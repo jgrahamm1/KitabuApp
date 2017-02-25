@@ -37,13 +37,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
             // Login Button
             case R.id.login_button:
-                // TODO start LoginActivity
+                Intent login_intent = new Intent(v.getContext(), LoginActivity.class);
+                startActivity(login_intent);
                 break;
 
             // Register Button
             case R.id.register_button:
-                Intent intent = new Intent(v.getContext(), RegistrationActivity.class);
-                startActivity(intent);
+                Intent reg_intent = new Intent(v.getContext(), RegistrationActivity.class);
+                startActivity(reg_intent);
                 break;
 
             default:
