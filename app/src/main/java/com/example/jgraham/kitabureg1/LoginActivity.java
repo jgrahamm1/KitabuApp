@@ -1,5 +1,6 @@
 package com.example.jgraham.kitabureg1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -50,7 +55,32 @@ public class LoginActivity extends AppCompatActivity {
         lgn_task.execute();
     }
 
-    public void onLoginPassed() {
+    public void onLoginPassed(JSONObject json_obj) {
+        try {
+
+            // Parse user info from JSON object
+            JSONObject user = json_obj.getJSONObject("user");
+            String id = user.getString("id");
+            String phoneno = user.getString("phoneno");
+            String email = user.getString("email");
+            String name = user.getString("name");
+
+            Log.d("LOGIN", "Got user info --> id " + id + " phn: " + phoneno + " email: " + email +
+            " name: " + name);
+
+            // Start MainActivity with user info in Extras
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.putExtra("id", id);
+            intent.putExtra("phoneno", phoneno);
+            intent.putExtra("email", email);
+            intent.putExtra("name", name);
+            startActivity(intent);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         login_btn.setEnabled(true);
         finish();
     }
@@ -99,13 +129,19 @@ public class LoginActivity extends AppCompatActivity {
             // TODO: check this.exception
             // TODO: do something with the result
             Log.d("LOGIN", "onPostExecute got result: " + result);
-            String tr = "true";
+            String tr = "false";
 
             if (result.contains(tr)) {
-                onLoginPassed();
+                onLoginFailed();
             }
             else {
-                onLoginFailed();
+                try {
+                    JSONObject response = new JSONObject(result);
+                    onLoginPassed(response);
+                } catch (JSONException e) {
+                    Log.d("LOGIN", "JSONException...");
+                    e.printStackTrace();
+                }
             }
         }
     }
