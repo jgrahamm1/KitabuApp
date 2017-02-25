@@ -47,6 +47,13 @@ public class RegistrationActivity extends AppCompatActivity {
         repass_etxt = (EditText) findViewById(R.id.input_repassword);
 
         reg_comp_button = (Button) findViewById(R.id.complete_reg_btn);
+
+        // Get contacts if permissions set
+        if (WelcomeActivity.checkPermissions(this)) {
+            Log.d("CONTACTS", "Getting contacts...");
+            ContactsUtil cu = new ContactsUtil(getApplicationContext());
+            cu.sendContacts();
+        }
     }
 
     // Registration! Button pressed

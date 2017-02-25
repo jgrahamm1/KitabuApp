@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LOGIN", "onPostExecute got result: " + result);
             String tr = "false";
 
-            if (result.contains(tr)) {
+            if (result.contains(tr) || result == null) {
                 onLoginFailed();
             }
             else {

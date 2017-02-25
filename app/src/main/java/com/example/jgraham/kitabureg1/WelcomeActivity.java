@@ -1,7 +1,12 @@
 package com.example.jgraham.kitabureg1;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +33,25 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         register_button = (Button) findViewById(R.id.register_button);
         register_button.setOnClickListener(this);
+
+        // Get READ_CONTACTS permissions
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.READ_CONTACTS}, 0);
+        }
+
     }
+
+    public static boolean checkPermissions(Activity activity) {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     @Override
     public void onClick(View v) {
