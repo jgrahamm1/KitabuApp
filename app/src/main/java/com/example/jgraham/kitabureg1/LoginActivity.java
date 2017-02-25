@@ -74,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("phoneno", phoneno);
             intent.putExtra("email", email);
             intent.putExtra("name", name);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
         } catch (JSONException e) {
