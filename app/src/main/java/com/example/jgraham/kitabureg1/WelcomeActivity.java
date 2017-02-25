@@ -2,15 +2,20 @@ package com.example.jgraham.kitabureg1;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by jgraham on 2/24/17.
@@ -24,6 +29,11 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        /*
+         * TODO: Aditi: Add a tutorial screen here.
+         * TODO: Aditi: Improve this page UI.
+         * TODO: Mahesh: Check for corner cases.
+         */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
@@ -40,7 +50,23 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS}, 0);
         }
-
+        SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString("id", null);
+        String name = sharedPreferences.getString("name", null);
+        String email = sharedPreferences.getString("email", null);
+        String phoneno = sharedPreferences.getString("phoneno", null);
+        Log.d("id", String.valueOf(id));
+        Log.d("name", String.valueOf(name));
+        Log.d("email", String.valueOf(email));
+        Log.d("phoneno", String.valueOf(phoneno));
+        if(id != null && name != null && email !=null && phoneno != null)
+        {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("sender", "welcome"); // I check this flag to perform actions in MainActivity.
+            startActivity(intent);
+        }
     }
 
     public static boolean checkPermissions(Activity activity) {

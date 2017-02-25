@@ -43,6 +43,24 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = (Button) findViewById(R.id.btn_login);
     }
 
+    boolean validate(String phone, String pwd)
+    {
+        boolean valid = true;
+        if (phone.isEmpty() || phone.length()!=10) {
+            login_etxt.setError("Enter Valid 10 digit Mobile Number!");
+            valid = false;
+        } else {
+            login_etxt.setError(null);
+        }
+        if (pwd.isEmpty() || pwd.length() < 6) {
+            pwd_etxt.setError("Password must be greater than 6 characters!");
+            valid = false;
+        } else {
+            login_etxt.setError(null);
+        }
+        return valid;
+    }
+
     // Login! pressed
     public void onLoginClick(View view) {
 
@@ -50,9 +68,14 @@ public class LoginActivity extends AppCompatActivity {
 
         m_login_phone = login_etxt.getText().toString();
         m_login_pwd = pwd_etxt.getText().toString();
-
-        LoginTask lgn_task = new LoginTask();
-        lgn_task.execute();
+        if(validate(m_login_phone, m_login_pwd)) {
+            LoginTask lgn_task = new LoginTask();
+            lgn_task.execute();
+        }
+        else
+        {
+            login_btn.setEnabled(true);
+        }
     }
 
     public void onLoginPassed(JSONObject json_obj) {
@@ -74,6 +97,7 @@ public class LoginActivity extends AppCompatActivity {
             intent.putExtra("phoneno", phoneno);
             intent.putExtra("email", email);
             intent.putExtra("name", name);
+            intent.putExtra("sender", "login");
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
 
@@ -130,7 +154,7 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LOGIN", "onPostExecute got result: " + result);
             String tr = "false";
 
-            if (result.contains(tr) || result == null) {
+            if (result == null || result.contains(tr)) {
                 onLoginFailed();
             }
             else {

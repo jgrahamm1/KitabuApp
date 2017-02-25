@@ -181,7 +181,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         protected void onPostExecute(String result) {
             // TODO: check this.exception
-            // TODO: do something with the result
             Log.d("REGISTER", "onPostExecute got result: " + result);
             String tr = "true";
 

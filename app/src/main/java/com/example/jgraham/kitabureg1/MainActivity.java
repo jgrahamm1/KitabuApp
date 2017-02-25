@@ -1,6 +1,8 @@
 package com.example.jgraham.kitabureg1;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,12 +14,16 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jgraham.backend.myApi.*;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -25,10 +31,13 @@ import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "Kitabu_preferences";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -67,8 +76,41 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        Intent intent = getIntent();
+        String sender = intent.getStringExtra("sender");
+        if(sender!= null && sender.equals("login"))
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                    Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("id", intent.getStringExtra("id"));
+            editor.putString("phoneno", intent.getStringExtra("phoneno"));
+            editor.putString("email", intent.getStringExtra("email"));
+            editor.putString("name", intent.getStringExtra("name"));
+            editor.commit();
+        }
+        else
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                    Context.MODE_PRIVATE);
+            String name = sharedPreferences.getString("name",null);
+            if(name != null)
+                Toast.makeText(this, "Welcome back, "+name, Toast.LENGTH_SHORT).show();
+        }
         new GcmRegistrationAsyncTask(this).execute();
+
+        /*
+         TODO: Add ShowCaseView here.
+         */
+//        new ShowcaseView.Builder(this)
+//                //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
+//                .setTarget(new TextView(getApplicationContext(), TextView.LAYER_TYPE_NONE))
+//                .setContentTitle("ShowcaseView")
+//                .setContentText("This is highlighting the Home button")
+//                .hideOnTouchOutside()
+//                .build();
     }
+
 
 
     @Override
@@ -76,6 +118,22 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    /*
+     * Clear all shared preferences and go to the Welcome Screen.
+     */
+    void signout()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
+        Intent intent = new Intent(getApplicationContext(), WelcomeActivity.class);
+        Toast.makeText(this, "Sign out successful,\n sorry to see you go! :(", Toast.LENGTH_SHORT);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -87,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+        else if(id == R.id.action_signout)
+        {
+            signout();
             return true;
         }
 
@@ -148,11 +211,39 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private GoogleCloudMessaging gcm;
     private Context context;
 
-    // TODO: change to your own sender ID to Google Developers Console project number, as per instructions above
     private static final String SENDER_ID = "609569899467";
 
     public GcmRegistrationAsyncTask(Context context) {
         this.context = context;
+    }
+
+    boolean register_gcm(String regId) {
+        SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        boolean msg = false;
+        String phoneno = sharedPreference.getString("phoneno", null);
+        String serv_res = "";
+        if (phoneno != null) {
+
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("phoneno", phoneno);
+            params.put("regId", regId);
+
+            // Send to server
+            try {
+                serv_res = ServerUtil.get("http://kitabu.prashant.at/api/gcm", params);
+                if (serv_res.contains("false")) {
+                    msg = false;
+                } else if (serv_res.contains("true")) {
+                    msg = true;
+                }
+            } catch (IOException e) {
+                Log.d("LOGIN", "Sending to server did not work");
+                e.printStackTrace();
+                msg = false;
+            }
+        }
+        return msg;
     }
 
     @Override
@@ -179,14 +270,26 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
                 gcm = GoogleCloudMessaging.getInstance(context);
             }
             String regId = gcm.register(SENDER_ID);
-            msg = "Device registered, registration ID=" + regId;
-
-            // You should send the registration ID to your server over HTTP,
-            // so it can use GCM/HTTP or CCS to send messages to your app.
-            // The request to your server should be authenticated if your app
-            // is using accounts.
-            //regService.register(regId).execute();
-
+            SharedPreferences sharedPreferences = context.getSharedPreferences("Kitabu_preferences",
+                    Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("regId", regId);
+            editor.commit();
+            // Receive the regid
+            // Send the regid to our server API
+            // Server stores our regid with the user table
+            // Server can now send push messages
+            if(regId != null)
+            {
+                if(register_gcm(regId))
+                {
+                    msg = "Login Successful!";
+                }
+                else
+                {
+                    msg = "Login unsuccessful!";
+                }
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
             msg = "Error: " + ex.getMessage();
@@ -196,7 +299,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(String msg) {
-        Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
         Logger.getLogger("REGISTRATION").log(Level.INFO, msg);
     }
 }
