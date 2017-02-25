@@ -18,25 +18,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Random;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Random;
-
-/**
- * Helper class used to communicate with the AppEngine server.
+/*
+ * Helper class used to communicate with the Kitabu server.
  */
+
 public final class ServerUtil {
 
     private static final int MAX_ATTEMPTS = 5;
@@ -45,7 +30,7 @@ public final class ServerUtil {
 
 
     /**
-     * Issue a POST request to the server.
+     * Issue a GET request to the server.
      *
      * @param endpoint
      *            GET address.
