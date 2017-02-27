@@ -13,6 +13,18 @@
         <url-pattern>/_ah/spi/*</url-pattern>
     </servlet-mapping>
 
+<servlet>
+        <servlet-name>TestServlet</servlet-name>
+        <servlet-class>com.example.jgraham.backend.TestServlet</servlet-class>
+	</servlet>
+
+	
+    <servlet-mapping>
+        <servlet-name>TestServlet</servlet-name>
+        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>

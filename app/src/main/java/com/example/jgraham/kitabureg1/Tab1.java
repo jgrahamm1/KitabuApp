@@ -20,11 +20,11 @@ public class Tab1 extends Fragment{
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
         // Get contacts if permissions set
-        if (WelcomeActivity.checkPermissions(getActivity())) {
-            Log.d("CONTACTS", "Getting contacts...");
-            ContactsUtil cu = new ContactsUtil(getContext());
-            cu.sendContacts();
-        }
+//        if (WelcomeActivity.checkPermissions(getActivity())) {
+//            Log.d("CONTACTS", "Getting contacts...");
+//            ContactsUtil cu = new ContactsUtil(getContext());
+//            cu.sendContacts();
+//        }
         return rootView;
     }
 }

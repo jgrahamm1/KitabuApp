@@ -60,6 +60,23 @@
         <service
             android:name=".WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <receiver
+            android:name=".GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="com.example.jgraham1.kitabureg" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".GcmIntentService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+
+
 
 </manifest>

@@ -79,29 +79,27 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-        Intent intent = getIntent();
-        String sender = intent.getStringExtra("sender");
-        if(sender!= null && sender.equals("login"))
-        {
-            SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
-                    Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("id", intent.getStringExtra("id"));
-            editor.putString("phoneno", intent.getStringExtra("phoneno"));
-            editor.putString("email", intent.getStringExtra("email"));
-            editor.putString("name", intent.getStringExtra("name"));
-            editor.commit();
+        if(savedInstanceState == null) {
+            Intent intent = getIntent();
+            String sender = intent.getStringExtra("sender");
+            if (sender != null && sender.equals("login")) {
+                SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                        Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("id", intent.getStringExtra("id"));
+                editor.putString("phoneno", intent.getStringExtra("phoneno"));
+                editor.putString("email", intent.getStringExtra("email"));
+                editor.putString("name", intent.getStringExtra("name"));
+                editor.commit();
+            } else {
+                SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
+                        Context.MODE_PRIVATE);
+                String name = sharedPreferences.getString("name", null);
+                if (name != null)
+                    Toast.makeText(this, "Welcome back, " + name, Toast.LENGTH_SHORT).show();
+            }
+            new GcmRegistrationAsyncTask(this).execute();
         }
-        else
-        {
-            SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
-                    Context.MODE_PRIVATE);
-            String name = sharedPreferences.getString("name",null);
-            if(name != null)
-                Toast.makeText(this, "Welcome back, "+name, Toast.LENGTH_SHORT).show();
-        }
-        new GcmRegistrationAsyncTask(this).execute();
-
         /*
          TODO: Add ShowCaseView here.
          */
