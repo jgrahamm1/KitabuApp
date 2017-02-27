@@ -21,16 +21,20 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.RemoteViews;
 
 public class WidgetProvider extends AppWidgetProvider {
   public static String EXTRA_WORD=
     "com.example.jgraham.kitabureg1.WORD";
-
+    RemoteViews widget;
     public static int BUTTON_PRESS=1;
+
 
   @Override
   public void onUpdate(Context ctxt, AppWidgetManager appWidgetManager,
@@ -44,11 +48,13 @@ public class WidgetProvider extends AppWidgetProvider {
         Log.d("aptest","cuttonpressvalcurrent "+BUTTON_PRESS);
         if(BUTTON_PRESS==1)
         {
+
             Log.d("aptest","new buttonpressed1");
             svcIntent.putExtra("buttonpress",1);
         }
         else  if(BUTTON_PRESS==2)
         {
+
             Log.d("aptest","new buttonpressed2");
             svcIntent.putExtra("buttonpress",2);
         }
@@ -58,9 +64,8 @@ public class WidgetProvider extends AppWidgetProvider {
         }
 
 
-      RemoteViews widget=new RemoteViews(ctxt.getPackageName(),
+      widget=new RemoteViews(ctxt.getPackageName(),
                                           R.layout.widget);
-      
       widget.setRemoteAdapter(appWidgetIds[i], R.id.words,
                               svcIntent);
 
@@ -70,6 +75,8 @@ public class WidgetProvider extends AppWidgetProvider {
                                             clickIntent,
                                             0);
         /*widget.setOnClickPendingIntent(R.id.actionButton, clickPI);*/
+
+
 
        // Register an onClickListener for 1st button
         Intent intent1 = new Intent(ctxt, WidgetProvider.class);
@@ -127,6 +134,10 @@ public class WidgetProvider extends AppWidgetProvider {
             value=b.getString("key");
             if(value.equals("public"))
             {
+               /* widget.setInt(R.id.btn_public, "setBackgroundColor",Color.parseColor("#DE5A00"));
+                widget.setInt(R.id.btn_private, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+                widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+*/
                 BUTTON_PRESS=1;
                 Log.d("aptest","buttonpressed");
                 Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
@@ -138,7 +149,10 @@ public class WidgetProvider extends AppWidgetProvider {
             }
             if(value.equals("private"))
             {
-                BUTTON_PRESS=2;
+              /*  widget.setInt(R.id.btn_public, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+                widget.setInt(R.id.btn_private, "setBackgroundColor", Color.parseColor("#DE5A00"));
+                widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+         */       BUTTON_PRESS=2;
                 Log.d("aptest","buttonpressed");
                 Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
                 LoremViewsFactory.items=LoremViewsFactory.items2;
@@ -149,7 +163,10 @@ public class WidgetProvider extends AppWidgetProvider {
             }
             if(value.equals("suggestion"))
             {
-                BUTTON_PRESS=3;
+          /*      widget.setInt(R.id.btn_public, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+                widget.setInt(R.id.btn_private, "setBackgroundColor", Color.parseColor("#C7D4DD"));
+                widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#DE5A00"));
+     */           BUTTON_PRESS=3;
                 Log.d("aptest","buttonpressed");
                 Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
                 LoremViewsFactory.items=LoremViewsFactory.items3;

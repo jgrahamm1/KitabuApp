@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/mainscreenlogin2"
+    android:gravity="center">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,19 +13,26 @@
         android:id="@+id/linear_layout"
         android:orientation="vertical">
 
-
         <Button
-            android:layout_width="400dp"
+            android:background="@drawable/buttonshape"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/login_button"
             android:text="Login"
+            android:textColor="@color/colorAccent"
             />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10pt" />
+
         <Button
-            android:layout_width="400dp"
+            android:background="@drawable/buttonshape"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/register_button"
             android:text="Register"
+            android:textColor="@color/colorAccent"
             />
 
     </LinearLayout>

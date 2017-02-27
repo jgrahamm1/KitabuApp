@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    >
 
     <LinearLayout
         android:orientation="vertical"
@@ -11,7 +12,8 @@
         android:layout_height="wrap_content"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        android:gravity="center">
 
         <ImageView android:src="@drawable/reg_icon"
             android:layout_width="wrap_content"
@@ -29,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:hint="Name" />
+                android:hint="Name"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--  Email Label -->
@@ -42,7 +45,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="Email"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
 
@@ -56,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="Phone Number" />
+                android:hint="Phone Number"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Label -->
@@ -69,7 +74,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Password Re-enter Label -->
@@ -82,19 +88,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Re-enter Password"/>
+                android:hint="Re-enter Password"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <!-- Register Button -->
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/complete_reg_btn"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Register!"
-            android:onClick="sendRegistration"/>
+            android:text="Register"
+            android:onClick="sendRegistration"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/buttonshape"/>
 
     </LinearLayout>
 </ScrollView>

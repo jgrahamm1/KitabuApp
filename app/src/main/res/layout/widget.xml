@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="0dp"
         android:paddingBottom="0dp"
-        android:background="@drawable/widget_frame"
+        android:background="@color/colorPrimaryDark"
         >
 
         <Button
@@ -20,7 +20,9 @@
             android:layout_marginRight="-4.5dp"
             android:layout_marginLeft="-4.5dp"
             android:textSize="10dp"
-            android:text="Public" />
+            android:textColor="@color/colorAccent"
+            android:text="Public"
+            android:background="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btn_private"
@@ -30,7 +32,9 @@
             android:layout_marginRight="-4.5dp"
             android:layout_marginLeft="-4.5dp"
             android:textSize="10dp"
-            android:text="Private" />
+            android:text="Private"
+            android:textColor="@color/colorAccent"
+            android:background="@android:color/transparent"/>
 
         <Button
             android:id="@+id/btn_suggestion"
@@ -40,7 +44,9 @@
             android:layout_marginRight="-4dp"
             android:layout_marginLeft="-4.5dp"
             android:text="Suggestion"
-            android:textSize="10dp" />
+            android:textSize="10dp"
+            android:textColor="@color/colorAccent"
+            android:background="@android:color/transparent"/>
 
     </LinearLayout>
 <ListView
@@ -49,6 +55,6 @@
   android:layout_height="match_parent"
   android:layout_marginTop="3dp"
   android:layout_marginLeft="3dp"
-  android:background="@drawable/widget_frame"
-/>
+  android:textColor="@color/colorAccent"
+  android:background= "@color/colorLightBlue" />
 </LinearLayout>

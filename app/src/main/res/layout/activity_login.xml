@@ -2,22 +2,25 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:gravity="center">
 
     <LinearLayout
+        android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="56dp"
         android:paddingLeft="24dp"
-        android:paddingRight="24dp">
+        android:paddingRight="24dp"
+        >
 
         <ImageView android:src="@drawable/reg_icon"
             android:layout_width="wrap_content"
             android:layout_height="72dp"
             android:layout_marginBottom="24dp"
             android:layout_gravity="center_horizontal" />
-
         <!-- phone number -->
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
@@ -28,7 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
-                android:hint="Phone Number" />
+                android:hint="Phone Number"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <!--  Password Label -->
@@ -41,18 +45,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:hint="Password"/>
+                android:hint="Password"
+                android:textColor="@color/colorAccent"/>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_login"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             android:padding="12dp"
-            android:text="Login!"
-            android:onClick="onLoginClick"/>
+            android:text="Login"
+            android:onClick="onLoginClick"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/buttonshape"/>
 
     </LinearLayout>
 </ScrollView>
