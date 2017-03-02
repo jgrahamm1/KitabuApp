@@ -1,5 +1,21 @@
 package com.example.jgraham.kitabureg1;
 
+/*
+
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ___  ____   | || |     _____    | || |  _________   | || |      __      | || |   ______     | || | _____  _____ | |
+| | |_  ||_  _|  | || |    |_   _|   | || | |  _   _  |  | || |     /  \     | || |  |_   _ \    | || ||_   _||_   _|| |
+| |   | |_/ /    | || |      | |     | || | |_/ | | \_|  | || |    / /\ \    | || |    | |_) |   | || |  | |    | |  | |
+| |   |  __'.    | || |      | |     | || |     | |      | || |   / ____ \   | || |    |  __'.   | || |  | '    ' |  | |
+| |  _| |  \ \_  | || |     _| |_    | || |    _| |_     | || | _/ /    \ \_ | || |   _| |__) |  | || |   \ `--' /   | |
+| | |____||____| | || |    |_____|   | || |   |_____|    | || ||____|  |____|| || |  |_______/   | || |    `.__.'    | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+
+ */
+
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -12,10 +28,6 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Created by jgraham on 2/24/17.
- */
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -160,7 +172,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 // Send to server
                 try {
-                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/register", params);
+                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/register", params, getApplicationContext());
                 } catch (IOException e) {
                     Log.d("REGISTER", "Sending to server did not work");
                     e.printStackTrace();
@@ -174,10 +186,11 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            // TODO: check this.exception
             Log.d("REGISTER", "onPostExecute got result: " + result);
             String tr = "true";
-
+            /*
+             * Check if true was returned.
+             */
             if (result.contains(tr)) {
                 sendRegistrationPass();
             }
@@ -186,5 +199,4 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         }
     }
-
 }

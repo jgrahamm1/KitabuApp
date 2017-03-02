@@ -1,5 +1,21 @@
 package com.example.jgraham.kitabureg1;
 
+/*
+
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ___  ____   | || |     _____    | || |  _________   | || |      __      | || |   ______     | || | _____  _____ | |
+| | |_  ||_  _|  | || |    |_   _|   | || | |  _   _  |  | || |     /  \     | || |  |_   _ \    | || ||_   _||_   _|| |
+| |   | |_/ /    | || |      | |     | || | |_/ | | \_|  | || |    / /\ \    | || |    | |_) |   | || |  | |    | |  | |
+| |   |  __'.    | || |      | |     | || |     | |      | || |   / ____ \   | || |    |  __'.   | || |  | '    ' |  | |
+| |  _| |  \ \_  | || |     _| |_    | || |    _| |_     | || | _/ /    \ \_ | || |   _| |__) |  | || |   \ `--' /   | |
+| | |____||____| | || |    |_____|   | || |   |_____|    | || ||____|  |____|| || |  |_______/   | || |    `.__.'    | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+
+ */
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -204,9 +220,14 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
 }
+
+
+/*
+ * This asynctask handles GCM registration.
+ * GCM server is stored on AppSpot.
+ * Send a post request to the server.
+ */
 class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
     private MyApi regService = null;
     private GoogleCloudMessaging gcm;
@@ -218,6 +239,10 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         this.context = context;
     }
 
+    /*
+     * Returns true or false.
+     * Sends a post request.
+     */
     boolean register_gcm(String regId) {
         SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
@@ -232,7 +257,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
 
             // Send to server
             try {
-                serv_res = ServerUtil.get("http://kitabu.prashant.at/api/gcm", params);
+                serv_res = ServerUtil.get("http://kitabu.prashant.at/api/gcm", params, context);
                 if (serv_res.contains("false")) {
                     msg = false;
                 } else if (serv_res.contains("true")) {
@@ -247,14 +272,15 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         return msg;
     }
 
+    /*
+     * Inspired from sample code provided by XD.
+     */
     @Override
     protected String doInBackground(Void... params) {
         if (regService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
-                    // Need setRootUrl and setGoogleClientRequestInitializer only for local testing,
-                    // otherwise they can be skipped
-                    .setRootUrl("https://kitabu-dartmouth.appspot.com//_ah/api/")
+                    .setRootUrl("https://kitabu-dartmouth.appspot.com/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -298,6 +324,9 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         return msg;
     }
 
+    /*
+     * Was registration successful?
+     */
     @Override
     protected void onPostExecute(String msg) {
         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();

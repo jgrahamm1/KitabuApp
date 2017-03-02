@@ -17,8 +17,20 @@ import android.widget.Button;
 
 import org.w3c.dom.Text;
 
-/**
- * Created by jgraham on 2/24/17.
+/*
+
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ___  ____   | || |     _____    | || |  _________   | || |      __      | || |   ______     | || | _____  _____ | |
+| | |_  ||_  _|  | || |    |_   _|   | || | |  _   _  |  | || |     /  \     | || |  |_   _ \    | || ||_   _||_   _|| |
+| |   | |_/ /    | || |      | |     | || | |_/ | | \_|  | || |    / /\ \    | || |    | |_) |   | || |  | |    | |  | |
+| |   |  __'.    | || |      | |     | || |     | |      | || |   / ____ \   | || |    |  __'.   | || |  | '    ' |  | |
+| |  _| |  \ \_  | || |     _| |_    | || |    _| |_     | || | _/ /    \ \_ | || |   _| |__) |  | || |   \ `--' /   | |
+| | |____||____| | || |    |_____|   | || |   |_____|    | || ||____|  |____|| || |  |_______/   | || |    `.__.'    | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+
  */
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener{
@@ -31,7 +43,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         /*
          * TODO: Aditi: Add a tutorial screen here.
-         * TODO: Aditi: Improve this page UI.
          * TODO: Mahesh: Check for corner cases.
          */
         super.onCreate(savedInstanceState);
@@ -45,11 +56,15 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         register_button.setOnClickListener(this);
 
         // Get READ_CONTACTS permissions
+        /*
+         * TODO: Add Location also over here.
+         */
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.READ_CONTACTS}, 0);
         }
+
         SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         String id = sharedPreferences.getString("id", null);
@@ -69,16 +84,33 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         }
     }
 
-    public static boolean checkPermissions(Activity activity) {
-        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_CONTACTS)
-                != PackageManager.PERMISSION_GRANTED) {
-            return false;
-        } else {
-            return true;
+    /*
+     * TODO: This is a corner case, when permissions weren't granted!
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 0: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
+
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+                return;
+            }
         }
     }
 
-
+    /*
+     * If either of the buttons was clicked.
+     */
     @Override
     public void onClick(View v) {
         // Determine if user pressed 'Login' or 'Register'

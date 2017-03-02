@@ -1,5 +1,21 @@
 package com.example.jgraham.kitabureg1;
 
+/*
+
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ___  ____   | || |     _____    | || |  _________   | || |      __      | || |   ______     | || | _____  _____ | |
+| | |_  ||_  _|  | || |    |_   _|   | || | |  _   _  |  | || |     /  \     | || |  |_   _ \    | || ||_   _||_   _|| |
+| |   | |_/ /    | || |      | |     | || | |_/ | | \_|  | || |    / /\ \    | || |    | |_) |   | || |  | |    | |  | |
+| |   |  __'.    | || |      | |     | || |     | |      | || |   / ____ \   | || |    |  __'.   | || |  | '    ' |  | |
+| |  _| |  \ \_  | || |     _| |_    | || |    _| |_     | || | _/ /    \ \_ | || |   _| |__) |  | || |   \ `--' /   | |
+| | |____||____| | || |    |_____|   | || |   |_____|    | || ||____|  |____|| || |  |_______/   | || |    `.__.'    | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+
+ */
+
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
@@ -14,10 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-/**
- * Created by jgraham on 2/24/17.
- */
 
 public class ContactsUtil {
 
@@ -84,7 +96,7 @@ public class ContactsUtil {
 
                 // Send to server
                 try {
-                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/contacts", params);
+                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/contacts", params, m_context);
                 } catch (IOException e) {
                     Log.d("CONTACTS", "Sending contacts to server did not work");
                     e.printStackTrace();

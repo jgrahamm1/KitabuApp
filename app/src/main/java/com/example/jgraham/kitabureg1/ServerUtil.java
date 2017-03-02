@@ -4,7 +4,9 @@ package com.example.jgraham.kitabureg1;
  * Created by jgraham on 2/21/17.
  */
 
+import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +30,6 @@ public final class ServerUtil {
     private static final int BACKOFF_MILLI_SECONDS = 2000;
     private static final Random random = new Random();
 
-
     /**
      * Issue a GET request to the server.
      *
@@ -40,7 +41,7 @@ public final class ServerUtil {
      * @throws IOException
      *             propagated from GET.
      */
-    public static String get(String endpoint, Map<String, String> params)
+    public static String get(String endpoint, Map<String, String> params, Context context)
             throws IOException {
         URL url;
         try {
@@ -79,23 +80,30 @@ public final class ServerUtil {
             out.close();
             // handle the response
             int status = conn.getResponseCode();
-            Log.d("TAGG",""+status);
+            Log.d("TAGG", "" + status);
             if (status != 200) {
-                throw new IOException("Get failed with error code " + status);
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                Log.d("ALERT", "Server down!!!");
+                return "502"; // When the flag isn't 200, its got to be 502 and the server is down!
             }
-
-            // Get Response
-            InputStream is = conn.getInputStream();
-            BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-            String line;
-            StringBuffer response = new StringBuffer();
-            while ((line = rd.readLine()) != null) {
-                response.append(line);
-                response.append('\n');
+            else {
+                // Get Response
+                InputStream is = conn.getInputStream();
+                BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+                String line;
+                StringBuffer response = new StringBuffer();
+                while ((line = rd.readLine()) != null) {
+                    response.append(line);
+                    response.append('\n');
+                }
+                rd.close();
+                return response.toString();
             }
-            rd.close();
-            return response.toString();
-
         } finally {
             if (conn != null) {
                 conn.disconnect();

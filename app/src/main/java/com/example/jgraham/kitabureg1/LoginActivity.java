@@ -1,5 +1,21 @@
 package com.example.jgraham.kitabureg1;
 
+/*
+
+ .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
+| .--------------. || .--------------. || .--------------. || .--------------. || .--------------. || .--------------. |
+| |  ___  ____   | || |     _____    | || |  _________   | || |      __      | || |   ______     | || | _____  _____ | |
+| | |_  ||_  _|  | || |    |_   _|   | || | |  _   _  |  | || |     /  \     | || |  |_   _ \    | || ||_   _||_   _|| |
+| |   | |_/ /    | || |      | |     | || | |_/ | | \_|  | || |    / /\ \    | || |    | |_) |   | || |  | |    | |  | |
+| |   |  __'.    | || |      | |     | || |     | |      | || |   / ____ \   | || |    |  __'.   | || |  | '    ' |  | |
+| |  _| |  \ \_  | || |     _| |_    | || |    _| |_     | || | _/ /    \ \_ | || |   _| |__) |  | || |   \ `--' /   | |
+| | |____||____| | || |    |_____|   | || |   |_____|    | || ||____|  |____|| || |  |_______/   | || |    `.__.'    | |
+| |              | || |              | || |              | || |              | || |              | || |              | |
+| '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
+ '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'
+
+ */
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,10 +34,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by jgraham on 2/24/17.
- */
-
 public class LoginActivity extends AppCompatActivity {
 
     protected EditText login_etxt;
@@ -32,6 +44,11 @@ public class LoginActivity extends AppCompatActivity {
 
     protected Button login_btn;
 
+    /*
+     * onCreate of the activity.
+     * Not sure if we will do anything onSuspend...
+     * TODO: MAHESH - onSuspend() here?
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +60,10 @@ public class LoginActivity extends AppCompatActivity {
         login_btn = (Button) findViewById(R.id.btn_login);
     }
 
+    /*
+     * Method to validate phone number and password.
+     * setError when field is invalid.
+     */
     boolean validate(String phone, String pwd)
     {
         boolean valid = true;
@@ -110,6 +131,10 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
+
+    /*
+     * If username/password was incorrect, this method is called.
+     */
     public void onLoginFailed() {
         login_btn.setEnabled(true);
         Toast.makeText(getApplicationContext(), "Login failed", Toast.LENGTH_SHORT).show();
@@ -124,6 +149,9 @@ public class LoginActivity extends AppCompatActivity {
         private Exception exception;
         private String serv_res;
 
+        /*
+         * Let's get this done in the background.
+         */
         protected String doInBackground(Void... arg0) {
             try {
 
@@ -137,7 +165,8 @@ public class LoginActivity extends AppCompatActivity {
 
                 // Send to server
                 try {
-                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/sign_in", params);
+                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/sign_in",
+                            params, getBaseContext());
                 } catch (IOException e) {
                     Log.d("LOGIN", "Sending to server did not work");
                     e.printStackTrace();
@@ -150,14 +179,24 @@ public class LoginActivity extends AppCompatActivity {
             return serv_res;
         }
 
+        /*
+         * The background thing ended... so what now?
+         */
         protected void onPostExecute(String result) {
             Log.d("LOGIN", "onPostExecute got result: " + result);
             String tr = "false";
 
-            if (result == null || result.contains(tr)) {
+            if (result == null || result.contains(tr)) {  // Did I get a null or a false?
                 onLoginFailed();
             }
-            else {
+            else if(result.equals("502")) // ServerUtil returns this when Server down.
+            {
+                Log.d("LOGIN", "Came to 502");
+                Toast.makeText(getApplicationContext(),
+                        "Oops, looks like our server is down! Sorry! :(", Toast.LENGTH_LONG).show();
+                onLoginFailed();
+            }
+            else {                    // If no errors anticipated, lets parse the json.
                 try {
                     JSONObject response = new JSONObject(result);
                     onLoginPassed(response);
@@ -165,7 +204,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LOGIN", "JSONException...");
                     e.printStackTrace();
                 }
-            }
-        }
-    }
-}
+            } // Else close
+        } // PostExecute close
+     } // Login Asynctask close
+} // Login Activity close
