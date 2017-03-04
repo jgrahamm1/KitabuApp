@@ -39,6 +39,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".SendDataActivity">
+            <intent-filter>
+                <action android:name="com.example.jgraham.kitabureg1.SendDataActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".LoremActivity"
             android:label="@string/app_name"

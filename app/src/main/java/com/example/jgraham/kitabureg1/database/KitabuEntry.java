@@ -22,6 +22,13 @@ public class KitabuEntry {
         this.mPhoneNo=0L;
     }
 
+    public KitabuEntry(String id_str, String url, String phone, String tags) {
+        this.mId = Integer.parseInt(id_str);
+        this.mLink = url;
+        this.mPhoneNo = Long.parseLong(phone);
+        this.mTags = tags;
+    }
+
     public Long getmRowID() {
         return mRowID;
     }

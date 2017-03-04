@@ -12,7 +12,7 @@ import android.widget.TextView;
  * Created by maheshdevalla on 2/24/17.
  */
 
-public class Tab1 extends Fragment{
+public class Tab1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

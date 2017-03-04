@@ -14,4 +14,11 @@
         android:layout_height="wrap_content"
         android:text = "Tab2"/>
 
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/create_link"
+        android:gravity="bottom"
+        android:text="Create Link (Temp)"/>
+
 </RelativeLayout>
