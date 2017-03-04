@@ -21,6 +21,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -45,6 +46,10 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -76,11 +81,70 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
+    /*
+ * Get the most recent id from the links sqlite table.
+ * Send a post request and use the JSON response.
+ */
+    void fetchdata()
+    {
+        SharedPreferences sharedPreference = getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        boolean msg = false;
+        String phoneno = sharedPreference.getString("phoneno", null);
+        String serv_res = "";
+        Map<String, String> params = new HashMap<String, String>();
+        try {
+            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/0/" + phoneno, params, this);
+            if (serv_res.contains("false")) {
+                msg = false;
+            } else
+            {
+                try {
+                    JSONObject response = new JSONObject(serv_res);
+                    Log.d("JSON Parsed", response.toString());
+                    JSONArray publicArray = response.getJSONArray("public");
+                    Log.d("JSON Parsed", publicArray.toString());
+                    JSONArray privateArray = response.getJSONArray("private");
+                    Log.d("JSON Parsed", privateArray.toString());
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+                Log.d("SERVER MESSAGE", serv_res);
+                msg = true;
+            }
+        } catch (IOException e) {
+            Log.d("LOGIN", "Sending to server did not work");
+            e.printStackTrace();
+            msg = false;
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+    /*
+     * If I want to use Runnable, I should be allowed to use runnable
+     * Noone on earth should have the right to stop me from doing what I want!
+     * ~ PA
+     */
+
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        // Runnable to fetch data from the server.
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                fetchdata();
+            }
+        };
+        runnable.run();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
