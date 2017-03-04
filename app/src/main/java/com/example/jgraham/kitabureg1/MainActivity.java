@@ -246,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onSaveLinkClicked(View view)
     {
-        Intent intent = new Intent(this, SendDataActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SendDataActivity.class);
         startActivity(intent);
     }
     @Override
