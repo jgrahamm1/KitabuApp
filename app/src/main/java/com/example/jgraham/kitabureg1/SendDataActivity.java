@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -152,6 +155,21 @@ public class SendDataActivity extends AppCompatActivity {
                 try {
                     JSONObject response = new JSONObject(result);
                     Log.d("SENDDATA", "JSONObject received: " + result.toString());
+
+                    // Parse JSONObject and put info in SQLite DB
+                    // Parse user info from JSON object
+                    JSONObject link_json = response.getJSONObject("link");
+                    String phoneno = link_json.getString("phoneno");
+                    String id = link_json.getString("id");
+                    String url = link_json.getString("url");
+                    String tag_list = link_json.getString("tag_list");
+
+                    // Put entry in SQLite DB
+                    KitabuEntry k_entry = new KitabuEntry(id, url, phoneno, tag_list);
+                    MySQLiteDbHelper db_helper = new MySQLiteDbHelper(getApplicationContext());
+                    long local_id = db_helper.insertEntry(k_entry);
+//                    db_helper.close();
+                    Log.d("SENDDATA", "Put link in SQLite DB with id: " + local_id);
 
                 } catch (JSONException e) {
                     Log.d("LOGIN", "JSONException...");
