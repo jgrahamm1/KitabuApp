@@ -51,6 +51,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.zip.Inflater;
 
 public class MainActivity extends AppCompatActivity {
     public static final String PREFS_NAME = "Kitabu_preferences";
@@ -84,6 +85,29 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Snackbar snackbar = Snackbar.make(view, "", Snackbar.LENGTH_SHORT);
+                // Get the Snackbar's layout view
+                Snackbar.SnackbarLayout layout = (Snackbar.SnackbarLayout) snackbar.getView();
+                // Hide the text
+                TextView textView = (TextView) layout.findViewById(android.support.design.R.id.snackbar_text);
+                textView.setVisibility(View.INVISIBLE);
+
+                // Inflate our custom view
+
+                View snackView = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+
+                // Add the view to the Snackbar's layout
+                layout.addView(snackView, 0);
+                // Show the Snackbar
+                snackbar.show();
+
+            }
+        });
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
@@ -152,7 +176,14 @@ public class MainActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-
+    public void onAddReminderClicked(View view)
+    {
+        Toast.makeText(getApplicationContext(),"Add Reminder Clicked",Toast.LENGTH_SHORT).show();
+    }
+    public void onSaveLinkClicked(View view)
+    {
+        Toast.makeText(getApplicationContext(),"Save Link Clicked",Toast.LENGTH_SHORT).show();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
