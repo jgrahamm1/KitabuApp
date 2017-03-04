@@ -15,7 +15,7 @@ public class DeleteActivity extends AppCompatActivity {
     private EditText eid,title,link,tags;
     private static MySQLiteDbHelper mySQLiteDbHelper;
     private int id;
-    private static final String EMPTY_STRING= "";
+    private static final String EMPTY_STRING= " ";
     private Button delete_button;
 
     @Override
@@ -42,15 +42,6 @@ public class DeleteActivity extends AppCompatActivity {
         tags = (EditText) findViewById(R.id.edittext_tags);
         tags.setText(str_tags==null?EMPTY_STRING:str_tags);
 
-//        title = (EditText) findViewById(R.id.edittext_title);
-//        eid.setText(str_title==null?EMPTY_STRING:str_title);
-
-
-//        Log.d("rowid in delete acti",String.valueOf(rowId));
-//        Log.d("id in delete activity",String.valueOf(id));
-//        Log.d("title in delete acti",title==null?"null value in title":title);
-//        Log.d("Link in delete activity",link==null?"null value in link":link);
-//        Log.d("tags in delete activity",tags==null?"null value in tags":tags);
         mySQLiteDbHelper = new MySQLiteDbHelper(getApplicationContext());
     }
     public void delete_data(View view){
