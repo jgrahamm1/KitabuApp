@@ -246,7 +246,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onSaveLinkClicked(View view)
     {
-        Toast.makeText(getApplicationContext(),"Save Link Clicked",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, SendDataActivity.class);
+        startActivity(intent);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -306,11 +307,11 @@ public class MainActivity extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Tab 1";
+                    return "Private";
                 case 1:
-                    return "Tab 2";
+                    return "Public";
                 case 2:
-                    return "Tab 3";
+                    return "Notifications";
             }
             return null;
         }
