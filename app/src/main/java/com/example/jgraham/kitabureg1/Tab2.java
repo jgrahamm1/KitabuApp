@@ -18,7 +18,9 @@ public class Tab2 extends Fragment implements View.OnClickListener {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+//        int value=1;
 
+        Log.d("Tab2","Tab2");
         View rootView = inflater.inflate(R.layout.tab2, container, false);
         TextView textView = (TextView) rootView.findViewById(R.id.section_label);
 
@@ -28,7 +30,7 @@ public class Tab2 extends Fragment implements View.OnClickListener {
 
         return rootView;
     }
-
+//
     @Override
     public void onClick(View v) {
         Log.d("TAB2", "OnClick called");

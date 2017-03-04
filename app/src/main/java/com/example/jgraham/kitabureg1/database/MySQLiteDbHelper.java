@@ -37,7 +37,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
             + KEY_ROWID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + KEY_ID
-            + " INTEGER, "
+            + " INTEGER UNIQUE, "
             + KEY_LINK
             + " TEXT, "
             + KEY_TITLE
@@ -99,20 +99,22 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // Remove a entry by giving its index
-    public void removeEntry(long rowIndex) {
+    public void removeEntry(int id) {
+        Log.d("Entered to delete","Delete record");
         SQLiteDatabase dbObj = getWritableDatabase();
-        dbObj.delete(TABLE_NAME_ENTRIES, KEY_ROWID + "=" + rowIndex, null);
+        dbObj.delete(TABLE_NAME_ENTRIES, KEY_ID + "=" + id, null);
         dbObj.close();
     }
 
     // Query a specific entry by its index. Return a cursor having each column
     // value
-    public KitabuEntry fetchEntryByIndex(long rowId) throws SQLException {
+    public KitabuEntry fetchEntryByIndex(int id) throws SQLException {
+        Log.d("Fetch Single Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         KitabuEntry entry = null;
         // do the query with the condition KEY_ROWID = rowId
         Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
-                KEY_ROWID + "=" + rowId, null, null, null, null, null);
+                KEY_ID + "=" + id, null, null, null, null, null);
 
         // move the cursor to the first record
         if (cursor.moveToFirst()) {
@@ -129,6 +131,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all rows
     public ArrayList<KitabuEntry> fetchEntries() {
+        Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();

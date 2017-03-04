@@ -84,6 +84,10 @@ public class KitabuEntry {
     public void setmPhoneNo(Long mPhoneNo) {
         this.mPhoneNo = mPhoneNo;
     }
+    public String toString() {
+
+        return this.getmTitle() +" \n " + getmLink();
+    }
 
     public JSONObject toJSONObject() {
         JSONObject obj = new JSONObject();
