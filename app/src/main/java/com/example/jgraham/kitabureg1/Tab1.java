@@ -52,7 +52,6 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab1, container, false);
-        TextView textView = (TextView) rootView.findViewById(R.id.section_label);
         // Get contacts if permissions set
 //        if (WelcomeActivity.checkPermissions(getActivity())) {
 //            Log.d("CONTACTS", "Getting contacts...");
