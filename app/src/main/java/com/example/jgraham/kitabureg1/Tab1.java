@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 /**
  * Created by maheshdevalla on 2/24/17.
  */
@@ -25,6 +28,7 @@ public class Tab1 extends Fragment {
 //            ContactsUtil cu = new ContactsUtil(getContext());
 //            cu.sendContacts();
 //        }
+
         return rootView;
     }
 }

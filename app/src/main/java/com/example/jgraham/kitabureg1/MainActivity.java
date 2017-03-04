@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.example.jgraham.backend.myApi.*;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -100,12 +101,50 @@ public class MainActivity extends AppCompatActivity {
             } else
             {
                 try {
-                    JSONObject response = new JSONObject(serv_res);
+                    final JSONObject response = new JSONObject(serv_res);
                     Log.d("JSON Parsed", response.toString());
-                    JSONArray publicArray = response.getJSONArray("public");
-                    Log.d("JSON Parsed", publicArray.toString());
-                    JSONArray privateArray = response.getJSONArray("private");
-                    Log.d("JSON Parsed", privateArray.toString());
+
+                    Runnable runnable = new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                JSONArray publicArray = response.getJSONArray("public");
+                                Log.d("JSON Parsed", publicArray.toString());
+                                for (int i = 0; i < publicArray.length(); i++) {
+                                    JSONObject objects = (JSONObject) publicArray.get(i);
+                                    Log.d(String.valueOf(i), objects.toString());
+                                }
+                            }
+                            catch (JSONException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    Runnable runnable1 = new Runnable() {
+                        @Override
+                        public void run() {
+
+                            JSONArray privateArray = null;
+                            try {
+                                privateArray = response.getJSONArray("private");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Log.d("JSON Parsed", privateArray.toString());
+                            for(int i = 0; i < privateArray.length(); i++) {
+                                JSONObject objects = null;
+                                try {
+                                    objects = (JSONObject) privateArray.get(i);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                Log.d(String.valueOf(i), objects.toString());
+                            }
+                        }
+                    };
+                    runnable.run();
+                    runnable1.run();
                 }
                 catch (JSONException e)
                 {
@@ -195,6 +234,13 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("email", intent.getStringExtra("email"));
                 editor.putString("name", intent.getStringExtra("name"));
                 editor.commit();
+                ViewTarget viewTarget = new ViewTarget(R.id.tabs, this);
+                ShowcaseView showcaseView = new ShowcaseView.Builder(this)
+                        .setContentTitle("ShowcaseView")
+                        .setContentText("This is highlighting the Home button")
+                        .setTarget(viewTarget)
+                        .hideOnTouchOutside()
+                        .build();
             } else {
                 SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
                         Context.MODE_PRIVATE);
@@ -204,16 +250,6 @@ public class MainActivity extends AppCompatActivity {
             }
             new GcmRegistrationAsyncTask(this).execute();
         }
-        /*
-         TODO: Add ShowCaseView here.
-         */
-//        new ShowcaseView.Builder(this)
-//                //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
-//                .setTarget(new TextView(getApplicationContext(), TextView.LAYER_TYPE_NONE))
-//                .setContentTitle("ShowcaseView")
-//                .setContentText("This is highlighting the Home button")
-//                .hideOnTouchOutside()
-//                .build();
     }
 
 
