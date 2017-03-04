@@ -159,7 +159,8 @@ public class SendDataActivity extends AppCompatActivity {
                     // Parse JSONObject and put info in SQLite DB
                     // Parse user info from JSON object
                     JSONObject link_json = response.getJSONObject("link");
-                    String phoneno = link_json.getString("phoneno");
+                    JSONObject user_json = link_json.getJSONObject("user");
+                    String phoneno = user_json.getString("phoneno");
                     String id = link_json.getString("id");
                     String url = link_json.getString("url");
                     String tag_list = link_json.getString("tag_list");
@@ -168,8 +169,8 @@ public class SendDataActivity extends AppCompatActivity {
                     KitabuEntry k_entry = new KitabuEntry(id, url, phoneno, tag_list);
                     MySQLiteDbHelper db_helper = new MySQLiteDbHelper(getApplicationContext());
                     long local_id = db_helper.insertEntry(k_entry);
-//                    db_helper.close();
                     Log.d("SENDDATA", "Put link in SQLite DB with id: " + local_id);
+                    finish();
 
                 } catch (JSONException e) {
                     Log.d("LOGIN", "JSONException...");

@@ -47,7 +47,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
             + KEY_TAGS
             + " TEXT, "
             + KEY_PHNO
-            + " INTEGER, "
+            + " INTEGER "
             + ");";
 
     private static final String[] mColumnList = new String[] { KEY_ROWID,

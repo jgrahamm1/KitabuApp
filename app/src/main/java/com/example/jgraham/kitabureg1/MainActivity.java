@@ -163,10 +163,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Inflate our custom view
 
-                View snackView = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
-
-                // Add the view to the Snackbar's layout
-                layout.addView(snackView, 0);
+//                View snackView = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+//
+//                // Add the view to the Snackbar's layout
+//                layout.addView(snackView, 0);
                 // Show the Snackbar
                 snackbar.show();
 
