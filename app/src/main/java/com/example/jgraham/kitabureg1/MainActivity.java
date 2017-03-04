@@ -163,10 +163,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Inflate our custom view
 
-//                View snackView = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
-//
-//                // Add the view to the Snackbar's layout
-//                layout.addView(snackView, 0);
+                View snackView = getLayoutInflater().inflate(R.layout.snackbar_layout, null);
+
+                // Add the view to the Snackbar's layout
+                layout.addView(snackView, 0);
                 // Show the Snackbar
                 snackbar.show();
 
@@ -247,6 +247,8 @@ public class MainActivity extends AppCompatActivity {
     public void onSaveLinkClicked(View view)
     {
         Toast.makeText(getApplicationContext(),"Save Link Clicked",Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), SendDataActivity.class);
+        startActivity(intent);
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
