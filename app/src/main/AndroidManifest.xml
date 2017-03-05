@@ -44,8 +44,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".SendDataActivity">
+        <intent-filter>
+            <action android:name="com.example.jgraham.kitabureg1.SendDataActivity" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".AlarmScheduleActivity">
             <intent-filter>
-                <action android:name="com.example.jgraham.kitabureg1.SendDataActivity" />
+                <action android:name="com.example.jgraham.kitabureg1.AlarmScheduleActivity" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

@@ -1,20 +1,23 @@
 package com.example.jgraham.kitabureg1;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
-import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by prashant on 3/4/17.
@@ -28,6 +31,8 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
      */
     private final Context context;
     private final List<KitabuEntry> itemsArrayList;
+    MySQLiteDbHelper mySQLiteDbHelper;
+    KitabuEntry ke;
     public MyCursorAdapter(Context context, List<KitabuEntry> itemsArrayList) {
         super(context, R.layout.customlist, itemsArrayList);
         this.context = context;
@@ -40,7 +45,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
-
+        mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
             TextView textView = (TextView) view.findViewById(R.id.firstLine);
             TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
             textView.setText(itemsArrayList.get(position).getmTitle());
@@ -51,6 +56,29 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             @Override
                 public void onClick(View v) {
                     Log.d("Does delete work", String.valueOf(position));
+                // Log.d("Does delete work", String.valueOf(position));
+                ke = getItem(position);
+//                Log.d("link",ke.getmLink());
+//                mySQLiteDbHelper.removeEntry(ke.getmId());
+//                Log.d(itemsArrayList.
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setMessage("Confirm Delete");
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        mySQLiteDbHelper.removeEntry(ke.getmId());
+                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                alertDialog.show();
                 }
             });
         // Share button onClick listener
@@ -67,10 +95,10 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             @Override
             public void onClick(View v) {
                 Log.d("Does reminder work", String.valueOf(position));
-                Intent s_intent = new Intent(getContext(), SendDataActivity.class);
+                Intent s_intent = new Intent(getContext(), AlarmScheduleActivity.class);
                 int url_id = itemsArrayList.get(position).getmId();
                 s_intent.putExtra("position", position);
-                s_intent.putExtra("url_id", url_id);
+                s_intent.putExtra("id", url_id);
                 v.getContext().startActivity(s_intent);
             }
         });

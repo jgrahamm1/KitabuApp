@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -39,7 +38,6 @@ public class Tab2 extends Fragment {
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab2, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
-        //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_expandable_list_item_1, values);
         final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
         ListView lv = (ListView) rootView.findViewById(R.id.datalisttab2);
         lv.setAdapter(adapter);
