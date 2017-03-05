@@ -34,6 +34,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     private final List<KitabuEntry> itemsArrayList;
     MySQLiteDbHelper mySQLiteDbHelper;
     KitabuEntry ke;
+    KitabuEntry kes;
     public MyCursorAdapter(Context context, List<KitabuEntry> itemsArrayList) {
         super(context, R.layout.customlist, itemsArrayList);
         this.context = context;
@@ -47,6 +48,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
+
             TextView textView = (TextView) view.findViewById(R.id.firstLine);
             TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
             textView.setText(itemsArrayList.get(position).getmTitle());
@@ -59,6 +61,10 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     Log.d("Does delete work", String.valueOf(position));
                 // Log.d("Does delete work", String.valueOf(position));
                 ke = getItem(position);
+
+//                List<KitabuEntry> list = mySQLiteDbHelper.getLastTwenty();
+//                kes = list.get(0);
+//                Log.d(String.valueOf(list.size()),"cursor last id"+kes.getmId());
 //                Log.d("link",ke.getmLink());
 //                mySQLiteDbHelper.removeEntry(ke.getmId());
 //                Log.d(itemsArrayList.

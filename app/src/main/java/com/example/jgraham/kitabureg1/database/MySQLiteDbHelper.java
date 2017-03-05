@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLiteDbHelper extends SQLiteOpenHelper {
     // Database name string
@@ -309,6 +310,26 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
         return temp;
     }
+    public List<KitabuEntry> getLastTwenty() throws SQLException {
+
+        List<KitabuEntry> list = new ArrayList<>();
+        int res=1;
+        SQLiteDatabase dbObj = getReadableDatabase();
+        KitabuEntry entry = null;
+        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                null, null, null, null, KEY_ID+" DESC ", null);
+        // move the cursor to the first record
+        while(cursor.moveToNext()==true && res<=20) {
+            res++;
+            entry = cursorToEntry(cursor, true);
+            list.add(entry);
+        }
+        cursor.close();
+        dbObj.close();
+        return list;
+    }
+
+
 }
 
 
