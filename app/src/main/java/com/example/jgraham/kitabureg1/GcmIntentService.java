@@ -88,7 +88,8 @@ public class GcmIntentService extends IntentService {
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name))
-                .setStyle(new NotificationCompat.BigTextStyle().bigText("Kitabu"))
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(extras.getString("phoneno") + " suggested " + extras.getString("url")))
                 .setContentText(extras.getString("phoneno") + " suggested " + extras.getString("url"))
                 .setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
         mBuilder.setContentIntent(contentIntent);
