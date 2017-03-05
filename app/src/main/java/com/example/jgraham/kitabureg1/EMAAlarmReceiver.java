@@ -13,10 +13,16 @@ import android.util.Log;
 
 public class EMAAlarmReceiver extends BroadcastReceiver {
 
+    protected int m_id;
+
     // Receive broadcast
     @Override
     public void onReceive(final Context context, Intent intent) {
         //Log.d("ALARM", "BroadcastReceiver");
+        m_id = intent.getIntExtra("id", -1);
+        if (m_id == -1) {
+            Log.d("ALARM", "Warning: EMAAlarmReceiver got -1 for id");
+        }
 
         startPSM(context);
     }
@@ -25,6 +31,7 @@ public class EMAAlarmReceiver extends BroadcastReceiver {
     private void startPSM(Context context) {
         Log.d("ALARM", "BroadcastReceiver firing");
         Intent emaIntent = new Intent(context, AlarmService.class);
+        emaIntent.putExtra("id", m_id);
         emaIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startService(emaIntent);
     }

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -69,7 +70,7 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
     public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day) {
         m_calendar.set(Calendar.YEAR, year);
         m_calendar.set(Calendar.MONTH, month);
-        m_calendar.set(Calendar.DAY_OF_MONTH, day);
+        m_calendar.set(Calendar.DAY_OF_MONTH, day - 1);
     }
 
     @Override
@@ -87,17 +88,15 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
         // Schedule alarm based on calendar
         // Calculate the time when it expires.
         Intent intent = new Intent(this, EMAAlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent,0);
-
-        // Get URL and open it when notification clicked
+        // Store ID for Prashant DB
         intent.putExtra("id", m_id);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, m_calendar.getTimeInMillis(), pendingIntent);
         Log.d("ALARM", "Alarm set at " + date_string + " for url with id: " + m_id);
 
+        Toast.makeText(getApplicationContext(), "Alarm set for " + date_string, Toast.LENGTH_SHORT).show();
         finish();
     }
-
-
 }

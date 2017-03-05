@@ -79,9 +79,9 @@ public class ContactsUtil {
     }
 
     /*
- * LoginTask
- * AsyncTask for performing activity on network
- */
+    * LoginTask
+    * AsyncTask for performing activity on network
+    */
     class ContactsTask extends AsyncTask<Void, Void, String> {
 
         private Exception exception;
