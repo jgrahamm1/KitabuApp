@@ -32,19 +32,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
             android:id="@+id/innerlist">
-        <Button
+        <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/round_button"
-            android:text="DELETE"
+            android:src = "@android:drawable/ic_menu_delete"
             android:textColor="#fff"
             android:layout_marginRight="35dp"/>
 
-        <Button
+        <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/round_button"
-            android:text="TOSS"
+            android:src="@android:drawable/ic_menu_share"
             android:textColor="#fff" />
 
     </LinearLayout>
