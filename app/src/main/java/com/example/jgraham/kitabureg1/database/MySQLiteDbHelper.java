@@ -317,7 +317,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase dbObj = getReadableDatabase();
         KitabuEntry entry = null;
         Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
-                null, null, null, null, KEY_ID+" DESC ", null);
+                KEY_TYPE + "=" + "1", null, null, null, KEY_ID+" DESC ", "20");
         // move the cursor to the first record
         while(cursor.moveToNext()==true && res<=20) {
             res++;

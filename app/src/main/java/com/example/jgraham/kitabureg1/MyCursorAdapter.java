@@ -64,7 +64,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 
 //                List<KitabuEntry> list = mySQLiteDbHelper.getLastTwenty();
 //                kes = list.get(0);
-//                Log.d(String.valueOf(list.size()),"cursor last id"+kes.getmId());
+//                Log.d("size:"+String.valueOf(list.size())+"\t type:"+kes.getmType(),"cursor last id"+kes.getmId());
 //                Log.d("link",ke.getmLink());
 //                mySQLiteDbHelper.removeEntry(ke.getmId());
 //                Log.d(itemsArrayList.
