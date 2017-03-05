@@ -3,7 +3,6 @@ package com.example.jgraham.kitabureg1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,21 +27,7 @@ public class Tab1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
-//        List<KitabuEntry> values = mySQLiteDbHelper.fetchEntries();
-//        ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(),R.layout.tab1,values);
-//        KitabuEntry ke = adapter.getItem(1);
-//        ke.getmPhoneNo();
-//        Log.d("Phone no",String.valueOf(ke.getmPhoneNo()));
-//        Log.d("Link",ke.getmLink());
-//
-
-
-
-
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,28 +36,16 @@ public class Tab1 extends Fragment {
         View rootView = inflater.inflate(R.layout.tab1, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
         final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_expandable_list_item_1,values);
-//                ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,values);
-//        KitabuEntry ke = adapter.getItem(1);
-//        ke.getmPhoneNo();
-//        Log.d("Phone no",String.valueOf(ke.getmPhoneNo()));
-//        Log.d("Link",ke.getmLink());
-//        Log.d("ID",String.valueOf(ke.getmId()));
-//        Log.d("Tags",ke.getmTags());
-//        Log.d("Title",ke.getmTitle()==null?"nullvalue":ke.getmTitle());
-//        Log.d("Row ID",String.valueOf(ke.getmRowID()));
-//        Log.d("Link",ke.g());
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("position",String.valueOf(position));
                 KitabuEntry ke = adapter.getItem(position);
-                Log.d("ID in list view", String.valueOf(ke.getmId()));
-                Log.d("Link in list view", ke.getmLink());
-                Log.d("RowId in list view",String.valueOf(ke.getmRowID()));
-//                mySQLiteDbHelper.removeEntry(ke.getmRowID());
-
+//                Log.d("position",String.valueOf(position));
+//                Log.d("ID in list view", String.valueOf(ke.getmId()));
+//                Log.d("Link in list view", ke.getmLink());
+//                Log.d("RowId in list view",String.valueOf(ke.getmRowID()));
                 Intent intent = new Intent(getActivity(), DeleteActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putLong("RowID",ke.getmRowID());
@@ -80,8 +53,6 @@ public class Tab1 extends Fragment {
                 bundle.putString("title",ke.getmTitle());
                 bundle.putString("link",ke.getmLink());
                 bundle.putString("tags",ke.getmTags());
-//                bundle.putString("link",ke.getmLink());
-//                bundle.putString("link",ke.getmLink());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }

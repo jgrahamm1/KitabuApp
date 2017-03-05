@@ -6,60 +6,7 @@
     <ListView
         android:id="@+id/datalist"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        />
 </LinearLayout>
 
-    <!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--xmlns:tools="http://schemas.android.com/tools"-->
-    <!--android:id="@+id/activity_third"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
-    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
-    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
-    <!--tools:context=".MainActivity">-->
-    <!--<ListView-->
-        <!--android:id="@+id/display_listview"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:divider="@android:color/transparent"-->
-        <!--android:dividerHeight="8dp">-->
-    <!--</ListView>-->
-
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="ThirdActivity"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentTop="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_alignParentStart="true"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_marginStart="133dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_marginTop="82dp"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@+id/textView" />&ndash;&gt;-->
-    <!--&lt;!&ndash;<Button&ndash;&gt;-->
-    <!--&lt;!&ndash;android:id="@id/activity_third"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:onClick="addRows"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:text="AddRowThird"/>&ndash;&gt;-->
-<!--</LinearLayout>-->
-
-    <!--&lt;!&ndash;<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
-    <!--&lt;!&ndash;xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:paddingBottom="@dimen/activity_vertical_margin"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:paddingLeft="@dimen/activity_horizontal_margin"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:paddingRight="@dimen/activity_horizontal_margin"&ndash;&gt;-->
-    <!--&lt;!&ndash;android:paddingTop="@dimen/activity_vertical_margin"&ndash;&gt;-->
-    <!--&lt;!&ndash;tools:context=".MainActivity">&ndash;&gt;-->
-
-    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-        <!--&lt;!&ndash;android:id="@+id/section_label"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-        <!--&lt;!&ndash;android:text= "Private"/>&ndash;&gt;-->
-
-<!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
