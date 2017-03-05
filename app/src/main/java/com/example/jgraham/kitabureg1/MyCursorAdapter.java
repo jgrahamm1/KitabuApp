@@ -95,10 +95,10 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             @Override
             public void onClick(View v) {
                 Log.d("Does reminder work", String.valueOf(position));
-                Intent s_intent = new Intent(getContext(), SendDataActivity.class);
+                Intent s_intent = new Intent(getContext(), AlarmScheduleActivity.class);
                 int url_id = itemsArrayList.get(position).getmId();
                 s_intent.putExtra("position", position);
-                s_intent.putExtra("url_id", url_id);
+                s_intent.putExtra("id", url_id);
                 v.getContext().startActivity(s_intent);
             }
         });
