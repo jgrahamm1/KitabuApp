@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -89,14 +90,23 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         value.put(KEY_PHNO, entry.getmPhoneNo());
         // get a database object
         SQLiteDatabase dbObj = getWritableDatabase();
+        long id;
         // insert the record
-        long id = dbObj.insert(TABLE_NAME_ENTRIES, null, value);
-        // close the database
+        id = dbObj.insert(TABLE_NAME_ENTRIES, null, value);            // close the database
         dbObj.close();
 
         // return the primary key for the new record
         return id;
     }
+
+    public void updateEntry(int index)
+    {
+        SQLiteDatabase dbObj = getWritableDatabase();
+        dbObj.rawQuery("update " + TABLE_NAME_ENTRIES + " " +
+                "set type = '" + 2 + "' WHERE id = '" + index + "';", null);
+        dbObj.close();
+    }
+
 
     // Remove a entry by giving its index
     public void removeEntry(int rowIndex) {

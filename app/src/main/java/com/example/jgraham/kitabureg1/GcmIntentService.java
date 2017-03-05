@@ -50,6 +50,10 @@ public class GcmIntentService extends IntentService {
                 Log.d("LOG", extras.getString("url"));
                 Log.d("LOG", extras.getString("id"));
                 Log.d("LOG", extras.getString("phoneno"));
+                /*
+                 * We are sending all of these details via GCM.
+                 * I hope this works.... :/
+                 */
                 KitabuEntry entry = new KitabuEntry(extras.getString("id"),
                         extras.getString("url") ,
                         extras.getString("phoneno"),
@@ -57,8 +61,24 @@ public class GcmIntentService extends IntentService {
                         2,
                         extras.getString("title"));
                 MySQLiteDbHelper dbHelper = new MySQLiteDbHelper(getApplicationContext());
-                dbHelper.insertEntry(entry);
-            }
+                try {
+
+                KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
+                if(entry1 == null) {
+                    dbHelper.insertEntry(entry);
+                }
+                else
+                {
+                    Log.d("DB: " , "UPDATING");
+                    dbHelper.updateEntry(entry.getmId());
+                }
+
+                }
+                catch (Exception e)
+                {
+                    Log.d("GCM: ", "Received notification, but didn't push");
+                }
+        }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
