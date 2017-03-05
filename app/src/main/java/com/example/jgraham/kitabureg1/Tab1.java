@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
@@ -61,8 +62,12 @@ public class Tab1 extends Fragment {
                 startActivity(intent);
             }
         });
+        if(values.size() == 0)
+        {
+            TextView textView = (TextView) rootView.findViewById(R.id.tvi);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText("Nothing to show!");
+        }
         return rootView;
-
     }
-
 }

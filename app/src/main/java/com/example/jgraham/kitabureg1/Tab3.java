@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
@@ -36,11 +37,17 @@ public class Tab3 extends Fragment{
                              Bundle savedInstanceState) {
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab3, container, false);
-        List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
+        List<KitabuEntry> values = mySQLiteDbHelper.fetchNotificationEntries();
         //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), R.layout.customlist ,values);
         final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalisttab3);
         lv.setAdapter(adapter);
+        if(values.size() == 0)
+        {
+            TextView textView = (TextView) rootView.findViewById(R.id.tvi);
+            textView.setVisibility(View.VISIBLE);
+            textView.setText("Nothing to show!");
+        }
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
