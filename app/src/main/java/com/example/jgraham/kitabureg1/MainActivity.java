@@ -125,16 +125,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Alarm stuff (temp)
-        // Calculate the time when it expires.
-        long wakeupTime = System.currentTimeMillis() + (1000 * 10);
-
-        Intent myIntent = new Intent(this, EMAAlarmReceiver.class);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent,0);
-
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
-        alarmManager.set(AlarmManager.RTC_WAKEUP, wakeupTime, pendingIntent);
-        Log.d("ALARM", "Alarm set to go off in 10 seconds");
 
     /*
      * If I want to use Runnable, I should be allowed to use runnable

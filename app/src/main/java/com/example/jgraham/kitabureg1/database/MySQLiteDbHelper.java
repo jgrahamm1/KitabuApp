@@ -241,6 +241,28 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         entry.setmPhoneNo(cursor.getLong(cursor.getColumnIndex(KEY_PHNO)));
         return entry;
     }
+    // Query a specific entry by its link. Return a cursor having each column
+    // value
+    public KitabuEntry fetchEntryByTitle(String title) throws SQLException {
+        Log.d("Fetch Single Entries", "By title: Try to do that");
+        SQLiteDatabase dbObj = getReadableDatabase();
+        KitabuEntry entry = null;
+        // do the query with the condition KEY_ROWID = rowId
+        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                KEY_LINK + "= \"" + title+"\"", null, null, null, null, null);
+
+        // move the cursor to the first record
+        if (cursor.moveToFirst()) {
+            // convert the cursor to an KitabuEntry object
+            entry = cursorToEntry(cursor, true);
+        }
+
+        // close the cursor
+        cursor.close();
+        dbObj.close();
+
+        return entry;
+    }
 }
 
 

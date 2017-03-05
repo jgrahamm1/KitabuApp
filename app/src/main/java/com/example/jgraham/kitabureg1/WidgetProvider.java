@@ -45,11 +45,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RemoteViews;
 
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
+
+import java.util.ArrayList;
+
 public class WidgetProvider extends AppWidgetProvider {
   public static String EXTRA_WORD=
     "com.example.jgraham.kitabureg1.WORD";
     RemoteViews widget;
     public static int BUTTON_PRESS=1;
+    private static MySQLiteDbHelper mySQLiteDbHelper;
+    public static ArrayList<KitabuEntry> kitabuEntries;
+    //static int k=0;
 
 
   @Override
@@ -60,18 +68,21 @@ public class WidgetProvider extends AppWidgetProvider {
       
       svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
       svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
+        mySQLiteDbHelper = new MySQLiteDbHelper(ctxt);
 
-        Log.d("aptest","cuttonpressvalcurrent "+BUTTON_PRESS);
+
+
+        //Log.d("aptest","cuttonpressvalcurrent "+BUTTON_PRESS);
         if(BUTTON_PRESS==1)
         {
 
-            Log.d("aptest","new buttonpressed1");
+            //Log.d("aptest","new buttonpressed1");
             svcIntent.putExtra("buttonpress",1);
         }
         else  if(BUTTON_PRESS==2)
         {
 
-            Log.d("aptest","new buttonpressed2");
+            //Log.d("aptest","new buttonpressed2");
             svcIntent.putExtra("buttonpress",2);
         }
         else if(BUTTON_PRESS==3)
@@ -155,10 +166,28 @@ public class WidgetProvider extends AppWidgetProvider {
                 widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#C7D4DD"));
 */
                 BUTTON_PRESS=1;
-                Log.d("aptest","buttonpressed");
-                Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
-                LoremViewsFactory.items=LoremViewsFactory.items1;
-                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+                //Log.d("aptest","buttonpressed");
+                //Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
+                kitabuEntries=mySQLiteDbHelper.fetchPublicEntries();
+                int size=0;
+                if(kitabuEntries.size()<10)
+                {
+                    size=kitabuEntries.size();
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
+                    }
+                    for(int i=size;i<10;i++)
+                    {
+                        LoremViewsFactory.items[i]="";
+                    }
+                }
+                else
+                {
+                    size=10;
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
+                    }
+                }                AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                         new ComponentName(context, WidgetProvider.class));
                 appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.words);
@@ -169,9 +198,31 @@ public class WidgetProvider extends AppWidgetProvider {
                 widget.setInt(R.id.btn_private, "setBackgroundColor", Color.parseColor("#DE5A00"));
                 widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#C7D4DD"));
          */       BUTTON_PRESS=2;
-                Log.d("aptest","buttonpressed");
-                Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
-                LoremViewsFactory.items=LoremViewsFactory.items2;
+                //Log.d("aptest","buttonpressed");
+                //Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
+                kitabuEntries=mySQLiteDbHelper.fetchPrivateEntries();
+                int size=0;
+                if(kitabuEntries.size()<10)
+                {
+                    size=kitabuEntries.size();
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                    }
+                    for(int i=size;i<10;i++)
+                    {
+                        LoremViewsFactory.items[i]="";
+                    }
+                }
+                else
+                {
+                    size=10;
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                    }
+                }
+
+                //LoremViewsFactory.items2[0]="Aditi";
+                //LoremViewsFactory.items=LoremViewsFactory.items2;
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                         new ComponentName(context, WidgetProvider.class));
@@ -183,9 +234,28 @@ public class WidgetProvider extends AppWidgetProvider {
                 widget.setInt(R.id.btn_private, "setBackgroundColor", Color.parseColor("#C7D4DD"));
                 widget.setInt(R.id.btn_suggestion, "setBackgroundColor", Color.parseColor("#DE5A00"));
      */           BUTTON_PRESS=3;
-                Log.d("aptest","buttonpressed");
-                Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
-                LoremViewsFactory.items=LoremViewsFactory.items3;
+                //Log.d("aptest","buttonpressed");
+                //Log.d("aptest","buttonpressed->"+BUTTON_PRESS);
+                kitabuEntries=mySQLiteDbHelper.fetchNotificationEntries();
+                int size=0;
+                if(kitabuEntries.size()<10)
+                {
+                    size=kitabuEntries.size();
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                    }
+                    for(int i=size;i<10;i++)
+                    {
+                        LoremViewsFactory.items[i]="";
+                    }
+                }
+                else
+                {
+                    size=10;
+                    for(int i=0;i<size;i++) {
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
+                    }
+                }
                 AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
                 int appWidgetIds[] = appWidgetManager.getAppWidgetIds(
                         new ComponentName(context, WidgetProvider.class));
@@ -199,4 +269,5 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
 
     }
+
 }
