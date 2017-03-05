@@ -168,11 +168,11 @@ public class SendDataActivity extends AppCompatActivity {
                     KitabuEntry k_entry;
                     if(type.equals("true"))
                     {
-                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0);
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1);
                     }
                     else
                     {
-                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1);
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0);
                     }
 
                     // Put entry in SQLite DB
