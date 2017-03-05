@@ -26,7 +26,7 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
     // Calendar for storing the user's time of notification
     protected Calendar m_calendar;
 
-    // Calendar 
+    // Calendar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +79,9 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
         // Calculate the time when it expires.
         Intent myIntent = new Intent(this, EMAAlarmReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, myIntent,0);
+
+        // Get URL and open it when notification clicked
+        // TODO
 
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, m_calendar.getTimeInMillis(), pendingIntent);
