@@ -104,7 +104,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                         String phoneno = sharedPreferences.getString("phoneno", null);
                         ContactsUtil contactsUtil = new ContactsUtil(context);
                         contactsUtil.sendContacts(ke.getmId(), phoneno);
-                        Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "Shared!", Toast.LENGTH_SHORT).show();
 
                     }
                 });

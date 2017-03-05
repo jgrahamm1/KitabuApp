@@ -59,7 +59,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener{
     public static final String PREFS_NAME = "Kitabu_preferences";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -99,15 +99,6 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
-
-        // Runnable to fetch data from the server.
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        };
-        runnable.run();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorAccent));
         setSupportActionBar(toolbar);
@@ -230,6 +221,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onTabSelected(TabLayout.Tab tab) {
+        Log.d("Selected", "Selected");
+    }
+
+    @Override
+    public void onTabUnselected(TabLayout.Tab tab) {
+        Log.d("Unselected", "Unselected");
+
+    }
+
+    @Override
+    public void onTabReselected(TabLayout.Tab tab) {
+        Log.d("Reselected", "Reselected");
     }
 
 
@@ -442,6 +449,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         }
         return msg;
     }
+
 
     /*
      * Was registration successful?
