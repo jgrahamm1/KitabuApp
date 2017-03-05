@@ -1,5 +1,7 @@
 package com.example.jgraham.kitabureg1.database;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -106,6 +108,30 @@ public class KitabuEntry {
             return null;
         }
         return obj;
+    }
+    public KitabuEntry(JSONObject jsonObject)
+    {
+        try {
+            this.mId = jsonObject.getInt("id");
+            if(jsonObject.getString("phoneno").equals("null")) {
+                this.mPhoneNo = -1L;
+            }
+            else
+            {
+                this.mPhoneNo = Long.parseLong(jsonObject.getString("phoneno"));
+            }
+            this.mLink = jsonObject.getString("url");
+            this.mTitle = jsonObject.getString("title");
+            if(jsonObject.getString("typep").equals("true"))
+                this.mType = 1;
+            else
+                this.mType = 0;
+            this.mTags = jsonObject.getString("tag_list");
+        }
+        catch (JSONException e)
+        {
+            Log.d("JSON", "EXCEPTION");
+        }
     }
 }
 

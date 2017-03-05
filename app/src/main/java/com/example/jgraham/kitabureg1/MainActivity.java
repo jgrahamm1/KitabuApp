@@ -41,6 +41,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.jgraham.backend.myApi.MyApi;
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -80,45 +82,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    /*
- * Get the most recent id from the links sqlite table.
- * Send a post request and use the JSON response.
- */
-    void fetchdata()
-    {
-        SharedPreferences sharedPreference = getSharedPreferences("Kitabu_preferences",
-                Context.MODE_PRIVATE);
-        boolean msg = false;
-        String phoneno = sharedPreference.getString("phoneno", null);
-        String serv_res = "";
-        Map<String, String> params = new HashMap<String, String>();
-        try {
-            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/0/" + phoneno, params, this);
-            if (serv_res.contains("false")) {
-                msg = false;
-            } else
-            {
-                try {
-                    JSONObject response = new JSONObject(serv_res);
-                    Log.d("JSON Parsed", response.toString());
-                    JSONArray publicArray = response.getJSONArray("public");
-                    Log.d("JSON Parsed", publicArray.toString());
-                    JSONArray privateArray = response.getJSONArray("private");
-                    Log.d("JSON Parsed", privateArray.toString());
-                }
-                catch (JSONException e)
-                {
-                    e.printStackTrace();
-                }
-                Log.d("SERVER MESSAGE", serv_res);
-                msg = true;
-            }
-        } catch (IOException e) {
-            Log.d("LOGIN", "Sending to server did not work");
-            e.printStackTrace();
-            msg = false;
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                fetchdata();
+
             }
         };
         runnable.run();
@@ -335,6 +298,65 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         this.context = context;
     }
 
+
+    /*
+ * Get the most recent id from the links sqlite table.
+ * Send a post request and use the JSON response.
+ */
+    void fetchdata()
+    {
+        SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        boolean msg = false;
+        MySQLiteDbHelper mySQLiteDbHelper = new MySQLiteDbHelper(context);
+        mySQLiteDbHelper.deleteallprivate();
+        int lastid = mySQLiteDbHelper.getLastId();
+        String phoneno = sharedPreference.getString("phoneno", null);
+        String serv_res = "";
+        Map<String, String> params = new HashMap<String, String>();
+        try {
+            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/" + lastid + "/" + phoneno, params, context);
+            if (serv_res.equals("false")) {
+                msg = false;
+            } else
+            {
+                try {
+
+                    JSONObject response = new JSONObject(serv_res);
+                    Log.d("JSON Parsed", response.toString());
+                    JSONArray publicArray = response.getJSONArray("public");
+                    for(int i = 0; i < publicArray.length(); i++)
+                    {
+                        JSONObject jsonObject = (JSONObject) publicArray.get(i);
+                        KitabuEntry entry = new KitabuEntry(jsonObject);
+                        mySQLiteDbHelper.insertEntry(entry);
+                        Log.d("JSON", jsonObject.toString());
+                    }
+                    Log.d("JSON Parsed", publicArray.toString());
+                    JSONArray privateArray = response.getJSONArray("private");
+                    for(int i = 0; i < privateArray.length(); i++)
+                    {
+                        JSONObject jsonObject = (JSONObject) privateArray.get(i);
+                        KitabuEntry entry = new KitabuEntry(jsonObject);
+                        mySQLiteDbHelper.insertEntry(entry);
+                        Log.d("JSON", jsonObject.toString());
+                    }
+                    Log.d("JSON Parsed", privateArray.toString());
+                }
+                catch (JSONException e)
+                {
+                    e.printStackTrace();
+                }
+                Log.d("SERVER MESSAGE", serv_res);
+                msg = true;
+            }
+        } catch (IOException e) {
+            Log.d("LOGIN", "Sending to server did not work");
+            e.printStackTrace();
+            msg = false;
+        }
+    }
+
     /*
      * Returns true or false.
      * Sends a post request.
@@ -373,6 +395,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
      */
     @Override
     protected String doInBackground(Void... params) {
+        fetchdata();
         if (regService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
