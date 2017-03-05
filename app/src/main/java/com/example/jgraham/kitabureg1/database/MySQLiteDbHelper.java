@@ -161,7 +161,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, null,
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,  "type=0",
                 null, null, null, null);
 
         // the cursor initially points the record PRIOR to the first record
@@ -211,7 +211,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, null,
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,  "type=2",
                 null, null, null, null);
 
         // the cursor initially points the record PRIOR to the first record
