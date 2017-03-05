@@ -7,10 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
-
-import java.util.ArrayList;
 
 
 public class DeleteActivity extends AppCompatActivity {

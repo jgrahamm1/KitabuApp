@@ -1,23 +1,15 @@
 package com.example.jgraham.kitabureg1;
 
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.icu.util.Calendar;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.util.Log;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.TimePicker;
-
-import java.text.DecimalFormat;
 
 /**
  * Created by jgraham on 3/4/17.
