@@ -49,7 +49,7 @@ public class LoremActivity extends Activity {
     if (word==null) {
       word="Hello, Welcome to Kitabu!";
     }
-    MySQLiteDbHelper mySQLiteDbHelper=new MySQLiteDbHelper(getApplicationContext());
+    MySQLiteDbHelper mySQLiteDbHelper= MySQLiteDbHelper.getInstance(getApplicationContext());
       KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByTitle(word);
       String url = kitabuEntry.getmLink();
       Intent i = new Intent(Intent.ACTION_VIEW);

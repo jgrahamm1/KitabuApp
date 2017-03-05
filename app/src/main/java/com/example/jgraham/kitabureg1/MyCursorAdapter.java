@@ -46,7 +46,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
-        mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
+        mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
             TextView textView = (TextView) view.findViewById(R.id.firstLine);
             TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
             textView.setText(itemsArrayList.get(position).getmTitle());

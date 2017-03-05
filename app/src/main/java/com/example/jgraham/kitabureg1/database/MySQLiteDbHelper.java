@@ -18,6 +18,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Version code
     private static final int DATABASE_VERSION = 1;
+   private static MySQLiteDbHelper sInstance;
 
     // Table schema, column names
     public static final String KEY_ROWID = "_id";
@@ -59,6 +60,16 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         Log.d("DB created","Database_Kitabu");
     }
 
+    public static synchronized MySQLiteDbHelper getInstance(Context context) {
+
+        // Use the application context, which will ensure that you
+        // don't accidentally leak an Activity's context.
+        // See this article for more information: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new MySQLiteDbHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
     @Override
     public void onCreate(SQLiteDatabase db) {
         // create the table schema.

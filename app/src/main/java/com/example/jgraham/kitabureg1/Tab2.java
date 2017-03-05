@@ -35,7 +35,7 @@ public class Tab2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
+        mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab2, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
         final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
