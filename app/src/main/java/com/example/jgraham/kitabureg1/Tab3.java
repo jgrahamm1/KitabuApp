@@ -37,7 +37,8 @@ public class Tab3 extends Fragment{
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab3, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
-        final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), R.layout.customlist ,values);
+        //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), R.layout.customlist ,values);
+        final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalisttab3);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
