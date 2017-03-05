@@ -37,12 +37,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.RemoteViews;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
@@ -68,7 +64,7 @@ public class WidgetProvider extends AppWidgetProvider {
       
       svcIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetIds[i]);
       svcIntent.setData(Uri.parse(svcIntent.toUri(Intent.URI_INTENT_SCHEME)));
-        mySQLiteDbHelper = new MySQLiteDbHelper(ctxt);
+        mySQLiteDbHelper = MySQLiteDbHelper.getInstance(ctxt);
 
 
 

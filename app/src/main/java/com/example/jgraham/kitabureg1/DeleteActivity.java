@@ -40,7 +40,7 @@ public class DeleteActivity extends AppCompatActivity {
         tags = (EditText) findViewById(R.id.edittext_tags);
         tags.setText(str_tags==null?EMPTY_STRING:str_tags);
 
-        mySQLiteDbHelper = new MySQLiteDbHelper(getApplicationContext());
+        mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
     }
     public void delete_data(View view){
         mySQLiteDbHelper.removeEntry(id);

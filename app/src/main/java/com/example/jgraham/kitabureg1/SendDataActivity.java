@@ -29,6 +29,7 @@ public class SendDataActivity extends AppCompatActivity {
     // Store the info in EditTexts
     protected String link_str, tag_str;
     protected int typep;
+    MySQLiteDbHelper db_helper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,7 +184,7 @@ public class SendDataActivity extends AppCompatActivity {
                     }
 
                     // Put entry in SQLite DB
-                    MySQLiteDbHelper db_helper = new MySQLiteDbHelper(getApplicationContext());
+                    MySQLiteDbHelper db_helper = MySQLiteDbHelper.getInstance(getApplicationContext());
                     long local_id = db_helper.insertEntry(k_entry);
                     Log.d("SENDDATA", "Put link in SQLite DB with id: " + local_id);
                     finish();

@@ -22,12 +22,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
@@ -65,7 +62,7 @@ public class GcmIntentService extends IntentService {
                         extras.getString("tags"),
                         2,
                         extras.getString("title"));
-                MySQLiteDbHelper dbHelper = new MySQLiteDbHelper(getApplicationContext());
+                MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
                 try {
                     KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
                     if(entry1 == null) {

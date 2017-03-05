@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
@@ -78,7 +77,7 @@ public class AlarmService extends IntentService {
         if (notification_manager == null) {
 
             // Set intent for launching URL
-            MySQLiteDbHelper mySQLiteDbHelper=new MySQLiteDbHelper(getApplicationContext());
+            MySQLiteDbHelper mySQLiteDbHelper=MySQLiteDbHelper.getInstance(getApplicationContext());
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
 

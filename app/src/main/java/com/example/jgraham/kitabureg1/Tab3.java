@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -35,7 +34,7 @@ public class Tab3 extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
+        mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab3, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchNotificationEntries();
         //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), R.layout.customlist ,values);
