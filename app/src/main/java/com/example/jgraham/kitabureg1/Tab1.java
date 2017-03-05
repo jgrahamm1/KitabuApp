@@ -3,6 +3,7 @@ package com.example.jgraham.kitabureg1;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,8 @@ public class Tab1 extends Fragment {
 //                Log.d("ID in list view", String.valueOf(ke.getmId()));
 //                Log.d("Link in list view", ke.getmLink());
 //                Log.d("RowId in list view",String.valueOf(ke.getmRowID()));
+
+                Log.d("type",String.valueOf(ke.getmType()));
                 Intent intent = new Intent(getActivity(), DeleteActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putLong("RowID",ke.getmRowID());

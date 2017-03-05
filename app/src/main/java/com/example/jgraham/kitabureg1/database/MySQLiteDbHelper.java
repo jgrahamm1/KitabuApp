@@ -99,10 +99,10 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // Remove a entry by giving its index
-    public void removeEntry(int id) {
+    public void removeEntry(int rowIndex) {
         Log.d("Entered to delete","Delete record");
         SQLiteDatabase dbObj = getWritableDatabase();
-        dbObj.delete(TABLE_NAME_ENTRIES, KEY_ID + "=" + id, null);
+        dbObj.delete(TABLE_NAME_ENTRIES, KEY_ROWID + "=" + rowIndex, null);
         dbObj.close();
     }
 
