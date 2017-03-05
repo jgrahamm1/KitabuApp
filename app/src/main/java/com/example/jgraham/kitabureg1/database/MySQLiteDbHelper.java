@@ -147,7 +147,6 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
             entryList.add(entry);
             Log.d("TAGG", "Got data");
         }
-
         cursor.close();
         dbObj.close();
 
