@@ -81,7 +81,13 @@ public class SendDataActivity extends AppCompatActivity {
     // Format URL for sending to Prashant DB
     protected String formatURL(String url) {
         String url_formatted = String.valueOf(url);
-        if (!url.contains("http://") || !url.contains("https://")) {
+        if (url.contains("http://")) {
+            return url;
+        }
+        else if (url.contains("https://")) {
+            return url;
+        }
+        else {
             url_formatted = "http://" + url_formatted;
         }
         return url_formatted;
