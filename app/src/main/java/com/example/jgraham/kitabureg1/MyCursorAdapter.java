@@ -1,10 +1,13 @@
 package com.example.jgraham.kitabureg1;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
@@ -31,16 +34,40 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public View getView(final int position, View convertView, ViewGroup parent)
     {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.customlist, parent, false);
+        final View view = inflater.inflate(R.layout.customlist, parent, false);
 
             TextView textView = (TextView) view.findViewById(R.id.firstLine);
             TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
             textView.setText(itemsArrayList.get(position).getmTitle());
             textView1.setText(itemsArrayList.get(position).getmLink());
+        // Delete button onClick Listener
+            final ImageButton button = (ImageButton) view.findViewById(R.id.delete_button);
+            button.setOnClickListener(new View.OnClickListener() {
+            @Override
+                public void onClick(View v) {
+                    Log.d("Does delete work", String.valueOf(position));
+                }
+            });
+        // Share button onClick listener
+        final ImageButton button1 = (ImageButton) view.findViewById(R.id.share_button);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Does share work", String.valueOf(position));
+            }
+        });
+        // Reminder button onClick listener
+        final ImageButton button2 = (ImageButton) view.findViewById(R.id.reminder_button);
+        button2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Does reminder work", String.valueOf(position));
+            }
+        });
         return view;
     }
 }
