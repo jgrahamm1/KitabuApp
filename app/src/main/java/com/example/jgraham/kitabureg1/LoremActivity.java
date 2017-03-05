@@ -31,8 +31,13 @@
 package com.example.jgraham.kitabureg1;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.Toast;
+
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
 public class LoremActivity extends Activity {
   @Override
@@ -44,7 +49,12 @@ public class LoremActivity extends Activity {
     if (word==null) {
       word="Hello, Welcome to Kitabu!";
     }
-    
+    MySQLiteDbHelper mySQLiteDbHelper=new MySQLiteDbHelper(getApplicationContext());
+      KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByTitle(word);
+      String url = kitabuEntry.getmLink();
+      Intent i = new Intent(Intent.ACTION_VIEW);
+      i.setData(Uri.parse(url));
+      startActivity(i);
     Toast.makeText(this, word, Toast.LENGTH_LONG).show();
     
     finish();

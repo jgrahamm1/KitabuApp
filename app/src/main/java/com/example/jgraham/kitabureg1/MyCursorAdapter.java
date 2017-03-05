@@ -1,6 +1,7 @@
 package com.example.jgraham.kitabureg1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -66,6 +67,11 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             @Override
             public void onClick(View v) {
                 Log.d("Does reminder work", String.valueOf(position));
+                Intent s_intent = new Intent(getContext(), SendDataActivity.class);
+                int url_id = itemsArrayList.get(position).getmId();
+                s_intent.putExtra("position", position);
+                s_intent.putExtra("url_id", url_id);
+                v.getContext().startActivity(s_intent);
             }
         });
         return view;
