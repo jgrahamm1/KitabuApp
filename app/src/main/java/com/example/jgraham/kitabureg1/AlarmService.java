@@ -53,16 +53,10 @@ public class AlarmService extends IntentService {
         media_player = media_player.create(getApplicationContext(), R.raw.ring);
         vibrator = (Vibrator) getApplicationContext().
                 getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(750);
 
-        if (!media_player.isPlaying())
-            media_player.start();
-
-        vibrator.vibrate(1000);
-
-        // Stop
-        //notification_manager.cancel(NOTIFICATION_ID);
-        //stopService(intent);
-
+        // Stop this service
+        stopService(intent);
     }
 
     private void setupNotification(){
@@ -75,6 +69,7 @@ public class AlarmService extends IntentService {
             notificationBuilder.setContentTitle("Kitabu Notification");
             notificationBuilder.setContentText("Tap to view your link");
             notificationBuilder.setContentIntent(pendingIntent);
+            notificationBuilder.setAutoCancel(true);
             Notification notification = notificationBuilder.build();
             notification.flags |= Notification.FLAG_ONGOING_EVENT;
             notification_manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

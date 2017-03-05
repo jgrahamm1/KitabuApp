@@ -16,7 +16,7 @@ public class EMAAlarmReceiver extends BroadcastReceiver {
     // Receive broadcast
     @Override
     public void onReceive(final Context context, Intent intent) {
-        Log.d("ALARM", "BroadcastReceiver");
+        //Log.d("ALARM", "BroadcastReceiver");
 
         startPSM(context);
     }
