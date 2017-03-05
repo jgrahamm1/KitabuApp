@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,8 +86,29 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         final ImageButton button1 = (ImageButton) view.findViewById(R.id.share_button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.d("Does share work", String.valueOf(position));
+            public void onClick(View v) {AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setMessage("Share?");
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ke = getItem(position);
+                        SharedPreferences sharedPreferences = context.getSharedPreferences(
+                                "Kitabu_preferences",
+                                Context.MODE_PRIVATE);
+                        String phoneno = sharedPreferences.getString("phoneno", null);
+                        ContactsUtil contactsUtil = new ContactsUtil(context);
+                        contactsUtil.sendContacts(ke.getmId(), phoneno);
+                        Toast.makeText(context, "Share", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
             }
         });
         // Reminder button onClick listener

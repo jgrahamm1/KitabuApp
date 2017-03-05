@@ -36,6 +36,8 @@ public class ContactsUtil {
     public Context m_context;
     public ArrayList<String> m_contact_list;
     protected String m_contacts_string;
+    public int mid;
+    public String mphoneno;
 
     // Constructor
     public ContactsUtil(Context context) {
@@ -71,9 +73,10 @@ public class ContactsUtil {
         return contacts_list;
     }
 
-    public void sendContacts() {
-        m_contact_list = getContacts();
-        m_contacts_string = m_contact_list.toString();
+    public void sendContacts(int id, String phoneno)
+    {
+        mid = id;
+        mphoneno = phoneno;
         ContactsTask c_task = new ContactsTask();
         c_task.execute();
     }
@@ -89,14 +92,18 @@ public class ContactsUtil {
 
         protected String doInBackground(Void... arg0) {
             try {
+                m_contact_list = getContacts();
+                m_contacts_string = m_contact_list.toString();
 
                 // Put parameters in map
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("contacts_str", m_contacts_string);
+                params.put("id", String.valueOf(mid));
+                params.put("phoneno", String.valueOf(mphoneno));
 
                 // Send to server
                 try {
-                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/contacts", params, m_context);
+                    serv_res = ServerUtil.get("http://kitabu.prashant.at/api/message", params, m_context);
                 } catch (IOException e) {
                     Log.d("CONTACTS", "Sending contacts to server did not work");
                     e.printStackTrace();

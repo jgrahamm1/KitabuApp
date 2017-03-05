@@ -17,10 +17,15 @@ package com.example.jgraham.kitabureg1;
  */
 
 import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -62,24 +67,30 @@ public class GcmIntentService extends IntentService {
                         extras.getString("title"));
                 MySQLiteDbHelper dbHelper = new MySQLiteDbHelper(getApplicationContext());
                 try {
-
-                KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                if(entry1 == null) {
-                    dbHelper.insertEntry(entry);
-                }
-                else
-                {
-                    Log.d("DB: " , "UPDATING");
-                    dbHelper.updateEntry(entry.getmId());
-                }
-
+                    KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
+                    if(entry1 == null) {
+                        dbHelper.insertEntry(entry);
+                    }
+                    else
+                    {
+                        Log.d("DB: " , "UPDATING");
+                        dbHelper.updateEntry(entry.getmId());
+                    }
                 }
                 catch (Exception e)
                 {
                     Log.d("GCM: ", "Received notification, but didn't push");
                 }
-        }
+            }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+        Intent m_intent = new Intent(this,MainActivity.class);
+        m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, m_intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this).setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name)).setStyle(new NotificationCompat.BigTextStyle().bigText("Prashant")).setContentText("Prashant").setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        mBuilder.setContentIntent(contentIntent);
+        nm.notify(0, mBuilder.build());
     }
 }
