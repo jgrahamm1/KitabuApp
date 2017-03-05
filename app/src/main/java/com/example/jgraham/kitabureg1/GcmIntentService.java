@@ -89,7 +89,11 @@ public class GcmIntentService extends IntentService {
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, m_intent, PendingIntent.FLAG_CANCEL_CURRENT);
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this).setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name)).setStyle(new NotificationCompat.BigTextStyle().bigText("Prashant")).setContentText("Prashant").setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                .setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText("Kitabu"))
+                .setContentText(extras.getString("phoneno") + " suggested " + extras.getString("url"))
+                .setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
         mBuilder.setContentIntent(contentIntent);
         nm.notify(0, mBuilder.build());
     }
