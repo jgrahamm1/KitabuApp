@@ -171,14 +171,15 @@ public class SendDataActivity extends AppCompatActivity {
                     String url = link_json.getString("url");
                     String tag_list = link_json.getString("tag_list");
                     String type = link_json.getString("typep");
+                    String title = link_json.getString("title");
                     KitabuEntry k_entry;
                     if(type.equals("true"))
                     {
-                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1);
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1, title);
                     }
                     else
                     {
-                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0);
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0, title);
                     }
 
                     // Put entry in SQLite DB

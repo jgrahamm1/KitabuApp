@@ -22,10 +22,11 @@ public class KitabuEntry {
         this.mPhoneNo=0L;
     }
 
-    public KitabuEntry(String id_str, String url, String phone, String tags, int type) {
+    public KitabuEntry(String id_str, String url, String phone, String tags, int type, String title) {
         this.mId = Integer.parseInt(id_str);
         this.mLink = url;
         this.mPhoneNo = Long.parseLong(phone);
+        this.mTitle = title;
         this.mTags = tags;
         this.mType = type;
     }
