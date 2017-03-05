@@ -45,7 +45,15 @@
             android:layout_height="50dp"
             android:background="@drawable/round_button"
             android:src="@android:drawable/ic_menu_share"
-            android:textColor="#fff" />
+            android:textColor="#fff"
+            android:layout_marginRight="35dp"/>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/round_button"
+                android:src="@android:drawable/ic_menu_today"
+                android:textColor="#fff" />
 
     </LinearLayout>
 
