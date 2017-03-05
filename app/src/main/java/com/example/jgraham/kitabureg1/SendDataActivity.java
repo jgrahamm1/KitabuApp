@@ -141,7 +141,7 @@ public class SendDataActivity extends AppCompatActivity {
             Log.d("LOGIN", "onPostExecute got result: " + result);
             String tr = "false";
 
-            if (result == null || result.contains(tr)) {  // Did I get a null or a false?
+            if (result == null || result.equals(tr)) {  // Did I get a null or a false?
                 Log.d("SENDATA", "result == null || result was false");
             }
             else if(result.equals("502")) // ServerUtil returns this when Server down.
@@ -164,9 +164,18 @@ public class SendDataActivity extends AppCompatActivity {
                     String id = link_json.getString("id");
                     String url = link_json.getString("url");
                     String tag_list = link_json.getString("tag_list");
+                    String type = link_json.getString("typep");
+                    KitabuEntry k_entry;
+                    if(type.equals("true"))
+                    {
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1);
+                    }
+                    else
+                    {
+                        k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0);
+                    }
 
                     // Put entry in SQLite DB
-                    KitabuEntry k_entry = new KitabuEntry(id, url, phoneno, tag_list);
                     MySQLiteDbHelper db_helper = new MySQLiteDbHelper(getApplicationContext());
                     long local_id = db_helper.insertEntry(k_entry);
                     Log.d("SENDDATA", "Put link in SQLite DB with id: " + local_id);

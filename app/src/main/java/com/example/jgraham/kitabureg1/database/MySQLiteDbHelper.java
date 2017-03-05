@@ -154,6 +154,82 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         return entryList;
     }
 
+    // Query the entire table, return all private rows
+    public ArrayList<KitabuEntry> fetchPrivateEntries() {
+        Log.d("Fetch Entries", "Try to do that");
+        SQLiteDatabase dbObj = getReadableDatabase();
+        // store all the entries to an ArrayList
+        ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
+        // do the query without any condition. it retrieves every record from
+        // the database
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, null,
+                null, null, null, null);
+
+        // the cursor initially points the record PRIOR to the first record
+        // use the while loop to read every record from the cursor
+        while (cursor.moveToNext()) {
+            KitabuEntry entry = cursorToEntry(cursor, false);
+            entryList.add(entry);
+            Log.d("TAGG", "Got data");
+        }
+
+        cursor.close();
+        dbObj.close();
+
+        return entryList;
+    }
+
+    // Query the entire table, return all public rows
+    public ArrayList<KitabuEntry> fetchPublicEntries() {
+        Log.d("Fetch Entries", "Try to do that");
+        SQLiteDatabase dbObj = getReadableDatabase();
+        // store all the entries to an ArrayList
+        ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
+        // do the query without any condition. it retrieves every record from
+        // the database
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, "type=1",
+                null, null, null, null);
+
+        // the cursor initially points the record PRIOR to the first record
+        // use the while loop to read every record from the cursor
+        while (cursor.moveToNext()) {
+            KitabuEntry entry = cursorToEntry(cursor, false);
+            entryList.add(entry);
+            Log.d("TAGG", "Got data");
+        }
+
+        cursor.close();
+        dbObj.close();
+
+        return entryList;
+    }
+
+    // Query the entire table, return all notification rows
+    public ArrayList<KitabuEntry> fetchNotificationEntries() {
+        Log.d("Fetch Entries", "Try to do that");
+        SQLiteDatabase dbObj = getReadableDatabase();
+        // store all the entries to an ArrayList
+        ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
+        // do the query without any condition. it retrieves every record from
+        // the database
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, null,
+                null, null, null, null);
+
+        // the cursor initially points the record PRIOR to the first record
+        // use the while loop to read every record from the cursor
+        while (cursor.moveToNext()) {
+            KitabuEntry entry = cursorToEntry(cursor, false);
+            entryList.add(entry);
+            Log.d("TAGG", "Got data");
+        }
+
+        cursor.close();
+        dbObj.close();
+
+        return entryList;
+    }
+
+
     // convert the a row in the cursor to an KitabuEntry object
     private KitabuEntry cursorToEntry(Cursor cursor, boolean needGps) {
         KitabuEntry entry = new KitabuEntry();

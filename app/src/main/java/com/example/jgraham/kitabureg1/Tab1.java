@@ -35,7 +35,7 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab1, container, false);
-        List<KitabuEntry> values = mySQLiteDbHelper.fetchEntries();
+        List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
         final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_expandable_list_item_1,values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
