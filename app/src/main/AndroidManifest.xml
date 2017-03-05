@@ -91,7 +91,8 @@
 
 
         <receiver android:name="com.example.jgraham.kitabureg1.EMAAlarmReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
