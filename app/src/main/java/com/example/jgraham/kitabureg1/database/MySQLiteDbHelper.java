@@ -201,7 +201,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     public void deleteallprivate()
     {
         SQLiteDatabase dbObj = getWritableDatabase();
-        dbObj.rawQuery( "delete from " + TABLE_NAME_ENTRIES + " where type=0", null);
+        dbObj.rawQuery( "delete from " + TABLE_NAME_ENTRIES + "where type=0", null);
     }
 
     // Query the entire table, return all public rows
