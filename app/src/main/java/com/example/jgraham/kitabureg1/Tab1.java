@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -37,7 +36,6 @@ public class Tab1 extends Fragment {
         mySQLiteDbHelper = new MySQLiteDbHelper(getContext());
         View rootView = inflater.inflate(R.layout.tab1, container, false);
         List<KitabuEntry> values = mySQLiteDbHelper.fetchPrivateEntries();
-        //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(),android.R.layout.simple_expandable_list_item_1,values);
         final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
@@ -45,11 +43,6 @@ public class Tab1 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 KitabuEntry ke = adapter.getItem(position);
-//                Log.d("position",String.valueOf(position));
-//                Log.d("ID in list view", String.valueOf(ke.getmId()));
-//                Log.d("Link in list view", ke.getmLink());
-//                Log.d("RowId in list view",String.valueOf(ke.getmRowID()));
-
                 Log.d("type",String.valueOf(ke.getmType()));
                 Intent intent = new Intent(getActivity(), DeleteActivity.class);
                 Bundle bundle = new Bundle();
