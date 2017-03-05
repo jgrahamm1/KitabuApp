@@ -113,7 +113,13 @@ public class KitabuEntry {
     {
         try {
             this.mId = jsonObject.getInt("id");
-            this.mPhoneNo = Long.parseLong(jsonObject.getString("phoneno"));
+            if(jsonObject.getString("phoneno").equals("null")) {
+                this.mPhoneNo = -1L;
+            }
+            else
+            {
+                this.mPhoneNo = Long.parseLong(jsonObject.getString("phoneno"));
+            }
             this.mLink = jsonObject.getString("url");
             this.mTitle = jsonObject.getString("title");
             if(jsonObject.getString("typep").equals("true"))

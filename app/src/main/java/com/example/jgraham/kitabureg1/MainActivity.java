@@ -308,17 +308,19 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
         SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         boolean msg = false;
+        MySQLiteDbHelper mySQLiteDbHelper = new MySQLiteDbHelper(context);
+        mySQLiteDbHelper.deleteallprivate();
+        int lastid = mySQLiteDbHelper.getLastId();
         String phoneno = sharedPreference.getString("phoneno", null);
         String serv_res = "";
         Map<String, String> params = new HashMap<String, String>();
         try {
-            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/0/" + phoneno, params, context);
-            if (serv_res.contains("false")) {
+            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/" + lastid + "/" + phoneno, params, context);
+            if (serv_res.equals("false")) {
                 msg = false;
             } else
             {
                 try {
-                    MySQLiteDbHelper mySQLiteDbHelper = new MySQLiteDbHelper(context);
 
                     JSONObject response = new JSONObject(serv_res);
                     Log.d("JSON Parsed", response.toString());
@@ -393,6 +395,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
      */
     @Override
     protected String doInBackground(Void... params) {
+        fetchdata();
         if (regService == null) {
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
@@ -437,7 +440,6 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             ex.printStackTrace();
             msg = "Error: " + ex.getMessage();
         }
-        fetchdata();
         return msg;
     }
 

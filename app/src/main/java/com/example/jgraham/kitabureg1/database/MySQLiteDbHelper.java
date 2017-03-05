@@ -197,6 +197,13 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         return entryList;
     }
 
+    // Deleting all private entries
+    public void deleteallprivate()
+    {
+        SQLiteDatabase dbObj = getWritableDatabase();
+        dbObj.rawQuery( "delete from " + TABLE_NAME_ENTRIES + " where type=0", null);
+    }
+
     // Query the entire table, return all public rows
     public ArrayList<KitabuEntry> fetchPublicEntries() {
         Log.d("Fetch Entries", "Try to do that");
