@@ -79,16 +79,25 @@ public class AlarmService extends IntentService {
 
             // Set intent for launching URL
             MySQLiteDbHelper mySQLiteDbHelper=new MySQLiteDbHelper(getApplicationContext());
-            KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByIndex(m_id);
-            String url = kitabuEntry.getmLink();
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
 
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+            // This handles the case when the id is -1 for some (bad) reason
+            if (m_id == -1) {
+                KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByIndex(m_id);
+                String url = "https://www.google.com";
+                intent.setData(Uri.parse(url));
+            }
+            else {
+                KitabuEntry kitabuEntry = mySQLiteDbHelper.fetchEntryByIndex(m_id);
+                String url = kitabuEntry.getmLink();
+                intent.setData(Uri.parse(url));
+            }
 
             //Intent intent = new Intent(this, SendDataActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // MR5 Added
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);//XD: see book p1019 why we do not use Notification.Builder
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
             notificationBuilder.setSmallIcon(R.drawable.kitabu);
             notificationBuilder.setContentTitle("Kitabu Notification");
             notificationBuilder.setContentText("Tap to view your link");
