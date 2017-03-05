@@ -41,7 +41,8 @@ import android.widget.RemoteViewsService;
 public class LoremViewsFactory implements RemoteViewsService.RemoteViewsFactory {
     private static int ITEM_CODE=1;
     public static String[] items = new String[10];
-  public static final String[] items1={"lorem", "ipsum", "dolor",
+
+  /*public static final String[] items1={"lorem", "ipsum", "dolor",
                                         "sit", "amet", "consectetuer", "vel", "erat", "ligula", "vitae"};
   public static final String[] items2={
           "adipiscing", "elit", "morbi",
@@ -54,7 +55,7 @@ public class LoremViewsFactory implements RemoteViewsService.RemoteViewsFactory 
           "porttitor", "sodales",
           "pellentesque", "augue",
           "purus","adipiscing", "elit"};
-
+*/
   private Context ctxt=null;
   private int appWidgetId;
 
@@ -66,7 +67,7 @@ public class LoremViewsFactory implements RemoteViewsService.RemoteViewsFactory 
       Log.d("aptest", "lorem"+ITEM_CODE);
       if(ITEM_CODE==2)
       {
-          items=items2;
+          //items=items2;
       }
   }
   

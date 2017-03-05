@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
+import java.util.ArrayList;
 
 
 public class DeleteActivity extends AppCompatActivity {
@@ -17,7 +19,6 @@ public class DeleteActivity extends AppCompatActivity {
     private int id;
     private static final String EMPTY_STRING= " ";
     private Button delete_button;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
