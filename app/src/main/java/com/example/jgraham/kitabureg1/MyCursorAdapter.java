@@ -38,8 +38,8 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         View view = inflater.inflate(R.layout.customlist, parent, false);
         TextView textView = (TextView) view.findViewById(R.id.firstLine);
         TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
-        textView.setText("Does this work?");
-        textView1.setText("Yes it does!");
+        textView.setText(itemsArrayList.get(position).getmTitle());
+        textView1.setText(itemsArrayList.get(position).getmLink());
         return view;
     }
 }
