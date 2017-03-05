@@ -64,7 +64,6 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
         // Use the application context, which will ensure that you
         // don't accidentally leak an Activity's context.
-        // See this article for more information: http://bit.ly/6LRzfx
         if (sInstance == null) {
             sInstance = new MySQLiteDbHelper(context.getApplicationContext());
         }
