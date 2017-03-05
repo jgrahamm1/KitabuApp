@@ -7,10 +7,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
+import com.example.jgraham.kitabureg1.database.KitabuEntry;
+import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
 /**
  * Created by jgraham on 3/3/17.
@@ -25,6 +29,9 @@ public class AlarmService extends IntentService {
     // Vib & Sound
     public Vibrator vibrator;
     public MediaPlayer media_player;
+
+    // Url id
+    protected int m_id;
 
 
     /**
@@ -46,6 +53,12 @@ public class AlarmService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d("ALARM", "AlarmService --> OnHandleIntent called");
 
+        // Get url id from intent
+        m_id = intent.getIntExtra("id", -1);
+        if (m_id == -1) {
+            Log.d("ALARM", "Warning: AlarmService url id is -1");
+        }
+
         // Start notification
         setupNotification();
 
@@ -55,16 +68,36 @@ public class AlarmService extends IntentService {
                 getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(750);
 
+
+
         // Stop this service
         stopService(intent);
     }
 
     private void setupNotification(){
         if (notification_manager == null) {
-            Intent intent = new Intent(this, SendDataActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP); // MR5 Added
+
+            // Set intent for launching URL
+            MySQLiteDbHelper mySQLiteDbHelper=new MySQLiteDbHelper(getApplicationContext());
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+
+            // This handles the case when the id is -1 for some (bad) reason
+            if (m_id == -1) {
+                KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByIndex(m_id);
+                String url = "https://www.google.com";
+                intent.setData(Uri.parse(url));
+            }
+            else {
+                KitabuEntry kitabuEntry = mySQLiteDbHelper.fetchEntryByIndex(m_id);
+                String url = kitabuEntry.getmLink();
+                intent.setData(Uri.parse(url));
+            }
+
+            //Intent intent = new Intent(this, SendDataActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);//XD: see book p1019 why we do not use Notification.Builder
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
             notificationBuilder.setSmallIcon(R.drawable.kitabu);
             notificationBuilder.setContentTitle("Kitabu Notification");
             notificationBuilder.setContentText("Tap to view your link");

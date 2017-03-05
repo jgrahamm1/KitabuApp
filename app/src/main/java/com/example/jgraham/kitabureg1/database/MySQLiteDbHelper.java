@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteConstraintException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -272,6 +271,26 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         dbObj.close();
 
         return entry;
+    }
+    // Query the entire table, to return the last inserted id
+    public int getLastId() throws SQLException {
+
+        int temp = -1;
+        SQLiteDatabase dbObj = getReadableDatabase();
+        KitabuEntry entry = null;
+        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                null, null, null, null, KEY_ID+" DESC ", null);
+        // move the cursor to the first record
+        if (cursor.moveToFirst()==true) {
+            entry = cursorToEntry(cursor, true);
+            temp = entry.getmId();
+//            Log.d("Entered into cursor",String.valueOf(temp));
+            return temp;
+        }
+        cursor.close();
+        dbObj.close();
+
+        return temp;
     }
 }
 
