@@ -75,7 +75,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                         mySQLiteDbHelper.removeEntry(ke.getmId());
 //                        clear();
                         itemsArrayList.remove(ke);
-                        addAll(itemsArrayList);
+//                        addAll(itemsArrayList);
                         notifyDataSetChanged();
                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                     }
