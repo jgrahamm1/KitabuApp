@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        tab1 = new Tab1();
+        tab2 = new Tab2();
+        tab3 = new Tab3();
 
 
     /*
@@ -180,16 +183,15 @@ public class MainActivity extends AppCompatActivity{
                 switch (tab.getPosition()) {
                     case 0:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        temp.fetchPrivateEntries();
-
+                        tab1.updateEntries();
                         break;
                     case 1:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        temp.fetchPublicEntries();
+                        tab2.updateEntries();
                         break;
                     case 2:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        temp.fetchNotificationEntries();
+                        tab3.updateEntries();
                         break;
                     default:
                 }
@@ -204,6 +206,18 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 Log.d("RESELECTED", String.valueOf(tab.getPosition()));
+                switch (tab.getPosition()) {
+                    case 0:
+                        tab1.updateEntries();
+                        break;
+                    case 1:
+                        tab2.updateEntries();
+                        break;
+                    case 2:
+                        tab3.updateEntries();
+                        break;
+                    default:
+                }
             }
         });
 
@@ -278,13 +292,13 @@ public class MainActivity extends AppCompatActivity{
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    tab1 = new Tab1();
+//                    tab1 = new Tab1();
                     return tab1;
                 case 1:
-                    tab2 = new Tab2();
+//                    tab2 = new Tab2();
                     return tab2;
                 case 2:
-                    tab3 = new Tab3();
+//                    tab3 = new Tab3();
                     return tab3;
             }
             return null;

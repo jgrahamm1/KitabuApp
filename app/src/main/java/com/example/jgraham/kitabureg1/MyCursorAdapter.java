@@ -48,6 +48,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
+        final Tab1 tab1 = new Tab1();
 //        Log.d("tab1", "tab1 called");
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
@@ -72,10 +73,11 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mySQLiteDbHelper.removeEntry(ke.getmId());
-                        mySQLiteDbHelper.fetchPrivateEntries();
-                        setNotifyOnChange(true);
+                        clear();
+                        itemsArrayList.remove(ke);
+                        addAll(itemsArrayList);
+                        notifyDataSetChanged();
                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
-
                     }
                 });
                 notifyDataSetChanged();

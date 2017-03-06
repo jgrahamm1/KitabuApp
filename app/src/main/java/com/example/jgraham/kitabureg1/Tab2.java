@@ -1,6 +1,8 @@
 package com.example.jgraham.kitabureg1;
 
+import android.app.LoaderManager;
 import android.content.Intent;
+import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,29 +16,32 @@ import android.widget.TextView;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by maheshdevalla on 2/24/17.
  */
 
-public class Tab2 extends Fragment {
+public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
 
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
     MyCursorAdapter adapter;
     List<KitabuEntry> values;
+    public static LoaderManager loaderManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        loaderManager = getActivity().getLoaderManager();
+        loaderManager.initLoader(1, null, this).forceLoad();
 
     }
 
     public void updateEntries()
     {
-        values = mySQLiteDbHelper.fetchPrivateEntries();
-        adapter.notifyDataSetChanged();
+        loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab2", "Tab2");
     }
 
@@ -73,6 +78,38 @@ public class Tab2 extends Fragment {
             textView.setVisibility(View.VISIBLE);
             textView.setText("Nothing to show!");
         }
+        adapter.notifyDataSetChanged();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("called", "onResume: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("called", "onDestroy: ");
+    }
+
+
+    @Override
+    public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
+        return new Kitabu1Loader(getContext());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
+        adapter.clear();
+        adapter.addAll(data);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
+        adapter.clear();
+        adapter.notifyDataSetChanged();
     }
 }

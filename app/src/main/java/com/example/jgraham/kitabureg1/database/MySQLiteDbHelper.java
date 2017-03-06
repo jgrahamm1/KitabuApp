@@ -175,7 +175,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all private rows
     public ArrayList<KitabuEntry> fetchPrivateEntries() {
-        Log.d("Fetch Entries", "Try to do that");
+//        Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
@@ -231,8 +231,8 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     }
 
     // Query the entire table, return all notification rows
-    public ArrayList<KitabuEntry> fetchNotificationEntries() {
-       // Log.d("Fetch Entries", "Try to do that");
+    public ArrayList<KitabuEntry> fetchNotificationEntries() throws SQLException{
+        Log.d("Fetch Notifications", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
