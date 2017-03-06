@@ -20,25 +20,31 @@ import java.util.List;
  * Created by maheshdevalla on 2/24/17.
  */
 
-public class Tab3 extends Fragment{
+public class Tab3 extends Fragment {
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
+    MyCursorAdapter adapter;
+    List<KitabuEntry> values;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
     }
-
-
+    public void updateEntries()
+    {
+        values = mySQLiteDbHelper.fetchPrivateEntries();
+        adapter.notifyDataSetChanged();
+        Log.d("Tab3", "Tab3");
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab3, container, false);
-        List<KitabuEntry> values = mySQLiteDbHelper.fetchNotificationEntries();
+        values = mySQLiteDbHelper.fetchNotificationEntries();
         //final ArrayAdapter<KitabuEntry> adapter = new ArrayAdapter<>(getActivity(), R.layout.customlist ,values);
-        final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
+        adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalisttab3);
         lv.setAdapter(adapter);
         if(values.size() == 0)

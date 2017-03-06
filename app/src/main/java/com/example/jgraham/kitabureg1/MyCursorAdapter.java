@@ -19,6 +19,8 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
 import java.util.List;
 
+import static com.google.android.gms.wearable.DataMap.TAG;
+
 
 /**
  * Created by prashant on 3/4/17.
@@ -39,11 +41,14 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         super(context, R.layout.customlist, itemsArrayList);
         this.context = context;
         this.itemsArrayList = itemsArrayList;
+        Log.d(TAG, "MyCursorAdapter: ");
     }
+
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
+//        Log.d("tab1", "tab1 called");
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
@@ -61,32 +66,30 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     Log.d("Does delete work", String.valueOf(position));
                 // Log.d("Does delete work", String.valueOf(position));
                 ke = getItem(position);
-
-//                List<KitabuEntry> list = mySQLiteDbHelper.getLastTwenty();
-//                kes = list.get(0);
-//                Log.d("size:"+String.valueOf(list.size())+"\t type:"+kes.getmType(),"cursor last id"+kes.getmId());
-//                Log.d("link",ke.getmLink());
-//                mySQLiteDbHelper.removeEntry(ke.getmId());
-//                Log.d(itemsArrayList.
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setMessage("Confirm Delete");
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mySQLiteDbHelper.removeEntry(ke.getmId());
+                        mySQLiteDbHelper.fetchPrivateEntries();
+                        setNotifyOnChange(true);
                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
 
                     }
                 });
+                notifyDataSetChanged();
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
                     }
                 });
+                notifyDataSetChanged();
 
                 alertDialog.show();
                 }
+
             });
         // Share button onClick listener
         final ImageButton button1 = (ImageButton) view.findViewById(R.id.share_button);
@@ -108,12 +111,14 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 
                     }
                 });
+                notifyDataSetChanged();
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
                     }
                 });
+                notifyDataSetChanged();
                 alertDialog.show();
             }
         });
@@ -130,6 +135,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 v.getContext().startActivity(s_intent);
             }
         });
+        notifyDataSetChanged();
         return view;
     }
 }

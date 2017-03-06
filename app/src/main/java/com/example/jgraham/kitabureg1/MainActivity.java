@@ -16,8 +16,6 @@ package com.example.jgraham.kitabureg1;
 
  */
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -59,7 +57,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabSelectedListener{
+
+
+public class MainActivity extends AppCompatActivity{
+    Tab1 tab1;
+    Tab2 tab2;
+    Tab3 tab3;
     public static final String PREFS_NAME = "Kitabu_preferences";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -81,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
     {
         finish();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,8 +137,9 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+
         if(savedInstanceState == null) {
             Intent intent = getIntent();
             String sender = intent.getStringExtra("sender");
@@ -168,6 +171,42 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
 //                .setContentText("This is highlighting the Home button")
 //                .hideOnTouchOutside()
 //                .build();
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                MySQLiteDbHelper temp = MySQLiteDbHelper.getInstance(getApplicationContext());
+//                Log.d("SELECTED", String.valueOf(tab.getPosition()));
+
+                switch (tab.getPosition()) {
+                    case 0:
+                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+                        temp.fetchPrivateEntries();
+
+                        break;
+                    case 1:
+                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+                        temp.fetchPublicEntries();
+                        break;
+                    case 2:
+                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+                        temp.fetchNotificationEntries();
+                        break;
+                    default:
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.d("UNSELECTED",  String.valueOf(tab.getPosition()));
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Log.d("RESELECTED", String.valueOf(tab.getPosition()));
+            }
+        });
+
     }
 
 
@@ -223,21 +262,6 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onTabSelected(TabLayout.Tab tab) {
-        Log.d("Selected", "Selected");
-    }
-
-    @Override
-    public void onTabUnselected(TabLayout.Tab tab) {
-        Log.d("Unselected", "Unselected");
-
-    }
-
-    @Override
-    public void onTabReselected(TabLayout.Tab tab) {
-        Log.d("Reselected", "Reselected");
-    }
 
 
     /**
@@ -254,13 +278,13 @@ public class MainActivity extends AppCompatActivity implements  TabLayout.OnTabS
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    Tab1 tab1 = new Tab1();
+                    tab1 = new Tab1();
                     return tab1;
                 case 1:
-                    Tab2 tab2 = new Tab2();
+                    tab2 = new Tab2();
                     return tab2;
                 case 2:
-                    Tab3 tab3 = new Tab3();
+                    tab3 = new Tab3();
                     return tab3;
             }
             return null;

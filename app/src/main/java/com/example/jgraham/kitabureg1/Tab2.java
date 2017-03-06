@@ -24,11 +24,20 @@ public class Tab2 extends Fragment {
 
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
+    MyCursorAdapter adapter;
+    List<KitabuEntry> values;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    public void updateEntries()
+    {
+        values = mySQLiteDbHelper.fetchPrivateEntries();
+        adapter.notifyDataSetChanged();
+        Log.d("Tab2", "Tab2");
     }
 
 
@@ -37,8 +46,8 @@ public class Tab2 extends Fragment {
                              Bundle savedInstanceState) {
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab2, container, false);
-        List<KitabuEntry> values = mySQLiteDbHelper.fetchPublicEntries();
-        final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
+        values = mySQLiteDbHelper.fetchPublicEntries();
+        adapter = new MyCursorAdapter(getContext(), values);
         ListView lv = (ListView) rootView.findViewById(R.id.datalisttab2);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

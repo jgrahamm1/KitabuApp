@@ -129,7 +129,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     // Query a specific entry by its index. Return a cursor having each column
     // value
     public KitabuEntry fetchEntryByIndex(int id) throws SQLException {
-        Log.d("Fetch Single Entries", "Try to do that");
+       // Log.d("Fetch Single Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         KitabuEntry entry = null;
         // do the query with the condition KEY_ROWID = rowId
@@ -151,7 +151,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all rows
     public ArrayList<KitabuEntry> fetchEntries() {
-        Log.d("Fetch Entries", "Try to do that");
+        //Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
@@ -165,7 +165,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            Log.d("TAGG", "Got data");
+            //Log.d("TAGG", "Got data");
         }
         cursor.close();
         dbObj.close();
@@ -189,7 +189,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            Log.d("TAGG", "Got data");
+            //Log.d("TAGG", "Got data");
         }
 
         cursor.close();
@@ -207,7 +207,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all public rows
     public ArrayList<KitabuEntry> fetchPublicEntries() {
-        Log.d("Fetch Entries", "Try to do that");
+        //Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
@@ -221,7 +221,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            Log.d("TAGG", "Got data");
+           // Log.d("TAGG", "Got data");
         }
 
         cursor.close();
@@ -232,7 +232,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all notification rows
     public ArrayList<KitabuEntry> fetchNotificationEntries() {
-        Log.d("Fetch Entries", "Try to do that");
+       // Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
@@ -246,7 +246,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         while (cursor.moveToNext()) {
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            Log.d("TAGG", "Got data");
+            //Log.d("TAGG", "Got data");
         }
 
         cursor.close();
@@ -271,7 +271,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     // Query a specific entry by its link. Return a cursor having each column
     // value
     public KitabuEntry fetchEntryByTitle(String title) throws SQLException {
-        Log.d("Fetch Single Entries", "By title: Try to do that");
+     //   Log.d("Fetch Single Entries", "By title: Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         KitabuEntry entry = null;
         // do the query with the condition KEY_ROWID = rowId

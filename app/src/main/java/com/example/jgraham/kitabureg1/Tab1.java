@@ -23,20 +23,33 @@ import java.util.List;
 public class Tab1 extends Fragment {
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
+    MyCursorAdapter adapter;
+    List<KitabuEntry> values;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("called", "onCreate: of tab1");
 
+    }
+
+    public void updateEntries()
+    {
+        this.onCreate(null);
+        values.clear();
+        values = mySQLiteDbHelper.fetchPrivateEntries();
+        adapter.notifyDataSetChanged();
+        Log.d("Tab1", "Tab1");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        Log.d("called", "onCreateView: ");
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab1, container, false);
-        List<KitabuEntry> values = mySQLiteDbHelper.fetchPrivateEntries();
-        final MyCursorAdapter adapter = new MyCursorAdapter(getContext(), values);
+        values = mySQLiteDbHelper.fetchPrivateEntries();
+        adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -61,6 +74,19 @@ public class Tab1 extends Fragment {
             textView.setVisibility(View.VISIBLE);
             textView.setText("Nothing to show!");
         }
+        adapter.notifyDataSetChanged();
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d("called", "onResume: ");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d("called", "onDestroy: ");
     }
 }
