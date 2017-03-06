@@ -177,19 +177,20 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     public ArrayList<KitabuEntry> fetchPrivateEntries() {
 //        Log.d("Fetch Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
+        int res=1;
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,  "type=0",
-                null, null, null, null);
+        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                KEY_TYPE + "=" + "0", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()==true && res<=20) {
+            res++;
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            //Log.d("TAGG", "Got data");
         }
 
         cursor.close();
@@ -208,21 +209,26 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     // Query the entire table, return all public rows
     public ArrayList<KitabuEntry> fetchPublicEntries() {
         //Log.d("Fetch Entries", "Try to do that");
+        int res=1;
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList, "type=1",
-                null, null, null, null);
+                Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                KEY_TYPE + "=" + "1", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()==true && res<=20) {
+            res++;
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
            // Log.d("TAGG", "Got data");
         }
+
+//        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+//                KEY_TYPE + "=" + "1", null, null, null, KEY_ID+" DESC ", "20");
 
         cursor.close();
         dbObj.close();
@@ -234,19 +240,20 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     public ArrayList<KitabuEntry> fetchNotificationEntries() throws SQLException{
         Log.d("Fetch Notifications", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
+        int res=1;
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,  "type=2",
-                null, null, null, null);
+        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                KEY_TYPE + "=" + "2", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()) {
+        while (cursor.moveToNext()==true && res<=20) {
+            res++;
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
-            //Log.d("TAGG", "Got data");
         }
 
         cursor.close();

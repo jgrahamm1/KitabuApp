@@ -202,16 +202,16 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Log.d("RESELECTED", String.valueOf(tab.getPosition()));
+//                Log.d("RESELECTED", String.valueOf(tab.getPosition()));
                 switch (tab.getPosition()) {
                     case 0:
-                        tab1.updateEntries();
+//                        tab1.updateEntries();
                         break;
                     case 1:
-                        tab2.updateEntries();
+//                        tab2.updateEntries();
                         break;
                     case 2:
-                        tab3.updateEntries();
+//                        tab3.updateEntries();
                         break;
                     default:
                 }

@@ -73,7 +73,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mySQLiteDbHelper.removeEntry(ke.getmId());
-                        clear();
+//                        clear();
                         itemsArrayList.remove(ke);
                         addAll(itemsArrayList);
                         notifyDataSetChanged();
