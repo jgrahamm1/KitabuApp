@@ -179,15 +179,15 @@ public class MainActivity extends AppCompatActivity{
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+//                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
 //                        tab1.updateEntries();
                         break;
                     case 1:
-                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+//                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
 //                        tab2.updateEntries();
                         break;
                     case 2:
-                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
+//                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
 //                        tab3.updateEntries();
                         break;
                     default:
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.d("UNSELECTED",  String.valueOf(tab.getPosition()));
+//                Log.d("UNSELECTED",  String.valueOf(tab.getPosition()));
             }
 
             @Override

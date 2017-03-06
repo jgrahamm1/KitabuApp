@@ -38,7 +38,7 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     }
     public void updateEntries()
     {
-//        loaderManager.initLoader(1, null, this).forceLoad();
+        loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab3", "Tab3");
     }
     @Override

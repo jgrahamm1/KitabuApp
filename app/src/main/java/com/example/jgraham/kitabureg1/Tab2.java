@@ -74,7 +74,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
         if(values.size() == 0)
         {
-            TextView textView = (TextView) rootView.findViewById(R.id.tvi);
+            TextView textView = (TextView) rootView.findViewById(R.id.tv2);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Nothing to show!");
         }

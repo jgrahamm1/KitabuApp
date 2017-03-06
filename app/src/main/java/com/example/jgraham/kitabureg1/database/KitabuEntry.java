@@ -113,6 +113,7 @@ public class KitabuEntry {
     {
         try {
             this.mId = jsonObject.getInt("id");
+            Log.d("id", String.valueOf(this.mId));
             if(jsonObject.getString("phoneno").equals("null")) {
                 this.mPhoneNo = -1L;
             }
@@ -120,13 +121,18 @@ public class KitabuEntry {
             {
                 this.mPhoneNo = Long.parseLong(jsonObject.getString("phoneno"));
             }
+            Log.d("phoneno", String.valueOf(this.mPhoneNo));
             this.mLink = jsonObject.getString("url");
+            Log.d("link", String.valueOf(this.mLink));
             this.mTitle = jsonObject.getString("title");
+            Log.d("title", String.valueOf(this.mTitle));
             if(jsonObject.getString("typep").equals("true"))
                 this.mType = 1;
             else
                 this.mType = 0;
-            this.mTags = jsonObject.getString("tag_list");
+
+            Log.d("type", String.valueOf(this.mType));
+           // this.mTags = jsonObject.getString("tag_list");
         }
         catch (JSONException e)
         {
