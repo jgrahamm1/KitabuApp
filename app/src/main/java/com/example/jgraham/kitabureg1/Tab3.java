@@ -1,5 +1,4 @@
 package com.example.jgraham.kitabureg1;
-
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
@@ -39,7 +38,7 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     }
     public void updateEntries()
     {
-        loaderManager.initLoader(1, null, this).forceLoad();
+//        loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab3", "Tab3");
     }
     @Override
@@ -96,7 +95,9 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
-        adapter.clear();
+        if(adapter.getCount()!=0 && adapter!=null){
+            adapter.clear();
+        }
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
     }

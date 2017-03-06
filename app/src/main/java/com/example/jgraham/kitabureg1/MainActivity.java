@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity{
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
+        mViewPager.setOffscreenPageLimit(4);
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
@@ -177,21 +177,18 @@ public class MainActivity extends AppCompatActivity{
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                MySQLiteDbHelper temp = MySQLiteDbHelper.getInstance(getApplicationContext());
-//                Log.d("SELECTED", String.valueOf(tab.getPosition()));
-
                 switch (tab.getPosition()) {
                     case 0:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        tab1.updateEntries();
+//                        tab1.updateEntries();
                         break;
                     case 1:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        tab2.updateEntries();
+//                        tab2.updateEntries();
                         break;
                     case 2:
                         Log.d("SELECTED", String.valueOf(tab.getPosition()));
-                        tab3.updateEntries();
+//                        tab3.updateEntries();
                         break;
                     default:
                 }
