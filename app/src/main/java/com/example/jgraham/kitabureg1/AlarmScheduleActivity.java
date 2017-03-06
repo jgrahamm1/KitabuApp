@@ -45,6 +45,7 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
 
         // Init calendar that user sets time and date for
         m_calendar = Calendar.getInstance();
+        m_calendar.setTimeInMillis(System.currentTimeMillis());
 
         ListView list_view = (ListView) findViewById(R.id.alarmschedule_list_view);
         list_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -68,14 +69,13 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
 
     @Override
     public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day) {
-        m_calendar.set(Calendar.YEAR, year);
-        m_calendar.set(Calendar.MONTH, month);
-        m_calendar.set(Calendar.DAY_OF_MONTH, day - 1);
+        Log.d("ALARM", "day: " + day);
+        m_calendar.set(year, month, (day));
     }
 
     @Override
     public void onTimePickerDialogSet(DialogFragment dialog, int hour, int minute) {
-        m_calendar.set(Calendar.HOUR, hour);
+        m_calendar.set(Calendar.HOUR_OF_DAY, hour);
         m_calendar.set(Calendar.MINUTE, minute);
     }
 
@@ -95,7 +95,8 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
         AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, m_calendar.getTimeInMillis(), pendingIntent);
         Log.d("ALARM", "Alarm set at " + date_string + " for url with id: " + m_id);
-
+        Log.d("ALARM", "TIME: " + m_calendar.getTime().toString());
+        Log.d("ALARM", "NOW: " + System.currentTimeMillis() + " Cal: " + m_calendar.getTimeInMillis() + " diff: " + (m_calendar.getTimeInMillis() - System.currentTimeMillis()) );
         Toast.makeText(getApplicationContext(), "Alarm set for " + date_string, Toast.LENGTH_SHORT).show();
         finish();
     }

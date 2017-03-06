@@ -65,8 +65,8 @@ public class AlarmService extends IntentService {
         media_player = media_player.create(getApplicationContext(), R.raw.ring);
         vibrator = (Vibrator) getApplicationContext().
                 getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(750);
-
+        long[] pattern = {0, 200};
+        vibrator.vibrate(1200);
 
 
         // Stop this service
