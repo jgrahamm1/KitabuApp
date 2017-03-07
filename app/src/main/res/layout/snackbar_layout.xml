@@ -14,6 +14,7 @@
         android:orientation="vertical">
 
         <ImageButton
+            android:layout_gravity="center"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
             android:layout_width="50dp"
@@ -33,32 +34,32 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical">
+    <!--<LinearLayout-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical">-->
 
-        <ImageButton
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/reminder"
-            android:id="@+id/imageButton2"
-            android:onClick="onAddReminderClicked"/>
+        <!--<ImageButton-->
+            <!--android:adjustViewBounds="true"-->
+            <!--android:scaleType="centerInside"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--app:srcCompat="@drawable/reminder"-->
+            <!--android:id="@+id/imageButton2"-->
+            <!--android:onClick="onAddReminderClicked"/>-->
 
-        <TextView
-            android:text="Add Reminder"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <!--<TextView-->
+            <!--android:text="Add Reminder"-->
+            <!--android:textStyle="bold"-->
+            <!--android:textColor="#FFFFFF"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
 
-            android:id="@+id/textView2" />
+            <!--android:id="@+id/textView2" />-->
 
 
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </LinearLayout>
