@@ -31,6 +31,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public static LoaderManager loaderManager;
     public static int onCreateCheck=0;
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
