@@ -105,16 +105,18 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
         values = data;
-        adapter.clear();
-        adapter.addAll(data);
-        adapter.notifyDataSetChanged();
-
+        if(adapter!=null){
+            adapter.clear();
+            adapter.addAll(data);
+            adapter.notifyDataSetChanged();
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
-
-        adapter.clear();
-        adapter.notifyDataSetChanged();
+        if(adapter!=null) {
+            adapter.clear();
+            adapter.notifyDataSetChanged();
+        }
     }
 }
