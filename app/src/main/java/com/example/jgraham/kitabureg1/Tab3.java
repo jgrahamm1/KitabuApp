@@ -33,13 +33,14 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         loaderManager = getActivity().getLoaderManager();
-        loaderManager.initLoader(1, null, this).forceLoad();
+        Log.d("Tab3", "oncreate");
+        loaderManager.initLoader(3, null, this).forceLoad();
 
     }
     public void updateEntries()
     {
-        loaderManager.initLoader(1, null, this).forceLoad();
-        Log.d("Tab3", "Tab3");
+        loaderManager.initLoader(3, null, this).forceLoad();
+        Log.d("Tab3", "intloader");
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

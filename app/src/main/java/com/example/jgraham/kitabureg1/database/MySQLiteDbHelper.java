@@ -122,7 +122,8 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     public void removeEntry(int rowIndex) {
         Log.d("Entered to delete","Delete record");
         SQLiteDatabase dbObj = getWritableDatabase();
-        dbObj.delete(TABLE_NAME_ENTRIES, KEY_ID + "=" + rowIndex, null);
+        int temp = dbObj.delete(TABLE_NAME_ENTRIES, KEY_ID + "=" + rowIndex, null);
+        Log.d("deleted records",String.valueOf(temp));
         dbObj.close();
     }
 
@@ -175,26 +176,26 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all private rows
     public ArrayList<KitabuEntry> fetchPrivateEntries() {
-//        Log.d("Fetch Entries", "Try to do that");
+            Log.d("Fetch Private Entries", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         int res=1;
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,
                 KEY_TYPE + "=" + "0", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()==true && res<=20) {
+        while (cursor.moveToNext()) {
             res++;
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
         }
 
         cursor.close();
-        dbObj.close();
+//        dbObj.close();
 
         return entryList;
     }
@@ -208,19 +209,19 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
     // Query the entire table, return all public rows
     public ArrayList<KitabuEntry> fetchPublicEntries() {
-        //Log.d("Fetch Entries", "Try to do that");
+        Log.d("Fetch Public Entries", "Try to do that");
         int res=1;
         SQLiteDatabase dbObj = getReadableDatabase();
         // store all the entries to an ArrayList
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-                Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+                Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,
                 KEY_TYPE + "=" + "1", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()==true && res<=20) {
+        while (cursor.moveToNext()) {
             res++;
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
@@ -231,7 +232,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 //                KEY_TYPE + "=" + "1", null, null, null, KEY_ID+" DESC ", "20");
 
         cursor.close();
-        dbObj.close();
+//        dbObj.close();
 
         return entryList;
     }
@@ -245,19 +246,18 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         ArrayList<KitabuEntry> entryList = new ArrayList<KitabuEntry>();
         // do the query without any condition. it retrieves every record from
         // the database
-        Cursor cursor = dbObj.query(true, TABLE_NAME_ENTRIES, mColumnList,
+        Cursor cursor = dbObj.query(TABLE_NAME_ENTRIES, mColumnList,
                 KEY_TYPE + "=" + "2", null, null, null, KEY_ID+" DESC ", "20");
 
         // the cursor initially points the record PRIOR to the first record
         // use the while loop to read every record from the cursor
-        while (cursor.moveToNext()==true && res<=20) {
-            res++;
+        while (cursor.moveToNext()) {
             KitabuEntry entry = cursorToEntry(cursor, false);
             entryList.add(entry);
         }
 
         cursor.close();
-        dbObj.close();
+//        dbObj.close();
 
         return entryList;
     }

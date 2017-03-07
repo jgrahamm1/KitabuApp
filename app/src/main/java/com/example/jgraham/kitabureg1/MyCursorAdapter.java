@@ -33,7 +33,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
      * and switched back to ArrayAdapter
      */
     private final Context context;
-    private final List<KitabuEntry> itemsArrayList;
+    private  List<KitabuEntry> itemsArrayList;
     MySQLiteDbHelper mySQLiteDbHelper;
     KitabuEntry ke;
     KitabuEntry kes;
@@ -49,6 +49,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     public View getView(final int position, View convertView, ViewGroup parent)
     {
         final Tab1 tab1 = new Tab1();
+        final Tab2 tab2 = new Tab2();
 //        Log.d("tab1", "tab1 called");
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
@@ -66,29 +67,36 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 public void onClick(View v) {
                     Log.d("Does delete work", String.valueOf(position));
                 // Log.d("Does delete work", String.valueOf(position));
-                ke = getItem(position);
+                try {
+                    ke = getItem(position);
+                }
+                catch (Exception e){
+                    Toast.makeText(context, "Try Again to delete", Toast.LENGTH_SHORT).show();
+                }
+
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setMessage("Confirm Delete");
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         mySQLiteDbHelper.removeEntry(ke.getmId());
-//                        clear();
-                        itemsArrayList.remove(ke);
-//                        addAll(itemsArrayList);
-                        notifyDataSetChanged();
+                        itemsArrayList.remove(itemsArrayList.get(position));
+                        notifyDataSetChanged();  // Notify adapter of data change.
+
+                        /*
+                         TODO: Send request to server to delete.
+                         TODO: Receive GCM delete notifications from server.
+                         */
+
                         Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
-                notifyDataSetChanged();
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
                     }
                 });
-                notifyDataSetChanged();
-
                 alertDialog.show();
                 }
 

@@ -26,7 +26,6 @@ import android.util.Log;
 /*
  * Class to receive GCM broadcasts.
  * Sets a notification whenever received.
- * TODO: Mahesh - GCM Notification.
  */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver
 {

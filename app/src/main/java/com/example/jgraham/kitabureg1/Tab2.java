@@ -34,15 +34,16 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Tab2", "oncreate");
         loaderManager = getActivity().getLoaderManager();
-        loaderManager.initLoader(1, null, this).forceLoad();
+        loaderManager.initLoader(2, null, this).forceLoad();
 
     }
 
     public void updateEntries()
     {
-        loaderManager.initLoader(1, null, this).forceLoad();
-        Log.d("Tab2", "Tab2");
+        loaderManager.initLoader(2, null, this).forceLoad();
+        Log.d("Tab2", "intloader");
     }
 
 

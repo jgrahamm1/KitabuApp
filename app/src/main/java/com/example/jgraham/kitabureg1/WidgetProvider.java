@@ -148,7 +148,6 @@ public class WidgetProvider extends AppWidgetProvider {
     String value;
     @Override
     public void onReceive(Context context, Intent intent) {
-        // TODO Auto-generated method stub
 
         Bundle b=intent.getExtras();
 
@@ -259,7 +258,7 @@ public class WidgetProvider extends AppWidgetProvider {
             }
         }
         catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
         super.onReceive(context, intent);

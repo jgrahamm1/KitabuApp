@@ -179,16 +179,16 @@ public class MainActivity extends AppCompatActivity{
             public void onTabSelected(TabLayout.Tab tab) {
                 switch (tab.getPosition()) {
                     case 0:
-//                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
-//                        tab1.updateEntries();
+                        Log.d("SELECTED", "from main method");
+                        tab1.updateEntries();
                         break;
                     case 1:
 //                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
-//                        tab2.updateEntries();
+                        tab2.updateEntries();
                         break;
                     case 2:
 //                        Log.d("SELECTED", String.valueOf(tab.getPosition()));
-//                        tab3.updateEntries();
+                        tab3.updateEntries();
                         break;
                     default:
                 }
@@ -205,13 +205,13 @@ public class MainActivity extends AppCompatActivity{
 //                Log.d("RESELECTED", String.valueOf(tab.getPosition()));
                 switch (tab.getPosition()) {
                     case 0:
-//                        tab1.updateEntries();
+                        tab1.updateEntries();
                         break;
                     case 1:
-//                        tab2.updateEntries();
+                        tab2.updateEntries();
                         break;
                     case 2:
-//                        tab3.updateEntries();
+                        tab3.updateEntries();
                         break;
                     default:
                 }
@@ -290,11 +290,14 @@ public class MainActivity extends AppCompatActivity{
             switch (position) {
                 case 0:
 //                    tab1 = new Tab1();
+                    Log.d("Tab1", "Reselected: ");
                     return tab1;
                 case 1:
+                    Log.d("Tab1", "Reselected: ");
 //                    tab2 = new Tab2();
                     return tab2;
                 case 2:
+                    Log.d("Tab1", "Reselected: ");
 //                    tab3 = new Tab3();
                     return tab3;
             }

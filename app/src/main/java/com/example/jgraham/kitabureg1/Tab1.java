@@ -29,11 +29,12 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     MyCursorAdapter adapter;
     List<KitabuEntry> values;
     public static LoaderManager loaderManager;
+    public static int onCreateCheck=0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("called", "onCreate: of tab1");
+        Log.d("Tab3", "oncreate");
         loaderManager = getActivity().getLoaderManager();
         loaderManager.initLoader(1, null, this).forceLoad();
     }
@@ -41,7 +42,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public void updateEntries()
     {
         loaderManager.initLoader(1, null, this).forceLoad();
-        Log.d("Tab1", "Tab1");
+        Log.d("Tab1", "intloader");
     }
 
     @Override
@@ -54,6 +55,8 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         adapter = new MyCursorAdapter(getContext(), values);
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+        lv.invalidateViews();
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -94,18 +97,23 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
     @Override
     public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
+
         return new KitabuLoader(getContext());
+
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
+        values = data;
         adapter.clear();
         adapter.addAll(data);
         adapter.notifyDataSetChanged();
+
     }
 
     @Override
     public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
+
         adapter.clear();
         adapter.notifyDataSetChanged();
     }
