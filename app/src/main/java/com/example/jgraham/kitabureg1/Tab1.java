@@ -50,7 +50,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
         View rootView = inflater.inflate(R.layout.tab1, container, false);
         values = mySQLiteDbHelper.fetchPrivateEntries();
-        adapter = new MyCursorAdapter(getContext(), values);
+        adapter = new MyCursorAdapter(getContext(), values, 1);
         ListView lv= (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,20 +35,23 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     MySQLiteDbHelper mySQLiteDbHelper;
     KitabuEntry ke;
     KitabuEntry kes;
-    public MyCursorAdapter(Context context, List<KitabuEntry> itemsArrayList) {
+    int fragId;
+    public MyCursorAdapter(Context context, List<KitabuEntry> itemsArrayList, int fragId) {
         super(context, R.layout.customlist, itemsArrayList);
         this.context = context;
         this.itemsArrayList = itemsArrayList;
+        this.fragId = fragId;
         Log.d(TAG, "MyCursorAdapter: ");
     }
 
 
+    /*
+     * We add  all the buttons in this method.
+     * We hide the delete button for the public tab.
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent)
     {
-        final Tab1 tab1 = new Tab1();
-        final Tab2 tab2 = new Tab2();
-//        Log.d("tab1", "tab1 called");
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
@@ -59,6 +63,10 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             textView1.setText(itemsArrayList.get(position).getmLink());
         // Delete button onClick Listener
             final ImageButton button = (ImageButton) view.findViewById(R.id.delete_button);
+            if(fragId == 2)
+            {
+                button.setVisibility(View.INVISIBLE);
+            }
             button.setOnClickListener(new View.OnClickListener() {
             @Override
                 public void onClick(View v) {
@@ -118,14 +126,12 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 
                     }
                 });
-                notifyDataSetChanged();
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
                     }
                 });
-                notifyDataSetChanged();
                 alertDialog.show();
             }
         });
@@ -140,9 +146,36 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 s_intent.putExtra("position", position);
                 s_intent.putExtra("id", url_id);
                 v.getContext().startActivity(s_intent);
+                notifyDataSetChanged();
             }
         });
-        notifyDataSetChanged();
+
+        // Open Link button listener
+        final ImageButton button3 = (ImageButton) view.findViewById(R.id.open_button);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+                alertDialog.setMessage("Open Link?");
+                alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ke = getItem(position);
+                        Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(ke.getmLink()));
+                        context.startActivity(browserIntent);
+                    }
+                });
+                alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context, "Canceled", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                alertDialog.show();
+            }
+        });
+
         return view;
     }
 }
