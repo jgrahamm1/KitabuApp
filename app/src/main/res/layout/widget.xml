@@ -56,5 +56,5 @@
   android:layout_marginTop="3dp"
   android:layout_marginLeft="3dp"
   android:textColor="@color/colorAccent"
-  android:background= "@color/colorLightBlue" />
+  android:background= "@android:color/darker_gray" />
 </LinearLayout>
