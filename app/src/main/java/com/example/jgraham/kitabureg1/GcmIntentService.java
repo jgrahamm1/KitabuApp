@@ -25,14 +25,17 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-
+/*
+    * Defined a class to receive notifications.
+    * and updating the database accordingly
+    * after receiving the notifications.
+    *
+ */
 public class GcmIntentService extends IntentService {
-
     public GcmIntentService() {
         super("GcmIntentService");
     }
@@ -61,6 +64,10 @@ public class GcmIntentService extends IntentService {
                         extras.getString("tags"),
                         2,
                         extras.getString("title"));
+                /*
+                    * Getting the database object and fetch the entries by index.
+                    *  Accoding to the received notification update the necessary.
+                 */
                 MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
                 try {
                     KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
@@ -75,6 +82,7 @@ public class GcmIntentService extends IntentService {
                 }
             }
         }
+        // Wakeup the app after notification is received.
         GcmBroadcastReceiver.completeWakefulIntent(intent);
         Intent m_intent = new Intent(this, MainActivity.class);
         m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
