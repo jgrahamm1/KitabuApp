@@ -20,6 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/*
+    * This class handles all the public entries
+    * that are shared by the user and populate
+    * them in the private tab of the App.
+    *
+    *
+ */
+    //Loader Manager to load the dynamic data when records are deleted.
 public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
 
     public static LoaderManager loaderManager;
@@ -27,7 +35,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     ListView listview;
     MyCursorAdapter adapter;
     List<KitabuEntry> values;
-
+    //
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +44,9 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         loaderManager.initLoader(2, null, this).forceLoad();
 
     }
-
-    public void updateEntries() {
+        // Update the entries dynamically when delete button is pressed and updates
+        //the entries.
+        public void updateEntries() {
         loaderManager.initLoader(2, null, this).forceLoad();
         Log.d("Tab2", "intloader");
     }
@@ -95,7 +104,6 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
         return new Kitabu1Loader(getContext());
     }
-
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
         values = data;
@@ -105,7 +113,6 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             adapter.notifyDataSetChanged();
         }
     }
-
     @Override
     public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
         if (adapter != null) {
