@@ -7,11 +7,11 @@ import org.json.JSONObject;
 
 public class KitabuEntry {
 
-    private Long mRowID;
-    private int mId;
-    private String mLink;
-    private String mTitle;
-    private int mType;
+    private Long mRowID; // Unique Row ID for database operations.
+    private int mId;    // Unique id generated from web server.
+    private String mLink;     // URL that is shared.
+    private String mTitle;    //Title of the URL.
+    private int mType;        // column if is is
     private String mTags;
     private Long mPhoneNo;
 
