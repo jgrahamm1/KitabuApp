@@ -9,6 +9,12 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import java.util.ArrayList;
 
 
+/*
+    * Defined a class to handle the dynamic listview population
+    * for the public entries i.e. last 20 inserted records.
+ */
+
+
 public class KitabuLoader extends AsyncTaskLoader<ArrayList<KitabuEntry>> {
 
     Context mContext;
