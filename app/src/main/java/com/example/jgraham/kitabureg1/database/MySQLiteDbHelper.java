@@ -18,7 +18,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME_ENTRIES = "Kitabu_Database_Table_Links";
 
     // Version code
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
    private static MySQLiteDbHelper sInstance;
 
     // Table schema, column names
@@ -236,6 +236,7 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
 
         return entryList;
     }
+
 
     // Query the entire table, return all notification rows
     public ArrayList<KitabuEntry> fetchNotificationEntries() throws SQLException{

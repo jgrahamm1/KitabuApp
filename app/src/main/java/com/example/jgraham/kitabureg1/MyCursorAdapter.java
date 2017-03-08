@@ -122,9 +122,13 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        boolean var = deleteFromServer(ke.getmId());
+                       boolean var = true;
+                        if(fragId != 3) {
+                            var = deleteFromServer(ke.getmId());
+                        }
                         Log.d("DELETE", String.valueOf(var));
-                        if(var == true) {
+                        if(var == true)
+                        {
                             Log.d("DELETE", "Deleted from server");
                             mySQLiteDbHelper.removeEntry(ke.getmId());
                             itemsArrayList.remove(itemsArrayList.get(position));

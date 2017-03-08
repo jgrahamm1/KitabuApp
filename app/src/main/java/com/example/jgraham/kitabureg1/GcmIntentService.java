@@ -43,40 +43,47 @@ public class GcmIntentService extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
         String messageType = gcm.getMessageType(intent);
-        Log.d("LOG", extras.toString());
 
+        Log.d("LOG", extras.toString());
         if (extras != null && !extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
             {
                 Log.d("LOG", extras.toString());
-                Log.d("LOG", extras.getString("url"));
-                Log.d("LOG", extras.getString("id"));
-                Log.d("LOG", extras.getString("phoneno"));
+
+                if(extras.get("del") != null)
+                {
+                    int delVal = Integer.parseInt(extras.getString("del"));
+                    MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
+                    dbHelper.removeEntry(delVal);
+                }
+                else if(extras.get("save") != null)
+                {
+                    Log.d("Log", extras.getString("save"));
+                }
+
                 /*
                  * We are sending all of these details via GCM.
                  * I hope this works.... :/
                  */
-                KitabuEntry entry = new KitabuEntry(extras.getString("id"),
-                        extras.getString("url") ,
-                        extras.getString("phoneno"),
-                        extras.getString("tags"),
-                        2,
-                        extras.getString("title"));
-                MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
-                try {
-                    KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                    if(entry1 == null) {
-                        dbHelper.insertEntry(entry);
+                else if (extras.getString("url") != null) {
+                    KitabuEntry entry = new KitabuEntry(extras.getString("id"),
+                            extras.getString("url"),
+                            extras.getString("phoneno"),
+                            extras.getString("tags"),
+                            2,
+                            extras.getString("title"));
+                    MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
+                    try {
+                        KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
+                        if (entry1 == null) {
+                            dbHelper.insertEntry(entry);
+                        } else {
+                            Log.d("DB: ", "UPDATING");
+                            dbHelper.updateEntry(entry.getmId());
+                        }
+                    } catch (Exception e) {
+                        Log.d("GCM: ", "Received notification, but didn't push");
                     }
-                    else
-                    {
-                        Log.d("DB: " , "UPDATING");
-                        dbHelper.updateEntry(entry.getmId());
-                    }
-                }
-                catch (Exception e)
-                {
-                    Log.d("GCM: ", "Received notification, but didn't push");
                 }
             }
         }

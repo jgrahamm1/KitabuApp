@@ -54,8 +54,14 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.READ_CONTACTS}, 0);
+            {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS}, 0);
+            }
+        }
+        else
+        {
+            Globals.contacts_permission = true;
         }
 
         SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
