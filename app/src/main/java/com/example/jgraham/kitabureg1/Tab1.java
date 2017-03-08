@@ -139,7 +139,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         Log.d("SERVICE", "Tab1 --> onStart binding service");
         // Bind to LocalService
         Intent intent = new Intent(getContext(), GcmIntentService.class);
-        getContext().bindService(intent, this, Context.BIND_AUTO_CREATE);
+        getActivity().getApplicationContext().bindService(intent, this, Context.BIND_AUTO_CREATE);
     }
 
     @Override
@@ -147,7 +147,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         super.onStop();
         // Unbind from the service
         if (mBound) {
-            getContext().unbindService(mConnection);
+            getActivity().getApplicationContext().unbindService(mConnection);
             mBound = false;
         }
     }

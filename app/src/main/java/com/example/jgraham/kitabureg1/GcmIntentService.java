@@ -132,7 +132,6 @@ public class GcmIntentService extends IntentService {
             }
             // Wakeup the app after notification is received.
             GcmBroadcastReceiver.completeWakefulIntent(intent);
-
         }
     }
 }
