@@ -52,14 +52,11 @@ public class GcmIntentService extends IntentService {
             if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.d("LOG", extras.toString());
 
-                if(extras.get("del") != null)
-                {
+                if (extras.get("del") != null) {
                     int delVal = Integer.parseInt(extras.getString("del"));
                     MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
                     dbHelper.removeEntry(delVal);
-                }
-                else if(extras.get("save") != null)
-                {
+                } else if (extras.get("save") != null) {
                     Log.d("Log", extras.getString("save"));
                 }
 
@@ -90,34 +87,34 @@ public class GcmIntentService extends IntentService {
                     * Getting the database object and fetch the entries by index.
                     *  Accoding to the received notification update the necessary.
                  */
-                MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
-                try {
-                    KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                    if (entry1 == null) {
-                        dbHelper.insertEntry(entry);
-                    } else {
-                        Log.d("DB: ", "UPDATING");
-                        dbHelper.updateEntry(entry.getmId());
+                    try {
+                        KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
+                        if (entry1 == null) {
+                            dbHelper.insertEntry(entry);
+                        } else {
+                            Log.d("DB: ", "UPDATING");
+                            dbHelper.updateEntry(entry.getmId());
+                        }
+                    } catch (Exception e) {
+                        Log.d("GCM: ", "Received notification, but didn't push");
                     }
-                } catch (Exception e) {
-                    Log.d("GCM: ", "Received notification, but didn't push");
                 }
             }
-        }
-        // Wakeup the app after notification is received.
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
-        Intent m_intent = new Intent(this, MainActivity.class);
-        m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // Wakeup the app after notification is received.
+            GcmBroadcastReceiver.completeWakefulIntent(intent);
+            Intent m_intent = new Intent(this, MainActivity.class);
+            m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        PendingIntent contentIntent = PendingIntent.getActivity(this, 0, m_intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name))
-                .setStyle(new NotificationCompat.BigTextStyle()
-                        .bigText(extras.getString("phoneno") + " suggested " + extras.getString("url")))
-                .setContentText(extras.getString("phoneno") + " suggested " + extras.getString("url"))
-                .setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
-        mBuilder.setContentIntent(contentIntent);
-        nm.notify(0, mBuilder.build());
+            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, m_intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationCompat.Builder mBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+                    .setSmallIcon(R.drawable.kicondroplet).setContentTitle(getString(R.string.app_name))
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(extras.getString("phoneno") + " suggested " + extras.getString("url")))
+                    .setContentText(extras.getString("phoneno") + " suggested " + extras.getString("url"))
+                    .setAutoCancel(true).setSound(Settings.System.DEFAULT_NOTIFICATION_URI);
+            mBuilder.setContentIntent(contentIntent);
+            nm.notify(0, mBuilder.build());
+        }
     }
 }
