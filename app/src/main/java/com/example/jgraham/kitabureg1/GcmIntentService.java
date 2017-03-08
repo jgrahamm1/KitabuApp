@@ -106,22 +106,10 @@ public class GcmIntentService extends IntentService {
                             dbHelper.insertEntry(entry);
                         } else {
                             Log.d("DB: ", "UPDATING");
-                            dbHelper.updateEntry(entry.getmId());
-                        }
-                    } catch (Exception e) {
-                        Log.d("GCM: ", "Received notification, but didn't push");
-                    }
-                /*
-                    * Getting the database object and fetch the entries by index.
-                    *  Accoding to the received notification update the necessary.
-                 */
-                    try {
-                        KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                        if (entry1 == null) {
+                            dbHelper.removeEntry(entry.getmId());
+                            entry.setmType(2);
                             dbHelper.insertEntry(entry);
-                        } else {
-                            Log.d("DB: ", "UPDATING");
-                            dbHelper.updateEntry(entry.getmId());
+                            // dbHelper.updateEntry(entry.getmId());
                         }
                     } catch (Exception e) {
                         Log.d("GCM: ", "Received notification, but didn't push");
