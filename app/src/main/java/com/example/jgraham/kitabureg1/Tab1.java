@@ -132,12 +132,6 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             adapter.notifyDataSetChanged();
         }
 
-        // Remove the TextView
-        if (!values.isEmpty()) {
-            TextView nts_view = (TextView) context.findViewById(R.id.tv1);
-            nts_view.setVisibility(View.INVISIBLE);
-            nts_view.setText(" ");
-        }
     }
 
     @Override
