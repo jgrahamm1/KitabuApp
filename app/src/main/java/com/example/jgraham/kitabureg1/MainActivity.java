@@ -61,11 +61,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
+    public static final String PREFS_NAME = "Kitabu_preferences";
     Tab1 tab1;
     Tab2 tab2;
     Tab3 tab3;
-    public static final String PREFS_NAME = "Kitabu_preferences";
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity{
     private ViewPager mViewPager;
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         finish();
     }
 
@@ -145,7 +144,7 @@ public class MainActivity extends AppCompatActivity{
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        if(savedInstanceState == null) {
+        if (savedInstanceState == null) {
             Intent intent = getIntent();
             String sender = intent.getStringExtra("sender");
             if (sender != null && sender.equals("login")) {
@@ -161,18 +160,18 @@ public class MainActivity extends AppCompatActivity{
                 /*
                   TODO: Add ShowCaseView here.
                 */
-        new ShowcaseView.Builder(this)
-                //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
-                .setTarget(new Target() {
-                    @Override
-                    public Point getPoint() {
-                        return new Point(100,100);
-                    }
-                })
-                .setContentTitle("ShowcaseView")
-                .setContentText("This is highlighting the Home button")
-                .hideOnTouchOutside()
-                .build();
+                new ShowcaseView.Builder(this)
+                        //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
+                        .setTarget(new Target() {
+                            @Override
+                            public Point getPoint() {
+                                return new Point(100, 100);
+                            }
+                        })
+                        .setContentTitle("ShowcaseView")
+                        .setContentText("This is highlighting the Home button")
+                        .hideOnTouchOutside()
+                        .build();
 
             } else {
                 SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
@@ -231,7 +230,6 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -242,8 +240,7 @@ public class MainActivity extends AppCompatActivity{
     /*
      * Clear all shared preferences and go to the Welcome Screen.
      */
-    void signout()
-    {
+    void signout() {
         SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -254,15 +251,16 @@ public class MainActivity extends AppCompatActivity{
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
-    public void onAddReminderClicked(View view)
-    {
-        Toast.makeText(getApplicationContext(),"Add Reminder Clicked",Toast.LENGTH_SHORT).show();
+
+    public void onAddReminderClicked(View view) {
+        Toast.makeText(getApplicationContext(), "Add Reminder Clicked", Toast.LENGTH_SHORT).show();
     }
-    public void onSaveLinkClicked(View view)
-    {
+
+    public void onSaveLinkClicked(View view) {
         Intent intent = new Intent(getApplicationContext(), SendDataActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -273,16 +271,13 @@ public class MainActivity extends AppCompatActivity{
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
-        }
-        else if(id == R.id.action_signout)
-        {
+        } else if (id == R.id.action_signout) {
             signout();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     /**
@@ -343,11 +338,10 @@ public class MainActivity extends AppCompatActivity{
  * Send a post request to the server.
  */
 class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
+    private static final String SENDER_ID = "609569899467";
     private MyApi regService = null;
     private GoogleCloudMessaging gcm;
     private Context context;
-
-    private static final String SENDER_ID = "609569899467";
 
     public GcmRegistrationAsyncTask(Context context) {
         this.context = context;
@@ -358,8 +352,7 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
  * Get the most recent id from the links sqlite table.
  * Send a post request and use the JSON response.
  */
-    void fetchdata()
-    {
+    void fetchdata() {
         SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         boolean msg = false;
@@ -373,15 +366,13 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             serv_res = ServerUtil.get("http://kitabu.prashant.at/api/getlinks/" + lastid + "/" + phoneno, params, context);
             if (serv_res.equals("false")) {
                 msg = false;
-            } else
-            {
+            } else {
                 try {
 
                     JSONObject response = new JSONObject(serv_res);
                     Log.d("JSON Parsed", response.toString());
                     JSONArray publicArray = response.getJSONArray("public");
-                    for(int i = 0; i < publicArray.length(); i++)
-                    {
+                    for (int i = 0; i < publicArray.length(); i++) {
                         JSONObject jsonObject = (JSONObject) publicArray.get(i);
                         KitabuEntry entry = new KitabuEntry(jsonObject);
                         mySQLiteDbHelper.insertEntry(entry);
@@ -389,17 +380,14 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
                     }
                     Log.d("JSON Parsed", publicArray.toString());
                     JSONArray privateArray = response.getJSONArray("private");
-                    for(int i = 0; i < privateArray.length(); i++)
-                    {
+                    for (int i = 0; i < privateArray.length(); i++) {
                         JSONObject jsonObject = (JSONObject) privateArray.get(i);
                         KitabuEntry entry = new KitabuEntry(jsonObject);
                         mySQLiteDbHelper.insertEntry(entry);
                         Log.d("JSON", jsonObject.toString());
                     }
                     Log.d("JSON Parsed", privateArray.toString());
-                }
-                catch (JSONException e)
-                {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 Log.d("SERVER MESSAGE", serv_res);
@@ -480,14 +468,10 @@ class GcmRegistrationAsyncTask extends AsyncTask<Void, Void, String> {
             // Send the regid to our server API
             // Server stores our regid with the user table
             // Server can now send push messages
-            if(regId != null)
-            {
-                if(register_gcm(regId))
-                {
+            if (regId != null) {
+                if (register_gcm(regId)) {
                     msg = "Login Successful!";
-                }
-                else
-                {
+                } else {
                     msg = "Login unsuccessful!";
                 }
             }

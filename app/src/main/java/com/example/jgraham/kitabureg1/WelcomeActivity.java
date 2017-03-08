@@ -29,7 +29,7 @@ import android.widget.Button;
 
  */
 
-public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener{
+public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
     protected Button login_button;
@@ -62,8 +62,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                 Context.MODE_PRIVATE);
         String id = sharedPreferences.getString("id", null);
 
-        if(id != null)
-        {
+        if (id != null) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             intent.putExtra("sender", "welcome"); // I check this flag to perform actions in MainActivity.
@@ -85,9 +84,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
                     Globals.contacts_permission = true;
-                }
-                else
-                {
+                } else {
                     // boo-ya
                     // He/she didn't give us permission.
                     Globals.contacts_permission = false;
@@ -103,7 +100,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         // Determine if user pressed 'Login' or 'Register'
-        switch(v.getId()) {
+        switch (v.getId()) {
 
             // Login Button
             case R.id.login_button:

@@ -14,16 +14,10 @@ import android.widget.TimePicker;
 
 public class DialogManual extends DialogFragment {
 
-    public interface ManualDialogListener {
-        public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day);
-        public void onTimePickerDialogSet(DialogFragment dialog, int hour, int minute);
-    }
-
-    protected ManualDialogListener dialoglistener;
-
     public static final String DIALOG_KEY = "dialog";
     public static final int DATE_PICKER_DIALOG = 1;
     public static final int TIME_PICKER_DIALOG = 2;
+    protected ManualDialogListener dialoglistener;
 
     public static DialogManual newInstance(int id) {
         DialogManual d_fragment = new DialogManual();
@@ -93,6 +87,12 @@ public class DialogManual extends DialogFragment {
             default:
                 return null;
         }
+    }
+
+    public interface ManualDialogListener {
+        public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day);
+
+        public void onTimePickerDialogSet(DialogFragment dialog, int hour, int minute);
     }
 }
 

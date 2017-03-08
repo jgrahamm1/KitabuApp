@@ -21,13 +21,12 @@ import java.util.List;
 
 
 public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
+    public static LoaderManager loaderManager;
+    public static int onCreateCheck = 0;
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
     MyCursorAdapter adapter;
     List<KitabuEntry> values;
-    public static LoaderManager loaderManager;
-    public static int onCreateCheck=0;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         loaderManager.initLoader(1, null, this).forceLoad();
     }
 
-    public void updateEntries()
-    {
+    public void updateEntries() {
         loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab1", "intloader");
     }
@@ -51,7 +49,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         View rootView = inflater.inflate(R.layout.tab1, container, false);
         values = mySQLiteDbHelper.fetchPrivateEntries();
         adapter = new MyCursorAdapter(getContext(), values, 1);
-        ListView lv= (ListView) rootView.findViewById(R.id.datalist);
+        ListView lv = (ListView) rootView.findViewById(R.id.datalist);
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
         lv.invalidateViews();
@@ -59,20 +57,19 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 KitabuEntry ke = adapter.getItem(position);
-                Log.d("type",String.valueOf(ke.getmType()));
+                Log.d("type", String.valueOf(ke.getmType()));
                 Intent intent = new Intent(getActivity(), DeleteActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putLong("RowID",ke.getmRowID());
-                bundle.putInt("id",ke.getmId());
-                bundle.putString("title",ke.getmTitle());
-                bundle.putString("link",ke.getmLink());
-                bundle.putString("tags",ke.getmTags());
+                bundle.putLong("RowID", ke.getmRowID());
+                bundle.putInt("id", ke.getmId());
+                bundle.putString("title", ke.getmTitle());
+                bundle.putString("link", ke.getmLink());
+                bundle.putString("tags", ke.getmTags());
                 intent.putExtras(bundle);
                 startActivity(intent);
             }
         });
-        if(values.size() == 0)
-        {
+        if (values.size() == 0) {
             TextView textView = (TextView) rootView.findViewById(R.id.tv1);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Nothing to show!");
@@ -103,7 +100,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
         values = data;
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.clear();
             adapter.addAll(data);
             adapter.notifyDataSetChanged();
@@ -112,7 +109,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
     @Override
     public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
-        if(adapter!=null) {
+        if (adapter != null) {
             adapter.clear();
             adapter.notifyDataSetChanged();
         }

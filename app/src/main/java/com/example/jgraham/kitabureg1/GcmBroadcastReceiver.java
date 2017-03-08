@@ -27,11 +27,9 @@ import android.util.Log;
  * Class to receive GCM broadcasts.
  * Sets a notification whenever received.
  */
-public class GcmBroadcastReceiver extends WakefulBroadcastReceiver
-{
+public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent)
-    {
+    public void onReceive(Context context, Intent intent) {
         Log.d("Received a broadcast", "received");
         // Explicitly specify that GcmIntentService will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),

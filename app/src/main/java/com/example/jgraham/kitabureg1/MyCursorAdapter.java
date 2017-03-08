@@ -26,7 +26,6 @@ import java.util.Map;
 import static com.google.android.gms.wearable.DataMap.TAG;
 
 
-
 public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 
     /*
@@ -34,11 +33,12 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
      * and switched back to ArrayAdapter
      */
     private final Context context;
-    private  List<KitabuEntry> itemsArrayList;
     MySQLiteDbHelper mySQLiteDbHelper;
     KitabuEntry ke;
     KitabuEntry kes;
     int fragId;
+    private List<KitabuEntry> itemsArrayList;
+
     public MyCursorAdapter(Context context, List<KitabuEntry> itemsArrayList, int fragId) {
         super(context, R.layout.customlist, itemsArrayList);
         this.context = context;
@@ -52,8 +52,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
  * Send a post request and use the JSON response.
  * returns true or false
  */
-    boolean deleteFromServer( int id)
-    {
+    boolean deleteFromServer(int id) {
         SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         boolean msg = false;
@@ -65,8 +64,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     id + "/" + phoneno, params, context);
             if (serv_res.contains("false")) {
                 return false;
-            } else if(serv_res.contains("true"))
-            {
+            } else if (serv_res.contains("true")) {
                 return true;
             }
         } catch (IOException e) {
@@ -78,42 +76,38 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
     }
 
 
-
     /*
      * We add  all the buttons in this method.
      * We hide the delete button for the public tab.
      */
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent)
-    {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
         final View view = inflater.inflate(R.layout.customlist, parent, false);
         mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getContext());
 
-            TextView textView = (TextView) view.findViewById(R.id.firstLine);
-            TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
-            TextView textView2 = (TextView) view.findViewById(R.id.thirdLine);
-            textView.setText(itemsArrayList.get(position).getmTitle());
-            textView1.setText(itemsArrayList.get(position).getmLink());
-            textView2.setText(itemsArrayList.get(position).getmPhoneNo().toString());
-            if(fragId==1){
-                textView2.setVisibility(View.INVISIBLE);
-            }
+        TextView textView = (TextView) view.findViewById(R.id.firstLine);
+        TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
+        TextView textView2 = (TextView) view.findViewById(R.id.thirdLine);
+        textView.setText(itemsArrayList.get(position).getmTitle());
+        textView1.setText(itemsArrayList.get(position).getmLink());
+        textView2.setText(itemsArrayList.get(position).getmPhoneNo().toString());
+        if (fragId == 1) {
+            textView2.setVisibility(View.INVISIBLE);
+        }
         // Delete button onClick Listener
-            final ImageButton button = (ImageButton) view.findViewById(R.id.delete_button);
-            if(fragId == 2)
-            {
-                button.setVisibility(View.INVISIBLE);
-            }
-            button.setOnClickListener(new View.OnClickListener() {
+        final ImageButton button = (ImageButton) view.findViewById(R.id.delete_button);
+        if (fragId == 2) {
+            button.setVisibility(View.INVISIBLE);
+        }
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-                public void onClick(View v) {
-                    Log.d("Does delete work", String.valueOf(position));
+            public void onClick(View v) {
+                Log.d("Does delete work", String.valueOf(position));
                 try {
                     ke = getItem(position);
-                }
-                catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(context, "Try Again to delete", Toast.LENGTH_SHORT).show();
                 }
 
@@ -124,15 +118,13 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     public void onClick(DialogInterface dialog, int which) {
                         boolean var = deleteFromServer(ke.getmId());
                         Log.d("DELETE", String.valueOf(var));
-                        if(var == true) {
+                        if (var == true) {
                             Log.d("DELETE", "Deleted from server");
                             mySQLiteDbHelper.removeEntry(ke.getmId());
                             itemsArrayList.remove(itemsArrayList.get(position));
                             notifyDataSetChanged();  // Notify adapter of data change.
                             Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
+                        } else {
                             Log.d("DELETE", "Not deleted from server");
                             Toast.makeText(getContext(), "Could not delete, please try again later",
                                     Toast.LENGTH_SHORT).show();
@@ -149,19 +141,20 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                     }
                 });
                 alertDialog.show();
-                }
+            }
 
-            });
+        });
         // Share button onClick listener
         final ImageButton button1 = (ImageButton) view.findViewById(R.id.share_button);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+            public void onClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
                 alertDialog.setMessage("Share?");
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if(Globals.contacts_permission == true) {
+                        if (Globals.contacts_permission == true) {
                             // Permission given
                             ke = getItem(position);
                             SharedPreferences sharedPreferences = context.getSharedPreferences(
@@ -171,9 +164,7 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                             ContactsUtil contactsUtil = new ContactsUtil(context);
                             contactsUtil.sendContacts(ke.getmId(), phoneno);
                             Toast.makeText(context, "Shared!", Toast.LENGTH_SHORT).show();
-                        }
-                        else
-                        {
+                        } else {
                             // No permission
                             Toast.makeText(context, "Functionality disabled, please give us permission to access contacts.",
                                     Toast.LENGTH_SHORT).show();

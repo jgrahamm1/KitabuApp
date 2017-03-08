@@ -1,4 +1,5 @@
 package com.example.jgraham.kitabureg1;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -22,14 +23,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SendDataActivity extends AppCompatActivity {
-    Button senddata_button;
-    private EditText senddata_link,senddata_tags;
-    private int flag=-2;
-
     // Store the info in EditTexts
     protected String link_str, tag_str;
     protected int typep;
+    Button senddata_button;
     MySQLiteDbHelper db_helper;
+    private EditText senddata_link, senddata_tags;
+    private int flag = -2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +40,19 @@ public class SendDataActivity extends AppCompatActivity {
     }
 
     // Onclick: called by pressing SendDataActivity Button
-    public void sendData(View view){
+    public void sendData(View view) {
         senddata_button = (Button) findViewById(R.id.senddata);
 
         // Get EditText info
-        if(senddata_link.getText().length()==0){
+        if (senddata_link.getText().length() == 0) {
             senddata_link.setError("URL is required");
         }
-        if (senddata_tags.getText().length()==0){
+        if (senddata_tags.getText().length() == 0) {
             senddata_tags.setError("Description is required");
         }
-        if(flag==-2){
+        if (flag == -2) {
             Toast.makeText(this, "Please select public or private", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             link_str = senddata_link.getText().toString();
             tag_str = senddata_tags.getText().toString();
             typep = flag;
@@ -65,9 +64,9 @@ public class SendDataActivity extends AppCompatActivity {
         stask.execute();
     }
 
-    public void onRadioButtonClicked(View view){
+    public void onRadioButtonClicked(View view) {
         boolean temp = ((RadioButton) view).isChecked();
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.radio_private:
                 if (temp)
                     flag = 1;
@@ -84,11 +83,9 @@ public class SendDataActivity extends AppCompatActivity {
         String url_formatted = String.valueOf(url);
         if (url.contains("http://")) {
             return url;
-        }
-        else if (url.contains("https://")) {
+        } else if (url.contains("https://")) {
             return url;
-        }
-        else {
+        } else {
             url_formatted = "http://" + url_formatted;
         }
         return url_formatted;
@@ -150,15 +147,13 @@ public class SendDataActivity extends AppCompatActivity {
 
             if (result == null || result.equals(tr)) {  // Did I get a null or a false?
                 Log.d("SENDATA", "result == null || result was false");
-            }
-            else if(result.equals("502")) // ServerUtil returns this when Server down.
+            } else if (result.equals("502")) // ServerUtil returns this when Server down.
             {
                 Log.d("LOGIN", "Came to 502");
                 Toast.makeText(getApplicationContext(),
                         "Oops, looks like our server is down! Sorry! :(", Toast.LENGTH_LONG).show();
                 //onLoginFailed();
-            }
-            else {                    // If no errors anticipated, lets parse the json.
+            } else {                    // If no errors anticipated, lets parse the json.
                 try {
                     JSONObject response = new JSONObject(result);
                     Log.d("SENDDATA", "JSONObject received: " + result.toString());
@@ -174,12 +169,9 @@ public class SendDataActivity extends AppCompatActivity {
                     String type = link_json.getString("typep");
                     String title = link_json.getString("title");
                     KitabuEntry k_entry;
-                    if(type.equals("true"))
-                    {
+                    if (type.equals("true")) {
                         k_entry = new KitabuEntry(id, url, phoneno, tag_list, 1, title);
-                    }
-                    else
-                    {
+                    } else {
                         k_entry = new KitabuEntry(id, url, phoneno, tag_list, 0, title);
                     }
 

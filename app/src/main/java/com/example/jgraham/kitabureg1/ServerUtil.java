@@ -28,13 +28,9 @@ public final class ServerUtil {
     /**
      * Issue a GET request to the server.
      *
-     * @param endpoint
-     *            GET address.
-     * @param params
-     *            request parameters.
-     *
-     * @throws IOException
-     *             propagated from GET.
+     * @param endpoint GET address.
+     * @param params   request parameters.
+     * @throws IOException propagated from GET.
      */
     public static String get(String endpoint, Map<String, String> params, Context context)
             throws IOException {
@@ -85,8 +81,7 @@ public final class ServerUtil {
                 Log.d("ALERT", "Server down!!!");
                 Log.d("ALERT", "Server down!!!");
                 return "502"; // When the flag isn't 200, its got to be 502 and the server is down!
-            }
-            else {
+            } else {
                 // Get Response
                 InputStream is = conn.getInputStream();
                 BufferedReader rd = new BufferedReader(new InputStreamReader(is));

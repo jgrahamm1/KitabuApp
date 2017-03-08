@@ -23,6 +23,7 @@ public class EMAAlarmReceiver extends BroadcastReceiver {
         }
         startPSM(context);
     }
+
     // Start service
     private void startPSM(Context context) {
         Log.d("ALARM", "BroadcastReceiver firing");

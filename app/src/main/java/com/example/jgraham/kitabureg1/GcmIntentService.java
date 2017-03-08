@@ -46,8 +46,7 @@ public class GcmIntentService extends IntentService {
         Log.d("LOG", extras.toString());
 
         if (extras != null && !extras.isEmpty()) {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
-            {
+            if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 Log.d("LOG", extras.toString());
                 Log.d("LOG", extras.getString("url"));
                 Log.d("LOG", extras.getString("id"));
@@ -57,7 +56,7 @@ public class GcmIntentService extends IntentService {
                  * I hope this works.... :/
                  */
                 KitabuEntry entry = new KitabuEntry(extras.getString("id"),
-                        extras.getString("url") ,
+                        extras.getString("url"),
                         extras.getString("phoneno"),
                         extras.getString("tags"),
                         2,
@@ -65,23 +64,19 @@ public class GcmIntentService extends IntentService {
                 MySQLiteDbHelper dbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
                 try {
                     KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                    if(entry1 == null) {
+                    if (entry1 == null) {
                         dbHelper.insertEntry(entry);
-                    }
-                    else
-                    {
-                        Log.d("DB: " , "UPDATING");
+                    } else {
+                        Log.d("DB: ", "UPDATING");
                         dbHelper.updateEntry(entry.getmId());
                     }
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     Log.d("GCM: ", "Received notification, but didn't push");
                 }
             }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
-        Intent m_intent = new Intent(this,MainActivity.class);
+        Intent m_intent = new Intent(this, MainActivity.class);
         m_intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0, m_intent, PendingIntent.FLAG_CANCEL_CURRENT);
