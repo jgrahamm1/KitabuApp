@@ -46,11 +46,6 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab1", "intloader");
     }
-    public static void updateEntries1(KitabuEntry entry) {
-        values.remove(entry);
-        adapter.notifyDataSetChanged();
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

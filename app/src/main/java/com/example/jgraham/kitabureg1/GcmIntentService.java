@@ -22,7 +22,9 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -40,14 +42,31 @@ import org.json.JSONObject;
     *
  */
 public class GcmIntentService extends IntentService {
+    IBinder mBinder;
+
     public GcmIntentService() {
         super("GcmIntentService");
+    }
+
+    public class GcmBind extends Binder
+    {
+        GcmIntentService getService()
+        {
+            return GcmIntentService.this;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+
+        mBinder = new GcmBind();
 
         String messageType = gcm.getMessageType(intent);
 
