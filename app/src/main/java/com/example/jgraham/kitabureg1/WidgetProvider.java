@@ -201,7 +201,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 {
                     size=kitabuEntries.size();
                     for(int i=0;i<size;i++) {
-                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
                     }
                     for(int i=size;i<10;i++)
                     {
@@ -212,7 +212,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 {
                     size=10;
                     for(int i=0;i<size;i++) {
-                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
                     }
                 }
 
@@ -237,7 +237,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 {
                     size=kitabuEntries.size();
                     for(int i=0;i<size;i++) {
-                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmTitle().toString();
+                        LoremViewsFactory.items[i] = kitabuEntries.get(i).getmLink().toString();
                     }
                     for(int i=size;i<10;i++)
                     {
