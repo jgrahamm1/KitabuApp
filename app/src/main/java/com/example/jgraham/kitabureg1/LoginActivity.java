@@ -1,5 +1,4 @@
 package com.example.jgraham.kitabureg1;
-
 /*
 
  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.  .----------------.
@@ -25,10 +24,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,25 +34,20 @@ public class LoginActivity extends AppCompatActivity {
 
     protected EditText login_etxt;
     protected EditText pwd_etxt;
-
     protected String m_login_phone;
     protected String m_login_pwd;
-
     protected Button login_btn;
 
     /*
      * onCreate of the activity.
      * Not sure if we will do anything onSuspend...
-     * TODO: MAHESH - onSuspend() here?
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         login_etxt = (EditText) findViewById(R.id.login_phone);
         pwd_etxt = (EditText) findViewById(R.id.login_password);
-
         login_btn = (Button) findViewById(R.id.btn_login);
     }
 
@@ -79,7 +71,6 @@ public class LoginActivity extends AppCompatActivity {
         }
         return valid;
     }
-
     // Login! pressed
     public void onLoginClick(View view) {
 
@@ -121,12 +112,9 @@ public class LoginActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-
         login_btn.setEnabled(true);
         finish();
     }
-
 
     /*
      * If username/password was incorrect, this method is called.
