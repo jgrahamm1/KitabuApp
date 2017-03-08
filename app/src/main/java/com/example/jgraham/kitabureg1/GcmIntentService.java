@@ -16,6 +16,7 @@ package com.example.jgraham.kitabureg1;
 
  */
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,6 +29,7 @@ import android.util.Log;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.api.client.json.JsonParser;
 
 import org.json.JSONObject;
 
@@ -57,12 +59,15 @@ public class GcmIntentService extends IntentService {
 
                 if (extras.get("del") != null) {
                     int delVal = Integer.parseInt(extras.getString("del"));
+                    KitabuEntry entry = dbHelper.fetchEntryByIndex(delVal);
                     dbHelper.removeEntry(delVal);
+                    Tab1.values.remove(entry);
                 } else if (extras.get("save") != null) {
-                    Log.d("Log", extras.getString("save"));
-                    JSONObject object = (JSONObject) extras.get("save");
-                    KitabuEntry kitabuEntry = new KitabuEntry(object);
-                    dbHelper.insertEntry(kitabuEntry);
+
+//                    JSONObject object = extras.getParcelable("save");
+  //                  Log.d("Log", object.toString());
+    //                KitabuEntry kitabuEntry = new KitabuEntry(object);
+      //              dbHelper.insertEntry(kitabuEntry);
                 }
 
                 /*
