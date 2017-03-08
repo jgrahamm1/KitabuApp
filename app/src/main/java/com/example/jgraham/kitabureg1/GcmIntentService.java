@@ -16,7 +16,6 @@ package com.example.jgraham.kitabureg1;
 
  */
 
-import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -28,12 +27,10 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.api.client.json.JsonParser;
-
-import org.json.JSONObject;
 
 /*
     * Defined a class to receive notifications.
