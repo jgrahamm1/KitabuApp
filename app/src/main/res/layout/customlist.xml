@@ -16,6 +16,16 @@
         android:singleLine="true"
         android:text="Description"
         android:textSize="12sp" />
+    <TextView
+        android:id="@+id/thirdLine"
+        android:layout_width="fill_parent"
+        android:layout_height="26dip"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:text="Description"
+        android:textSize="12sp" />
 
     <TextView
         android:id="@+id/firstLine"

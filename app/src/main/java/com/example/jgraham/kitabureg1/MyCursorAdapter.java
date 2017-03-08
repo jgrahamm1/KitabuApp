@@ -93,8 +93,13 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 
             TextView textView = (TextView) view.findViewById(R.id.firstLine);
             TextView textView1 = (TextView) view.findViewById(R.id.secondLine);
+            TextView textView2 = (TextView) view.findViewById(R.id.thirdLine);
             textView.setText(itemsArrayList.get(position).getmTitle());
             textView1.setText(itemsArrayList.get(position).getmLink());
+            textView2.setText(itemsArrayList.get(position).getmPhoneNo().toString());
+            if(fragId==1){
+                textView2.setVisibility(View.INVISIBLE);
+            }
         // Delete button onClick Listener
             final ImageButton button = (ImageButton) view.findViewById(R.id.delete_button);
             if(fragId == 2)

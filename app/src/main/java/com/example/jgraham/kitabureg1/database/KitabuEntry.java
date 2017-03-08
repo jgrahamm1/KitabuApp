@@ -90,7 +90,7 @@ public class KitabuEntry {
     }
     public String toString() {
 
-        return this.getmTitle() +" \n " + getmLink();
+        return this.getmTitle() +" \n " + getmLink()+" \n "+getmPhoneNo();
     }
 
     public JSONObject toJSONObject() {
