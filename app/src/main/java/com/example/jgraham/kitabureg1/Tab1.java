@@ -159,6 +159,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public void onServiceConnected(ComponentName name, IBinder service) {
         GcmIntentService.GcmBind binder = (GcmIntentService.GcmBind) service;
         mBound = true;
+        updateEntries();
         Log.d("SERVICE", "Tab1 --> onServiceConnected");
     }
 
