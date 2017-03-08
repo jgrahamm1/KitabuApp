@@ -156,15 +156,23 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ke = getItem(position);
-                        SharedPreferences sharedPreferences = context.getSharedPreferences(
-                                "Kitabu_preferences",
-                                Context.MODE_PRIVATE);
-                        String phoneno = sharedPreferences.getString("phoneno", null);
-                        ContactsUtil contactsUtil = new ContactsUtil(context);
-                        contactsUtil.sendContacts(ke.getmId(), phoneno);
-                        Toast.makeText(context, "Shared!", Toast.LENGTH_SHORT).show();
-
+                        if(Globals.contacts_permission == true) {
+                            // Permission given
+                            ke = getItem(position);
+                            SharedPreferences sharedPreferences = context.getSharedPreferences(
+                                    "Kitabu_preferences",
+                                    Context.MODE_PRIVATE);
+                            String phoneno = sharedPreferences.getString("phoneno", null);
+                            ContactsUtil contactsUtil = new ContactsUtil(context);
+                            contactsUtil.sendContacts(ke.getmId(), phoneno);
+                            Toast.makeText(context, "Shared!", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            // No permission
+                            Toast.makeText(context, "Functionality disabled, please give us permission to access contacts.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

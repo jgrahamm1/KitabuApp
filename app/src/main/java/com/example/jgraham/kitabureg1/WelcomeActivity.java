@@ -61,14 +61,8 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
                 Context.MODE_PRIVATE);
         String id = sharedPreferences.getString("id", null);
-        String name = sharedPreferences.getString("name", null);
-        String email = sharedPreferences.getString("email", null);
-        String phoneno = sharedPreferences.getString("phoneno", null);
-        Log.d("id", String.valueOf(id));
-        Log.d("name", String.valueOf(name));
-        Log.d("email", String.valueOf(email));
-        Log.d("phoneno", String.valueOf(phoneno));
-        if(id != null && name != null && email !=null && phoneno != null)
+
+        if(id != null)
         {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -90,11 +84,13 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission was granted, yay! Do the
                     // contacts-related task you need to do.
-
-                } else {
-
-                    // permission denied, boo! Disable the
-                    // functionality that depends on this permission.
+                    Globals.contacts_permission = true;
+                }
+                else
+                {
+                    // boo-ya
+                    // He/she didn't give us permission.
+                    Globals.contacts_permission = false;
                 }
                 return;
             }
