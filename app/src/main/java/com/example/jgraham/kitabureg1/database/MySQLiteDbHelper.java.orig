@@ -25,8 +25,23 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     // Table name string. (Only one table)
     private static final String TABLE_NAME_ENTRIES = "Kitabu_Database_Table_Links";
     // Version code
+<<<<<<< HEAD
     private static final int DATABASE_VERSION = 2;
+   private static MySQLiteDbHelper sInstance;
 
+    // Table schema, column names
+    public static final String KEY_ROWID = "_id";
+    public static final String KEY_ID = "id";
+    public static final String KEY_LINK = "link";
+    public static final String KEY_TITLE = "title";
+    public static final String KEY_TYPE = "type"; //public, private
+    public static final String KEY_TAGS = "tags";
+    public static final String KEY_PHNO = "phoneno";
+
+
+=======
+    private static final int DATABASE_VERSION = 1;
+>>>>>>> 4a5d1fdb604013a92ba1fdecf84ffd15932cf151
     // SQL query to create the table for the first time
     // Data types are defined below
     private static final String CREATE_TABLE_ENTRIES = "CREATE TABLE IF NOT EXISTS "
@@ -212,8 +227,14 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
         return entryList;
     }
 
+<<<<<<< HEAD
+
+    // Query the entire table, return all notification rows
+    public ArrayList<KitabuEntry> fetchNotificationEntries() throws SQLException{
+=======
     // Query the entire table, return all notification rows but only the top 20.
     public ArrayList<KitabuEntry> fetchNotificationEntries() throws SQLException {
+>>>>>>> 4a5d1fdb604013a92ba1fdecf84ffd15932cf151
         Log.d("Fetch Notifications", "Try to do that");
         SQLiteDatabase dbObj = getReadableDatabase();
         int res = 1;

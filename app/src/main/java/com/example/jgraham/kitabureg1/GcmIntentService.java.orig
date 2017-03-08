@@ -67,6 +67,7 @@ public class GcmIntentService extends IntentService {
                  * We are sending all of these details via GCM.
                  * I hope this works.... :/
                  */
+<<<<<<< HEAD
                 else if (extras.getString("url") != null) {
                     KitabuEntry entry = new KitabuEntry(extras.getString("id"),
                             extras.getString("url"),
@@ -86,6 +87,13 @@ public class GcmIntentService extends IntentService {
                     } catch (Exception e) {
                         Log.d("GCM: ", "Received notification, but didn't push");
                     }
+=======
+                KitabuEntry entry = new KitabuEntry(extras.getString("id"),
+                        extras.getString("url"),
+                        extras.getString("phoneno"),
+                        extras.getString("tags"),
+                        2,
+                        extras.getString("title"));
                 /*
                     * Getting the database object and fetch the entries by index.
                     *  Accoding to the received notification update the necessary.
@@ -101,6 +109,7 @@ public class GcmIntentService extends IntentService {
                     }
                 } catch (Exception e) {
                     Log.d("GCM: ", "Received notification, but didn't push");
+>>>>>>> 4a5d1fdb604013a92ba1fdecf84ffd15932cf151
                 }
             }
         }

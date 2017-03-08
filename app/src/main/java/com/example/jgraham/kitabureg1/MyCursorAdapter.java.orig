@@ -121,7 +121,12 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                             var = deleteFromServer(ke.getmId());
                         }
                         Log.d("DELETE", String.valueOf(var));
+<<<<<<< HEAD
+                        if(var == true)
+                        {
+=======
                         if (var == true) {
+>>>>>>> 4a5d1fdb604013a92ba1fdecf84ffd15932cf151
                             Log.d("DELETE", "Deleted from server");
                             mySQLiteDbHelper.removeEntry(ke.getmId());
                             itemsArrayList.remove(itemsArrayList.get(position));
