@@ -36,7 +36,7 @@ public class ContactsFragment extends Fragment implements
         AdapterView.OnItemClickListener {
 
     /*
- * Defines an array that contains column names to move from
+ * Defines an array that contains column  ames to move from
  * the Cursor to the ListView.
  */
     private final static String[] FROM_COLUMNS = {

@@ -1,11 +1,14 @@
 package com.example.jgraham.kitabureg1;
 
 import android.app.LoaderManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.Loader;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -23,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
+public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>>, ServiceConnection {
     public static LoaderManager loaderManager;
     public static FragmentActivity context;
     public static int onCreateCheck = 0;
@@ -32,6 +35,10 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     ListView listview;
     MyCursorAdapter  adapter;
     static List<KitabuEntry> values;
+
+    // Service bound flag
+    public boolean mBound;
+    public ServiceConnection mConnection;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,5 +127,43 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             adapter.clear();
             adapter.notifyDataSetChanged();
         }
+    }
+
+    /*
+     * Lifecycle methods added to register GcmIntentService to the MainActivity
+     * Having
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d("SERVICE", "Tab1 --> onStart binding service");
+        // Bind to LocalService
+        Intent intent = new Intent(getContext(), GcmIntentService.class);
+        getContext().bindService(intent, this, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        // Unbind from the service
+        if (mBound) {
+            getContext().unbindService(mConnection);
+            mBound = false;
+        }
+    }
+
+    /*
+     * Service methods
+     */
+    @Override
+    public void onServiceConnected(ComponentName name, IBinder service) {
+        GcmIntentService.GcmBind binder = (GcmIntentService.GcmBind) service;
+        mBound = true;
+        Log.d("SERVICE", "Tab1 --> onServiceConnected");
+    }
+
+    @Override
+    public void onServiceDisconnected(ComponentName name) {
+        Log.d("SERVICE", "Tab1 --> onServiceDisconnected");
     }
 }

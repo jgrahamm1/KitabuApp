@@ -50,10 +50,11 @@ public class GcmIntentService extends IntentService {
 
     public class GcmBind extends Binder
     {
-        GcmIntentService getService()
-        {
+        // Get the service
+        GcmIntentService getService() {
             return GcmIntentService.this;
         }
+
     }
 
     @Override
