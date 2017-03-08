@@ -18,7 +18,10 @@ import android.widget.Toast;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.google.android.gms.wearable.DataMap.TAG;
 
@@ -43,6 +46,37 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
         this.fragId = fragId;
         Log.d(TAG, "MyCursorAdapter: ");
     }
+
+    /*
+ * Get the id as argument.
+ * Send a post request and use the JSON response.
+ * returns true or false
+ */
+    boolean deleteFromServer( int id)
+    {
+        SharedPreferences sharedPreference = context.getSharedPreferences("Kitabu_preferences",
+                Context.MODE_PRIVATE);
+        boolean msg = false;
+        String phoneno = sharedPreference.getString("phoneno", null);
+        String serv_res = "";
+        Map<String, String> params = new HashMap<String, String>();
+        try {
+            serv_res = ServerUtil.get("http://kitabu.prashant.at/api/delete_link/" +
+                    id + "/" + phoneno, params, context);
+            if (serv_res.contains("false")) {
+                return false;
+            } else if(serv_res.contains("true"))
+            {
+                return true;
+            }
+        } catch (IOException e) {
+            Log.d("LOGIN", "Sending to server did not work");
+            e.printStackTrace();
+            msg = false;
+        }
+        return false;
+    }
+
 
 
     /*
@@ -83,16 +117,24 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
                 alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mySQLiteDbHelper.removeEntry(ke.getmId());
-                        itemsArrayList.remove(itemsArrayList.get(position));
-                        notifyDataSetChanged();  // Notify adapter of data change.
-
+                        boolean var = deleteFromServer(ke.getmId());
+                        Log.d("DELETE", String.valueOf(var));
+                        if(var == true) {
+                            Log.d("DELETE", "Deleted from server");
+                            mySQLiteDbHelper.removeEntry(ke.getmId());
+                            itemsArrayList.remove(itemsArrayList.get(position));
+                            notifyDataSetChanged();  // Notify adapter of data change.
+                            Toast.makeText(getContext(), "Deleted", Toast.LENGTH_SHORT).show();
+                        }
+                        else
+                        {
+                            Log.d("DELETE", "Not deleted from server");
+                            Toast.makeText(getContext(), "Could not delete, please try again later",
+                                    Toast.LENGTH_SHORT).show();
+                        }
                         /*
-                         TODO: Send request to server to delete.
                          TODO: Receive GCM delete notifications from server.
                          */
-
-                        Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
                     }
                 });
                 alertDialog.setNegativeButton("No", new DialogInterface.OnClickListener() {

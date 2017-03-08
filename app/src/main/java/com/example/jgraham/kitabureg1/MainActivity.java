@@ -19,6 +19,7 @@ package com.example.jgraham.kitabureg1;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Point;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -41,6 +42,8 @@ import android.widget.Toast;
 import com.example.jgraham.backend.myApi.MyApi;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.Target;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -56,7 +59,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 
 
 public class MainActivity extends AppCompatActivity{
@@ -155,6 +157,23 @@ public class MainActivity extends AppCompatActivity{
                 editor.putString("email", intent.getStringExtra("email"));
                 editor.putString("name", intent.getStringExtra("name"));
                 editor.commit();
+
+                /*
+                  TODO: Add ShowCaseView here.
+                */
+        new ShowcaseView.Builder(this)
+                //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
+                .setTarget(new Target() {
+                    @Override
+                    public Point getPoint() {
+                        return new Point(100,100);
+                    }
+                })
+                .setContentTitle("ShowcaseView")
+                .setContentText("This is highlighting the Home button")
+                .hideOnTouchOutside()
+                .build();
+
             } else {
                 SharedPreferences sharedPreferences = getSharedPreferences("Kitabu_preferences",
                         Context.MODE_PRIVATE);
@@ -164,16 +183,7 @@ public class MainActivity extends AppCompatActivity{
             }
             new GcmRegistrationAsyncTask(this).execute();
         }
-        /*
-         TODO: Add ShowCaseView here.
-         */
-//        new ShowcaseView.Builder(this)
-//                //.setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE))
-//                .setTarget(new TextView(getApplicationContext(), TextView.LAYER_TYPE_NONE))
-//                .setContentTitle("ShowcaseView")
-//                .setContentText("This is highlighting the Home button")
-//                .hideOnTouchOutside()
-//                .build();
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
