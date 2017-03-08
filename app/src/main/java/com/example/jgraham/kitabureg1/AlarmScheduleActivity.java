@@ -3,7 +3,6 @@ package com.example.jgraham.kitabureg1;
 import android.app.AlarmManager;
 import android.app.DialogFragment;
 import android.app.PendingIntent;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -22,7 +20,7 @@ import java.util.Locale;
  * Created by jgraham on 3/4/17.
  */
 
-public class AlarmScheduleActivity extends AppCompatActivity implements DialogManual.ManualDialogListener  {
+public class AlarmScheduleActivity extends AppCompatActivity implements DialogManual.ManualDialogListener {
 
     // Calendar for storing the user's time of notification
     protected Calendar m_calendar;
@@ -84,7 +82,6 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
         // Handle date field
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         String date_string = sdf.format(m_calendar.getTime());
-
         // Schedule alarm based on calendar
         // Calculate the time when it expires.
         Intent intent = new Intent(this, EMAAlarmReceiver.class);
@@ -92,11 +89,11 @@ public class AlarmScheduleActivity extends AppCompatActivity implements DialogMa
         intent.putExtra("id", m_id);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        AlarmManager alarmManager = (AlarmManager)getSystemService(ALARM_SERVICE);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, m_calendar.getTimeInMillis(), pendingIntent);
         Log.d("ALARM", "Alarm set at " + date_string + " for url with id: " + m_id);
         Log.d("ALARM", "TIME: " + m_calendar.getTime().toString());
-        Log.d("ALARM", "NOW: " + System.currentTimeMillis() + " Cal: " + m_calendar.getTimeInMillis() + " diff: " + (m_calendar.getTimeInMillis() - System.currentTimeMillis()) );
+        Log.d("ALARM", "NOW: " + System.currentTimeMillis() + " Cal: " + m_calendar.getTimeInMillis() + " diff: " + (m_calendar.getTimeInMillis() - System.currentTimeMillis()));
         Toast.makeText(getApplicationContext(), "Alarm set for " + date_string, Toast.LENGTH_SHORT).show();
         finish();
     }
