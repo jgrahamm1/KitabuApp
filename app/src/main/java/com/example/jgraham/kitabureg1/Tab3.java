@@ -112,7 +112,7 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
         // Remove the TextView
         if (!values.isEmpty()) {
-            TextView nts_view = (TextView) getActivity().findViewById(R.id.tv1);
+            TextView nts_view = (TextView) getActivity().findViewById(R.id.tvi);
             nts_view.setVisibility(View.INVISIBLE);
             nts_view.setText(" ");
         }
