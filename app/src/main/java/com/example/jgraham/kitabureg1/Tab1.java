@@ -50,6 +50,12 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     }
 
     public void updateEntries() {
+        // Remove the TextView
+        if (!values.isEmpty()) {
+            TextView nts_view = (TextView) context.findViewById(R.id.tv1);
+            nts_view.setVisibility(View.INVISIBLE);
+            nts_view.setText(" ");
+        }
         loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab1", "intloader");
     }
@@ -119,6 +125,13 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             adapter.addAll(data);
             adapter.notifyDataSetChanged();
         }
+
+        // Remove the TextView
+        if (!values.isEmpty()) {
+            TextView nts_view = (TextView) context.findViewById(R.id.tv1);
+            nts_view.setVisibility(View.INVISIBLE);
+            nts_view.setText(" ");
+        }
     }
 
     @Override
@@ -159,7 +172,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     public void onServiceConnected(ComponentName name, IBinder service) {
         GcmIntentService.GcmBind binder = (GcmIntentService.GcmBind) service;
         mBound = true;
-        Log.d("SERVICE", "Tab1 --> onServiceConnected");
+        Log.d("SERVICE", "Tab1 --> onServiceConnected!!!!!!!!!!!!!!!");
     }
 
     @Override
