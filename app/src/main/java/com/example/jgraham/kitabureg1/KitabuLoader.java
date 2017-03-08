@@ -12,11 +12,12 @@ import java.util.ArrayList;
 public class KitabuLoader extends AsyncTaskLoader<ArrayList<KitabuEntry>> {
 
     Context mContext;
-    public KitabuLoader(Context context)
-    {
+
+    public KitabuLoader(Context context) {
         super(context);
         mContext = context;
     }
+
     @Override
     protected void onStartLoading() {
         forceLoad();

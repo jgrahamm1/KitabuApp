@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,10 +63,9 @@ public class LoginActivity extends AppCompatActivity {
      * Method to validate phone number and password.
      * setError when field is invalid.
      */
-    boolean validate(String phone, String pwd)
-    {
+    boolean validate(String phone, String pwd) {
         boolean valid = true;
-        if (phone.isEmpty() || phone.length()!=10) {
+        if (phone.isEmpty() || phone.length() != 10) {
             login_etxt.setError("Enter Valid 10 digit Mobile Number!");
             valid = false;
         } else {
@@ -89,12 +87,10 @@ public class LoginActivity extends AppCompatActivity {
 
         m_login_phone = login_etxt.getText().toString();
         m_login_pwd = pwd_etxt.getText().toString();
-        if(validate(m_login_phone, m_login_pwd)) {
+        if (validate(m_login_phone, m_login_pwd)) {
             LoginTask lgn_task = new LoginTask();
             lgn_task.execute();
-        }
-        else
-        {
+        } else {
             login_btn.setEnabled(true);
         }
     }
@@ -110,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             String name = user.getString("name");
 
             Log.d("LOGIN", "Got user info --> id " + id + " phn: " + phoneno + " email: " + email +
-            " name: " + name);
+                    " name: " + name);
 
             // Start MainActivity with user info in Extras
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
@@ -188,15 +184,13 @@ public class LoginActivity extends AppCompatActivity {
 
             if (result == null || result.contains(tr)) {  // Did I get a null or a false?
                 onLoginFailed();
-            }
-            else if(result.equals("502")) // ServerUtil returns this when Server down.
+            } else if (result.equals("502")) // ServerUtil returns this when Server down.
             {
                 Log.d("LOGIN", "Came to 502");
                 Toast.makeText(getApplicationContext(),
                         "Oops, looks like our server is down! Sorry! :(", Toast.LENGTH_LONG).show();
                 onLoginFailed();
-            }
-            else {                    // If no errors anticipated, lets parse the json.
+            } else {                    // If no errors anticipated, lets parse the json.
                 try {
                     JSONObject response = new JSONObject(result);
                     onLoginPassed(response);
@@ -206,5 +200,5 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } // Else close
         } // PostExecute close
-     } // Login Asynctask close
+    } // Login Asynctask close
 } // Login Activity close

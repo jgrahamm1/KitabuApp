@@ -14,16 +14,10 @@ import android.widget.TimePicker;
 
 public class DialogManual extends DialogFragment {
 
-    public interface ManualDialogListener {
-        public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day);
-        public void onTimePickerDialogSet(DialogFragment dialog, int hour, int minute);
-    }
-
-    protected ManualDialogListener dialoglistener;
-
     public static final String DIALOG_KEY = "dialog";
     public static final int DATE_PICKER_DIALOG = 1;
     public static final int TIME_PICKER_DIALOG = 2;
+    protected ManualDialogListener dialoglistener;
 
     public static DialogManual newInstance(int id) {
         DialogManual d_fragment = new DialogManual();
@@ -49,16 +43,14 @@ public class DialogManual extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // Get current time for time picker dialog
+        // Get current time for time picker dialog  with onClick
         final Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-
-
         Bundle bundle = getArguments();
         int dialog_id = bundle.getInt(DIALOG_KEY);
-
         switch (dialog_id) {
+            //If datapicker selected then handling the code.
             case DATE_PICKER_DIALOG:
                 DatePickerDialog date_picker_dialog =
                         new DatePickerDialog(this.getContext());
@@ -77,7 +69,7 @@ public class DialogManual extends DialogFragment {
                 date_picker_dialog.setOnDateSetListener(date_set_listener);
                 return date_picker_dialog;
 
-
+            //If TImepicker selected then handling the app with onClick
             case TIME_PICKER_DIALOG:
                 TimePickerDialog.OnTimeSetListener time_set_listener =
                         new TimePickerDialog.OnTimeSetListener() {
@@ -95,6 +87,12 @@ public class DialogManual extends DialogFragment {
             default:
                 return null;
         }
+    }
+
+    public interface ManualDialogListener {
+        public void onDatePickerDialogSet(DialogFragment dialog, int year, int month, int day);
+
+        public void onTimePickerDialogSet(DialogFragment dialog, int hour, int minute);
     }
 }
 

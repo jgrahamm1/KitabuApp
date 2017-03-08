@@ -120,7 +120,7 @@ public class RegistrationActivity extends AppCompatActivity {
             email_etxt.setError(null);
         }
 
-        if (mobile.isEmpty() || mobile.length()!=10) {
+        if (mobile.isEmpty() || mobile.length() != 10) {
             phone_etxt.setError("Enter Valid Mobile Number");
             valid = false;
         } else {
@@ -193,8 +193,7 @@ public class RegistrationActivity extends AppCompatActivity {
              */
             if (result.contains(tr)) {
                 sendRegistrationPass();
-            }
-            else {
+            } else {
                 sendRegistrationFailed();
             }
         }

@@ -22,11 +22,11 @@ import java.util.List;
 
 public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
 
+    public static LoaderManager loaderManager;
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
     MyCursorAdapter adapter;
     List<KitabuEntry> values;
-    public static LoaderManager loaderManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
     }
 
-    public void updateEntries()
-    {
+    public void updateEntries() {
         loaderManager.initLoader(2, null, this).forceLoad();
         Log.d("Tab2", "intloader");
     }
@@ -70,8 +69,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
             }
         });
 
-        if(values.size() == 0)
-        {
+        if (values.size() == 0) {
             TextView textView = (TextView) rootView.findViewById(R.id.tv2);
             textView.setVisibility(View.VISIBLE);
             textView.setText("Nothing to show!");
@@ -101,7 +99,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     @Override
     public void onLoadFinished(Loader<ArrayList<KitabuEntry>> loader, ArrayList<KitabuEntry> data) {
         values = data;
-        if(adapter!=null){
+        if (adapter != null) {
             adapter.clear();
             adapter.addAll(data);
             adapter.notifyDataSetChanged();
@@ -110,7 +108,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
 
     @Override
     public void onLoaderReset(Loader<ArrayList<KitabuEntry>> loader) {
-        if(adapter!=null) {
+        if (adapter != null) {
             adapter.clear();
             adapter.notifyDataSetChanged();
         }

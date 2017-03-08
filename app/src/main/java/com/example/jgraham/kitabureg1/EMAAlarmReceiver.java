@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+/*
+    * References taken from MyRuns for alarm Configuration.
+ */
 
 public class EMAAlarmReceiver extends BroadcastReceiver {
 
@@ -18,7 +21,6 @@ public class EMAAlarmReceiver extends BroadcastReceiver {
         if (m_id == -1) {
             Log.d("ALARM", "Warning: EMAAlarmReceiver got -1 for id");
         }
-
         startPSM(context);
     }
 

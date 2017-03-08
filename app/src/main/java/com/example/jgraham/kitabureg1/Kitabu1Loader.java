@@ -9,15 +9,15 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import java.util.ArrayList;
 
 
-
 public class Kitabu1Loader extends AsyncTaskLoader<ArrayList<KitabuEntry>> {
 
     Context mContext;
-    public Kitabu1Loader(Context context)
-    {
+
+    public Kitabu1Loader(Context context) {
         super(context);
         mContext = context;
     }
+
     @Override
     protected void onStartLoading() {
         forceLoad();
