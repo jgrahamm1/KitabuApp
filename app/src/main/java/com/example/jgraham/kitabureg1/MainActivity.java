@@ -18,6 +18,7 @@ package com.example.jgraham.kitabureg1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.os.AsyncTask;
@@ -75,7 +76,6 @@ public class MainActivity extends AppCompatActivity {
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -260,6 +260,13 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), SendDataActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

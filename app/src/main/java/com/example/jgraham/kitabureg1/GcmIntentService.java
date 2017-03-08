@@ -16,18 +16,22 @@ package com.example.jgraham.kitabureg1;
 
  */
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Binder;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.api.client.json.JsonParser;
 
 import org.json.JSONObject;
 
@@ -38,14 +42,31 @@ import org.json.JSONObject;
     *
  */
 public class GcmIntentService extends IntentService {
+    IBinder mBinder;
+
     public GcmIntentService() {
         super("GcmIntentService");
+    }
+
+    public class GcmBind extends Binder
+    {
+        GcmIntentService getService()
+        {
+            return GcmIntentService.this;
+        }
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
+
+        mBinder = new GcmBind();
 
         String messageType = gcm.getMessageType(intent);
 
@@ -57,12 +78,15 @@ public class GcmIntentService extends IntentService {
 
                 if (extras.get("del") != null) {
                     int delVal = Integer.parseInt(extras.getString("del"));
+                    KitabuEntry entry = dbHelper.fetchEntryByIndex(delVal);
                     dbHelper.removeEntry(delVal);
+                    Tab1.values.remove(entry);
                 } else if (extras.get("save") != null) {
-                    Log.d("Log", extras.getString("save"));
-                    JSONObject object = (JSONObject) extras.get("save");
-                    KitabuEntry kitabuEntry = new KitabuEntry(object);
-                    dbHelper.insertEntry(kitabuEntry);
+
+//                    JSONObject object = extras.getParcelable("save");
+  //                  Log.d("Log", object.toString());
+    //                KitabuEntry kitabuEntry = new KitabuEntry(object);
+      //              dbHelper.insertEntry(kitabuEntry);
                 }
 
                 /*
@@ -82,22 +106,10 @@ public class GcmIntentService extends IntentService {
                             dbHelper.insertEntry(entry);
                         } else {
                             Log.d("DB: ", "UPDATING");
-                            dbHelper.updateEntry(entry.getmId());
-                        }
-                    } catch (Exception e) {
-                        Log.d("GCM: ", "Received notification, but didn't push");
-                    }
-                /*
-                    * Getting the database object and fetch the entries by index.
-                    *  Accoding to the received notification update the necessary.
-                 */
-                    try {
-                        KitabuEntry entry1 = dbHelper.fetchEntryByIndex(entry.getmId());
-                        if (entry1 == null) {
+                            dbHelper.removeEntry(entry.getmId());
+                            entry.setmType(2);
                             dbHelper.insertEntry(entry);
-                        } else {
-                            Log.d("DB: ", "UPDATING");
-                            dbHelper.updateEntry(entry.getmId());
+                            // dbHelper.updateEntry(entry.getmId());
                         }
                     } catch (Exception e) {
                         Log.d("GCM: ", "Received notification, but didn't push");

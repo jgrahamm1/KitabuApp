@@ -1,10 +1,13 @@
 package com.example.jgraham.kitabureg1;
 
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.Loader;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +25,17 @@ import java.util.List;
 
 public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
     public static LoaderManager loaderManager;
+    public static FragmentActivity context;
     public static int onCreateCheck = 0;
+    public GcmBroadcastReceiver broadcastReceiver;
     private static MySQLiteDbHelper mySQLiteDbHelper;
     ListView listview;
-    MyCursorAdapter adapter;
-    List<KitabuEntry> values;
+    MyCursorAdapter  adapter;
+    static List<KitabuEntry> values;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        context = getActivity();
         super.onCreate(savedInstanceState);
         Log.d("Tab3", "oncreate");
         loaderManager = getActivity().getLoaderManager();
@@ -81,6 +87,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     @Override
     public void onResume() {
         super.onResume();
+        getContext().registerReceiver(broadcastReceiver, new IntentFilter("gcm_unique"));
         Log.d("called", "onResume: ");
     }
 
