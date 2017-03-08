@@ -16,16 +16,13 @@ package com.example.jgraham.kitabureg1;
 
 */
 
-import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.provider.ContactsContract.Contacts;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +30,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
 
 public class ContactsFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor>,
@@ -63,8 +59,10 @@ public class ContactsFragment extends Fragment implements
     private static final int CONTACT_ID_INDEX = 0;
     // The column index for the LOOKUP_KEY column
     private static final int LOOKUP_KEY_INDEX = 1;
-
-
+    private static final String SELECTION =
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
+                    Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
+                    Contacts.DISPLAY_NAME + " LIKE ?";
     // Define global mutable variables
     // Define a ListView object
     ListView mContactsList;
@@ -77,20 +75,15 @@ public class ContactsFragment extends Fragment implements
     Uri mContactUri;
     // An adapter that binds the result Cursor to the ListView
     private SimpleCursorAdapter mCursorAdapter;
-
-    private static final String SELECTION =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB ?
-                    Contacts.DISPLAY_NAME_PRIMARY + " LIKE ?" :
-                    Contacts.DISPLAY_NAME + " LIKE ?";
     // Defines a variable for the search string
     private String mSearchString;
     // Defines the array to hold values that replace the ?
-    private String[] mSelectionArgs = { mSearchString };
-
+    private String[] mSelectionArgs = {mSearchString};
 
 
     // Empty public constructor, required by the system
-    public ContactsFragment() {}
+    public ContactsFragment() {
+    }
 
     // A UI Fragment must inflate its View
     @Override

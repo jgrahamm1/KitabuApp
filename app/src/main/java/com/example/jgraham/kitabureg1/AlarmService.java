@@ -17,23 +17,20 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
 public class AlarmService extends IntentService {
 
-    // Notifications
-    private NotificationManager notification_manager;
     public static final int NOTIFICATION_ID = 100;
-
     // Vib & Sound
     public Vibrator vibrator;
     public MediaPlayer media_player;
-
     // Url id
     protected int m_id;
+    // Notifications
+    private NotificationManager notification_manager;
 
 
     /**
      * A constructor is required, and must call the super IntentService(String)
      * constructor with a name for the worker thread.
      */
-
     public AlarmService() {
         super("AlarmService");
     }
@@ -43,7 +40,6 @@ public class AlarmService extends IntentService {
      * the intent that started the service. When this method returns, IntentService
      * stops the service, as appropriate.
      */
-
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("ALARM", "AlarmService --> OnHandleIntent called");
@@ -53,42 +49,34 @@ public class AlarmService extends IntentService {
         if (m_id == -1) {
             Log.d("ALARM", "Warning: AlarmService url id is -1");
         }
-
         // Start notification
         setupNotification();
-
         // Start alarm items
         media_player = media_player.create(getApplicationContext(), R.raw.ring);
         vibrator = (Vibrator) getApplicationContext().
                 getSystemService(Context.VIBRATOR_SERVICE);
         long[] pattern = {0, 200};
         vibrator.vibrate(1200);
-
-
-        // Stop this service
+        // Stop this alarm service
         stopService(intent);
     }
 
-    private void setupNotification(){
+    //Method to setup notifications
+    private void setupNotification() {
         if (notification_manager == null) {
-
             // Set intent for launching URL
-            MySQLiteDbHelper mySQLiteDbHelper=MySQLiteDbHelper.getInstance(getApplicationContext());
-
+            MySQLiteDbHelper mySQLiteDbHelper = MySQLiteDbHelper.getInstance(getApplicationContext());
             Intent intent = new Intent(Intent.ACTION_VIEW);
-
             // This handles the case when the id is -1 for some (bad) reason
             if (m_id == -1) {
-                KitabuEntry kitabuEntry=mySQLiteDbHelper.fetchEntryByIndex(m_id);
+                KitabuEntry kitabuEntry = mySQLiteDbHelper.fetchEntryByIndex(m_id);
                 String url = "https://www.google.com";
                 intent.setData(Uri.parse(url));
-            }
-            else {
+            } else {
                 KitabuEntry kitabuEntry = mySQLiteDbHelper.fetchEntryByIndex(m_id);
                 String url = kitabuEntry.getmLink();
                 intent.setData(Uri.parse(url));
             }
-
             //Intent intent = new Intent(this, SendDataActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);

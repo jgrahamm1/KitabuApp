@@ -22,10 +22,6 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.util.Log;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,9 +31,9 @@ public class ContactsUtil {
 
     public Context m_context;
     public ArrayList<String> m_contact_list;
-    protected String m_contacts_string;
     public int mid;
     public String mphoneno;
+    protected String m_contacts_string;
 
     // Constructor
     public ContactsUtil(Context context) {
@@ -73,8 +69,7 @@ public class ContactsUtil {
         return contacts_list;
     }
 
-    public void sendContacts(int id, String phoneno)
-    {
+    public void sendContacts(int id, String phoneno) {
         mid = id;
         mphoneno = phoneno;
         ContactsTask c_task = new ContactsTask();
