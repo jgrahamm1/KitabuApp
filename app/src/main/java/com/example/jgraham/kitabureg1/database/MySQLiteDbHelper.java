@@ -26,17 +26,6 @@ public class MySQLiteDbHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME_ENTRIES = "Kitabu_Database_Table_Links";
     // Version code
     private static final int DATABASE_VERSION = 2;
-   private static MySQLiteDbHelper sInstance;
-
-    // Table schema, column names
-    public static final String KEY_ROWID = "_id";
-    public static final String KEY_ID = "id";
-    public static final String KEY_LINK = "link";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_TYPE = "type"; //public, private
-    public static final String KEY_TAGS = "tags";
-    public static final String KEY_PHNO = "phoneno";
-
 
     // SQL query to create the table for the first time
     // Data types are defined below
