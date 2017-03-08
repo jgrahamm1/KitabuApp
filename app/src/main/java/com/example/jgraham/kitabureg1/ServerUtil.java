@@ -1,12 +1,7 @@
 package com.example.jgraham.kitabureg1;
 
-/**
- * Created by jgraham on 2/21/17.
- */
-
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;

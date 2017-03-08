@@ -8,9 +8,7 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
 import java.util.ArrayList;
 
-/**
- * Created by maheshdevalla on 3/5/17.
- */
+
 
 public class Kitabu1Loader extends AsyncTaskLoader<ArrayList<KitabuEntry>> {
 

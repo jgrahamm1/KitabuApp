@@ -15,10 +15,6 @@ import android.util.Log;
 import com.example.jgraham.kitabureg1.database.KitabuEntry;
 import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 
-/**
- * Created by jgraham on 3/3/17.
- */
-
 public class AlarmService extends IntentService {
 
     // Notifications

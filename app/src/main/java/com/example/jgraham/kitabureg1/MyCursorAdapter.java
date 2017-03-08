@@ -22,9 +22,6 @@ import java.util.List;
 import static com.google.android.gms.wearable.DataMap.TAG;
 
 
-/**
- * Created by prashant on 3/4/17.
- */
 
 public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
 

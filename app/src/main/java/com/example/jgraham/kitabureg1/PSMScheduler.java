@@ -7,9 +7,6 @@ import android.content.Intent;
 
 import java.util.Calendar;
 
-/**
- * Created by jgraham on 3/3/17.
- */
 
 public class PSMScheduler {
 

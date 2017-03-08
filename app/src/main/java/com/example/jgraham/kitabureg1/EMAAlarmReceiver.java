@@ -3,13 +3,8 @@ package com.example.jgraham.kitabureg1;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.media.MediaPlayer;
-import android.os.Vibrator;
 import android.util.Log;
 
-/**
- * Created by jgraham on 3/3/17.
- */
 
 public class EMAAlarmReceiver extends BroadcastReceiver {
 

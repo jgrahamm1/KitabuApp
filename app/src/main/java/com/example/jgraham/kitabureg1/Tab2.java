@@ -19,9 +19,6 @@ import com.example.jgraham.kitabureg1.database.MySQLiteDbHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by maheshdevalla on 2/24/17.
- */
 
 public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
 

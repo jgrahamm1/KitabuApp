@@ -11,10 +11,6 @@ import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 
-/**
- * Created by jgraham on 3/4/17.
- */
-
 
 public class DialogManual extends DialogFragment {
 
