@@ -37,8 +37,8 @@ import android.widget.Button;
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
-    protected Button login_button;
-    protected Button register_button;
+    protected Button login_button; // Login button
+    protected Button register_button;   // Register Button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
