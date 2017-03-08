@@ -29,6 +29,11 @@ import android.widget.Button;
 
  */
 
+    /*
+        * This class is intended to show the welcome screens
+        * and login activities.
+     */
+
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
 
     // Buttons
