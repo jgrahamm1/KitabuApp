@@ -32,14 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
             android:id="@+id/innerlist">
-        <ImageButton
-            android:layout_width="50dp"
-            android:id="@+id/delete_button"
-            android:layout_height="50dp"
-            android:background="@drawable/round_button"
-            android:src = "@android:drawable/ic_menu_delete"
-            android:textColor="#fff"
-            android:layout_marginRight="35dp"/>
 
         <ImageButton
             android:layout_width="50dp"
@@ -56,7 +48,27 @@
                 android:layout_height="50dp"
                 android:background="@drawable/round_button"
                 android:src="@android:drawable/ic_menu_today"
-                android:textColor="#fff" />
+                android:textColor="#fff"
+                android:layout_marginRight="35dp" />
+
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:id="@+id/open_button"
+                android:layout_height="50dp"
+                android:background="@drawable/round_button"
+                android:src = "@android:drawable/ic_menu_compass"
+                android:textColor="#fff"
+                android:layout_marginRight="35dp"/>
+
+            <ImageButton
+                android:layout_width="50dp"
+                android:id="@+id/delete_button"
+                android:layout_height="50dp"
+                android:background="@drawable/round_button"
+                android:src = "@android:drawable/ic_menu_delete"
+                android:textColor="#fff"
+                android:layout_marginRight="35dp"/>
 
     </LinearLayout>
 
