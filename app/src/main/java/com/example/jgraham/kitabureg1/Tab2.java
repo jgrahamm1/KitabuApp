@@ -23,7 +23,7 @@ import java.util.List;
 /*
     * This class handles all the public entries
     * that are shared by the user and populate
-    * them in the private tab of the App.
+    * them in the public tab of the App.
     *
     *
  */

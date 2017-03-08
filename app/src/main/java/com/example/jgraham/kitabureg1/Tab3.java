@@ -20,6 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
+/*
+    * This class handles all the Notification entries
+    * that are shared by the user and populate
+    * them in the notification tab of the App.
+    *
+    *
+ */
 public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>> {
     public static LoaderManager loaderManager;
     private static MySQLiteDbHelper mySQLiteDbHelper;
