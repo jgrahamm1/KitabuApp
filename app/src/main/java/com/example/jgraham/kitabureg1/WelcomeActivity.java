@@ -39,7 +39,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         /*
          * TODO: Aditi: Add a tutorial screen here.
-         * TODO: Mahesh: Check for corner cases.
          */
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);

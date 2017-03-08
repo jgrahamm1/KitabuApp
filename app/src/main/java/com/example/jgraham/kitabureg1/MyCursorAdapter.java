@@ -71,7 +71,6 @@ public class MyCursorAdapter extends ArrayAdapter<KitabuEntry> {
             @Override
                 public void onClick(View v) {
                     Log.d("Does delete work", String.valueOf(position));
-                // Log.d("Does delete work", String.valueOf(position));
                 try {
                     ke = getItem(position);
                 }
