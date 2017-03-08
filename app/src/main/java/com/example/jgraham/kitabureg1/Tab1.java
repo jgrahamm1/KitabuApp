@@ -26,6 +26,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/*
+    * This class handles all the private entries
+    * that are shared by the user and populate
+    * them in the private tab of the App.
+    *
+    *
+ */
+
+//Loader Manager to load the dynamic data when records are deleted.
 public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<KitabuEntry>>, ServiceConnection {
     public static LoaderManager loaderManager;
     public static FragmentActivity context;
@@ -49,6 +58,8 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         loaderManager.initLoader(1, null, this).forceLoad();
     }
 
+    // Update the entries dynamically when delete button is pressed and updates
+    //the entries.
     public void updateEntries() {
         loaderManager.initLoader(1, null, this).forceLoad();
         Log.d("Tab1", "intloader");
@@ -104,6 +115,7 @@ public class Tab1 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         Log.d("called", "onDestroy: ");
     }
 
+    // Loader Manager implemented methods to handle the dynamic listview
     @Override
     public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
 

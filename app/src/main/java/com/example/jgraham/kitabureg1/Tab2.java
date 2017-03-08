@@ -100,6 +100,7 @@ public class Tab2 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
     }
 
 
+    // Loader Manager implemented methods to handle the dynamic listview
     @Override
     public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
         return new Kitabu1Loader(getContext());

@@ -95,6 +95,7 @@ public class Tab3 extends Fragment implements LoaderManager.LoaderCallbacks<Arra
         Log.d("called", "onDestroy: ");
     }
 
+    // Loader Manager implemented methods to handle the dynamic listview
     @Override
     public Loader<ArrayList<KitabuEntry>> onCreateLoader(int id, Bundle args) {
         return new Kitabu2Loader(getContext());
