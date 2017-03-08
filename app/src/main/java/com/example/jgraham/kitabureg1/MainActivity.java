@@ -16,10 +16,8 @@ package com.example.jgraham.kitabureg1;
 
  */
 
-import android.*;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Point;
@@ -186,8 +184,8 @@ public class MainActivity extends AppCompatActivity {
                                 return new Point(100, 100);
                             }
                         })
-                        .setContentTitle("ShowcaseView")
-                        .setContentText("This is highlighting the Home button")
+                        .setContentTitle("Welcome to Kitabu")
+                        .setContentText("Try our tabs here, and thanks for using!")
                         .hideOnTouchOutside()
                         .build();
 
